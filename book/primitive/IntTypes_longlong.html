@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>New Integer Type - Modern C++ Explained</title>
+        <title>Integer Type long long - Modern C++ Explained</title>
 
 
         <!-- Custom HTML head -->
@@ -29,6 +29,8 @@
         <link rel="stylesheet" href="../ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="../section-lines.css">
+        <link rel="stylesheet" href="../version-commit.css">
 
     </head>
     <body>
@@ -83,7 +85,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../index.html">Preface</a></li><li class="chapter-item expanded affix "><li class="part-title">Modern C++ Elements</li><li class="chapter-item expanded "><a href="../primitive/index.html"><strong aria-hidden="true">1.</strong> Fundamental Data Types</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../primitive/IntTypes.html"><strong aria-hidden="true">1.1.</strong> Integer Types</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../primitive/IntTypes_NewIntType.html" class="active"><strong aria-hidden="true">1.1.1.</strong> New Integer Type</a></li></ol></li><li class="chapter-item expanded "><a href="../primitive/CharTypes.html"><strong aria-hidden="true">1.2.</strong> Character Types</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../primitive/CharTypes_CharSetsEncodings.html"><strong aria-hidden="true">1.2.1.</strong> Character Sets and Encodings</a></li><li class="chapter-item expanded "><a href="../primitive/CharTypes_NewCharTypes.html"><strong aria-hidden="true">1.2.2.</strong> New Character Types</a></li><li class="chapter-item expanded "><a href="../primitive/CharTypes_StringLiteralCat.html"><strong aria-hidden="true">1.2.3.</strong> String Literal Concatenation</a></li><li class="chapter-item expanded "><a href="../primitive/CharTypes_LibrarySuppor.html"><strong aria-hidden="true">1.2.4.</strong> Library Support</a></li></ol></li></ol></li><li class="chapter-item expanded "><a href="../namespace/index.html"><strong aria-hidden="true">2.</strong> Namespace</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../namespace/InlineNamespace.html"><strong aria-hidden="true">2.1.</strong> Inline Namespace</a></li><li class="chapter-item expanded "><a href="../namespace/NestedNamespace.html"><strong aria-hidden="true">2.2.</strong> Nested Namespace</a></li></ol></li><li class="chapter-item expanded "><li class="part-title">Meta-template Programming</li><li class="chapter-item expanded affix "><li class="part-title">Algorithms</li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../index.html">Preface</a></li><li class="chapter-item expanded affix "><li class="part-title">Modern C++ Elements</li><li class="chapter-item expanded "><a href="../primitive/index.html">Fundamental Data Types</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../primitive/IntTypes.html">Integer Types</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../primitive/IntTypes_longlong.html" class="active">Integer Type long long</a></li></ol></li><li class="chapter-item expanded "><a href="../primitive/CharTypes.html">Character Types</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../primitive/CharTypes_CharSetsEncodings.html">Character Sets and Encodings</a></li><li class="chapter-item expanded "><a href="../primitive/CharTypes_NewCharTypes.html">New Character Types</a></li><li class="chapter-item expanded "><a href="../primitive/CharTypes_StringLiteralCat.html">String Literal Concatenation</a></li><li class="chapter-item expanded "><a href="../primitive/CharTypes_LibrarySuppor.html">Library Support</a></li></ol></li></ol></li><li class="chapter-item expanded "><a href="../namespace/index.html">Namespace</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../namespace/InlineNamespace.html">Inline Namespace</a></li><li class="chapter-item expanded "><a href="../namespace/NestedNamespace.html">Nested Namespace</a></li></ol></li><li class="chapter-item expanded "><li class="part-title">Meta-template Programming</li><li class="chapter-item expanded affix "><li class="part-title">Algorithms</li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -118,6 +120,9 @@
                         <a href="../print.html" title="Print this book" aria-label="Print this book">
                             <i id="print-button" class="fa fa-print"></i>
                         </a>
+                        <a href="https://github.com/wxinix/cpp-explained" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
 
                     </div>
                 </div>
@@ -144,7 +149,71 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="new-integer-type"><a class="header" href="#new-integer-type">New Integer Type</a></h1>
+                        <h1 id="integer-type-long-long"><a class="header" href="#integer-type-long-long">Integer Type long long</a></h1>
+<h2 id="history"><a class="header" href="#history">History</a></h2>
+<p>Before <code>long long</code> was officially added to the C++11 standard in 2011, C++ programmers already knew about the <code>long long</code>  integer type for a long time. It has been part of the C language since the C99 standard, and many major C++ compilers supported <code>long long</code> for compatibility with C.</p>
+<p>As early as 1995, Roland Hartinger first proposed to add <code>long long</code>  to C++. At the time, the C committee had not yet considered this type. As a result, the C++ committee was reluctant to add a fundamental type that was not also in C. After <code>long long</code> had been added to C99, Stephen Adamczyk proposed to reconsider its addition to C++ in 2005. Finally, <code>long long</code> was accepted as part of C++ in 2011, more than ten years after it was first included in the C standard.</p>
+<h2 id="bit-size"><a class="header" href="#bit-size">Bit Size</a></h2>
+<p>The C++ standard defines <code>long long</code> as an integer type that is at least 64 bits long, but it does not guarantee that <code>long long</code> will always be 64 bits on all platforms. The size of <code>long long</code> can depend on the architecture and the compiler being used. However, most modern platforms do support a 64-bit <code>long long</code> type. To ensure portability and avoid any potential issues, it's best to use the <code>sizeof</code> operator to determine the size of <code>long long</code> on a specific platform.</p>
+<p>Keep in mind, <code>long long</code> is a signed type in C++, and its corresponding unsigned type is <code>unsigned long long</code>. In practice, <code>long long int</code> and <code>unsigned long long int</code>  have the same meaning as <code>long long</code> and <code>unsigned long long</code>, respectively. </p>
+<h2 id="literal-suffix"><a class="header" href="#literal-suffix">Literal Suffix</a></h2>
+<p>The C++ standard defines <code>LL</code> and <code>ULL</code> as literal suffixes for <code>long long</code> and <code>unsigned long long</code>, respectively. When initializing a <code>long long</code> type variable, you can write it like this:</p>
+<pre><code class="language-cpp">long long x = 65536LL;
+</code></pre>
+<p>The literal suffix <code>LL</code> can be omitted with the same result:</p>
+<pre><code class="language-cpp">long long x = 65536;
+</code></pre>
+<p>When working with large integer values in C++, it is important to use literal suffixes to ensure that the code runs as intended. For example:</p>
+<pre><code class="language-cpp">long long x = 65536 &lt;&lt; 16; // Value overflows to 0
+std::cout &lt;&lt; &quot;x = &quot; &lt;&lt; x &lt;&lt; std::endl;
+long long y = 65536LL &lt;&lt; 16;
+std::cout &lt;&lt; &quot;y = &quot; &lt;&lt; y &lt;&lt; std::endl;
+</code></pre>
+<p>The code <code>long long x = 65536 &lt;&lt; 16</code> performs a bitwise left shift operation on the decimal value 65536 by 16 bits, which can result in an overflow and unexpected behavior.</p>
+<p>To prevent overflowing, we should use the <code>LL</code> literal suffix to ensure that the value is treated as a <code>long long</code> data type, as in <code>long long y = 65536LL &lt;&lt; 16</code>. This will ensure that the code runs as intended and the value is not unexpectedly truncated or overflowed.</p>
+<h2 id="numerical-limits"><a class="header" href="#numerical-limits">Numerical Limits</a></h2>
+<p>We should avoid using <code>macro</code> as much as possible for defining the maximum and minimum values:</p>
+<pre><code class="language-cpp">#define LLONG_MAX 9223372036854775807LL        // long long max value
+#define LLONG_MIN (-9223372036854775807LL - 1) // long long min value
+#define ULLONG_MAX 0xFFFFFFFFFFFFFFFFULL    // unsigned long long max value
+</code></pre>
+<p>Instead, we should use <code>std::numeric_limits</code>:</p>
+<pre><code class="language-cpp">#include &lt;iostream&gt;
+#include &lt;limits&gt;
+#include &lt;cstdio&gt;
+int main(int argc, char *argv[])
+{
+    // Avoid these!
+    std::cout &lt;&lt; &quot;LLONG_MAX = &quot;  
+            &lt;&lt; LLONG_MAX  
+            &lt;&lt; std::endl;
+
+    std::cout &lt;&lt; &quot;LLONG_MIN = &quot;  
+            &lt;&lt; LLONG_MIN  
+            &lt;&lt; std::endl;
+
+    std::cout &lt;&lt; &quot;ULLONG_MAX = &quot; 
+            &lt;&lt; ULLONG_MAX 
+            &lt;&lt; std::endl;
+
+    std::printf(&quot;LLONG_MAX  = %lld\n&quot;, LLONG_MAX);  // format specifier %lld
+    std::printf(&quot;LLONG_MIN  = %lld\n&quot;, LLONG_MIN);  // format specifier %lld
+    std::printf(&quot;ULLONG_MAX = %llu\n&quot;, ULLONG_MAX); // format specifier %llu
+
+    // Use std::numeric_limits
+    std::cout &lt;&lt; &quot;std::numeric_limits&lt;long long&gt;::max() = &quot; 
+            &lt;&lt; std::numeric_limits&lt;long long&gt;::max() 
+            &lt;&lt; std::endl;
+
+    std::cout &lt;&lt; &quot;std::numeric_limits&lt;long long&gt;::min() = &quot;
+            &lt;&lt; std::numeric_limits&lt;long long&gt;::min()
+            &lt;&lt; std::endl;
+
+    std::cout &lt;&lt; &quot;std::numeric_limits&lt;unsigned long long&gt;::max() = &quot;
+            &lt;&lt; std::numeric_limits&lt;unsigned long long&gt;::max() 
+            &lt;&lt; std::endl;
+}
+</code></pre>
 
                     </main>
 

@@ -1,6 +1,0 @@
-[book]
-authors = ["wxinix"]
-language = "en"
-multilingual = false
-src = "src"
-title = "Modern C++ Explained"
