@@ -13,6 +13,10 @@
     - [String Literal Concatenation](primitive/CharTypes_StringLiteralCat.md)
     - [Library Support](primitive/CharTypes_LibrarySuppor.md)
 
+- [Namespace](namespace/README.md)
+  - [Inline Namespace](namespace/InlineNamespace.md)
+  - [Nested Namespace](namespace/NestedNamespace.md)
+
 # Meta-template Programming
 
 # Algorithms
