@@ -1,3 +1,0 @@
-# Modern C++ Explained
-
-
