@@ -164,6 +164,65 @@
 <p>This book focuses on helping readers understand the rationale behind new C++11 to C++20 features, discussing past C++ limitations, and examining how these features address and optimize those issues. Wherever necessary, it also explains how new features are implemented in compilers. Code samples are tested using GCC, Clang, and MSVC. </p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="fundamental-data-types"><a class="header" href="#fundamental-data-types">Fundamental Data Types</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="integer-types"><a class="header" href="#integer-types">Integer Types</a></h1>
+<h2 id="common-integer-types"><a class="header" href="#common-integer-types">Common Integer Types</a></h2>
+<p>C++ supports several integer types with varying sizes and ranges. Here is a list of the most commonly used integer types in C++, available since the earlier versions of the language. </p>
+<div class="table-wrapper"><table><thead><tr><th>Type name</th><th>Typical Size (in bytes)</th><th>Range</th></tr></thead><tbody>
+<tr><td><code>bool</code></td><td>1</td><td>Boolean literal <code>true</code> or <code>false</code>, added in C++98</td></tr>
+<tr><td><code>char</code></td><td>1</td><td>[-128, 127] or [0, 255] depending on signedness</td></tr>
+<tr><td><code>short</code></td><td>2</td><td>[-32,768, 32,767]</td></tr>
+<tr><td><code>int</code></td><td>4</td><td>[-2,147,483,648, 2,147,483,647]</td></tr>
+<tr><td><code>long</code></td><td>4 or 8</td><td>[-2,147,483,648, 2,147,483,647] or [-9,223,372,036,854,775,808, 9,223,372,036,854,775,807] depending on platform</td></tr>
+<tr><td><code>long long</code></td><td>8</td><td>[-9,223,372,036,854,775,808, 9,223,372,036,854,775,807]</td></tr>
+<tr><td><code>unsigned char</code></td><td>1</td><td>[0, 255]</td></tr>
+<tr><td><code>unsigned short</code></td><td>2</td><td>[0, 65,535]</td></tr>
+<tr><td><code>unsigned int</code></td><td>4</td><td>[0, 4,294,967,295]</td></tr>
+<tr><td><code>unsigned long</code></td><td>4 or 8</td><td>[0, 4,294,967,295] or [0, 18,446,744,073,709,551,615] depending on platform</td></tr>
+<tr><td><code>unsigned long long</code></td><td>8</td><td>[0, 18,446,744,073,709,551,615]</td></tr>
+</tbody></table>
+</div>
+<p>The C++ standard does not specify the minimum bytes for these integer types, except the following constraints:</p>
+<pre><code class="language-cpp">sizeof(char)      == 1                  // Rule 1
+sizeof(char)      &lt;= sizeof(short)      // Rule 2
+sizeof(short)     &lt;= sizeof(int)        // Rule 3
+sizeof(int)       &lt;= sizeof(long)       // Rule 4
+sizeof(long)      &lt;= sizeof(long long)  // Rule 5
+sizeof(char)      *  CHAR_BIT &gt;= 8      // Rule 6
+sizeof(short)     *  CHAR_BIT &gt;= 16     // Rule 7
+sizeof(int)       *  CHAR_BIT &gt;= 16     // Rule 8
+sizeof(long)      *  CHAR_BIT &gt;= 32     // Rule 9
+sizeof(long long) *  CHAR_BIT &gt;= 64     // Rule 10
+</code></pre>
+<p><code>CHAR_BIT</code> represents the number of bits in a char type. Although most modern architectures use 8 bits per byte, this is not always the case as some older machines may have used 7-bit bytes. Under Rule 4, C/C++ allows <code>long</code> and <code>int</code> to have the same size, but it must be at least 32 bits according to Rule 9.</p>
+<h2 id="distinction-of-char-types"><a class="header" href="#distinction-of-char-types">Distinction of char Types</a></h2>
+<p>In C++, <code>char</code> is not necessarily the same type as <code>signed char</code>, although on most platforms they are equivalent.</p>
+<p>The C++ standard defines <code>char</code>, <code>signed char</code>, and <code>unsigned char</code> as three distinct integral types, each with its own range of representable values. The C++ standard does not specify whether <code>char</code> is signed or unsigned by default, which means that it is implementation-defined.</p>
+<p>On most platforms, char is implemented as a signed type, and its range of representable values is the same as that of <code>signed char</code>. However, on some rare platforms, <code>char</code> may be implemented as an unsigned type, in which case it would have the same range of representable values as <code>unsigned char</code>.</p>
+<p>So, while <code>char</code> and <code>signed char</code> are often the same type in C++, it is not guaranteed by the standard. To ensure portability of code that relies on the signedness of <code>char</code>, it is recommended to use <code>signed char</code> explicitly.</p>
+<h2 id="fixed-size-integer-types"><a class="header" href="#fixed-size-integer-types">Fixed Size Integer Types</a></h2>
+<p>The C++11 standard introduced new integer types such as <code>int8_t</code>, <code>int16_t</code>, <code>int32_t</code>, and <code>int64_t</code> with fixed sizes, as well as their unsigned counterparts, <code>uint8_t</code>, <code>uint16_t</code>, <code>uint32_t</code>, and <code>uint64_t</code>. These types are guaranteed to have the specified size and range on any conforming implementation. </p>
+<p>The following table summarizing these fixed size integer types - note that the <code>intN_t</code> and <code>uintN_t</code> types are guaranteed to have exactly <code>N</code> bits, where <code>N</code> is 8, 16, 32, or 64.</p>
+<div class="table-wrapper"><table><thead><tr><th>Type</th><th>Size (in bytes)</th><th>Range</th></tr></thead><tbody>
+<tr><td><code>int8_t</code></td><td>1</td><td>[-128, 127]</td></tr>
+<tr><td><code>uint8_t</code></td><td>1</td><td>[0, 255]</td></tr>
+<tr><td><code>int16_t</code></td><td>2</td><td>[-32,768, 32,767]</td></tr>
+<tr><td><code>uint16_t</code></td><td>2</td><td>[0, 65,535]</td></tr>
+<tr><td><code>int32_t</code></td><td>4</td><td>[-2,147,483,648, 2,147,483,647]</td></tr>
+<tr><td><code>uint32_t</code></td><td>4</td><td>[0, 4,294,967,295]</td></tr>
+<tr><td><code>int64_t</code></td><td>8</td><td>[-9,223,372,036,854,775,808, 9,223,372,036,854,775,807]</td></tr>
+<tr><td><code>uint64_t</code></td><td>8</td><td>[0, 18,446,744,073,709,551,615]</td></tr>
+</tbody></table>
+</div>
+<h2 id="128-bit-integer-types"><a class="header" href="#128-bit-integer-types">128-bit Integer Types</a></h2>
+<p>The C++ standard does not define a 128-bit integer type, as of the latest version C++20.</p>
+<p>However, some compilers and libraries provide extensions that define a 128-bit integer type. For example, the GCC and Clang compilers provide an __int128 type, which is a 128-bit signed integer type. The Boost Multiprecision library provides several integer types with arbitrary precision, including a boost::multiprecision::int128_t type.</p>
+<div class="table-wrapper"><table><thead><tr><th>Type name</th><th>Library/Compiler</th><th>Description</th></tr></thead><tbody>
+<tr><td><code>__int128</code></td><td>GCC, Clang</td><td>A 128-bit signed integer type</td></tr>
+<tr><td><code>unsigned __int128</code></td><td>GCC, Clang</td><td>A 128-bit unsigned integer type</td></tr>
+<tr><td><code>int128_t</code></td><td>Boost Multiprecision</td><td>A 128-bit signed integer type</td></tr>
+<tr><td><code>uint128_t</code></td><td>Boost Multiprecision</td><td>A 128-bit unsigned integer type</td></tr>
+</tbody></table>
+</div>
+<p>It's important to note that the availability and behavior of non-standard integer types may vary depending on the platform and compiler used.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="integer-type-long-long"><a class="header" href="#integer-type-long-long">Integer Type long long</a></h1>
 <h2 id="history"><a class="header" href="#history">History</a></h2>
 <p>Before <code>long long</code> was officially added to the C++11 standard in 2011, C++ programmers already knew about the <code>long long</code>  integer type for a long time. It has been part of the C language since the C99 standard, and many major C++ compilers supported <code>long long</code> for compatibility with C.</p>
