@@ -4,18 +4,18 @@
 
 # Modern C++ Elements
 
-- [Fundamental Data Types](01_primitive/README.md)
-  - [Integer Types](01_primitive/IntTypes.md)
-    - [New Integer Type](01_primitive/IntTypes_NewIntType.md)
-  - [Character Types](01_primitive/CharTypes.md)
-    - [Character Sets and Encodings](01_primitive/CharTypes_CharSetsEncodings.md)
-    - [New Character Types](01_primitive/CharTypes_NewCharTypes.md)
-    - [String Literal Concatenation](01_primitive/CharTypes_StringLiteralCat.md)
-    - [Library Support](01_primitive/CharTypes_LibrarySuppor.md)
+- [Fundamental Data Types](primitive/README.md)
+  - [Integer Types](primitive/IntTypes.md)
+    - [New Integer Type](primitive/IntTypes_NewIntType.md)
+  - [Character Types](primitive/CharTypes.md)
+    - [Character Sets and Encodings](primitive/CharTypes_CharSetsEncodings.md)
+    - [New Character Types](primitive/CharTypes_NewCharTypes.md)
+    - [String Literal Concatenation](primitive/CharTypes_StringLiteralCat.md)
+    - [Library Support](primitive/CharTypes_LibrarySuppor.md)
 
-- [Namespace](02_namespace/README.md)
-  - [Inline Namespace](02_namespace/InlineNamespace.md)
-  - [Nested Namespace](02_namespace/NestedNamespace.md)
+- [Namespace](namespace/README.md)
+  - [Inline Namespace](namespace/InlineNamespace.md)
+  - [Nested Namespace](namespace/NestedNamespace.md)
 
 # Meta-template Programming
 
