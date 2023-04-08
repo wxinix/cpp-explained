@@ -6,7 +6,7 @@
 
 - [Fundamental Data Types](primitive/README.md)
   - [Integer Types](primitive/IntTypes.md)
-    - [New Integer Type](primitive/IntTypes_NewIntType.md)
+    - [Integer Type long long](primitive/IntTypes_longlong.md)
   - [Character Types](primitive/CharTypes.md)
     - [Character Sets and Encodings](primitive/CharTypes_CharSetsEncodings.md)
     - [New Character Types](primitive/CharTypes_NewCharTypes.md)
