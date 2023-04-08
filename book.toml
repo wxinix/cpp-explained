@@ -1,6 +1,12 @@
 [book]
-authors = ["wxinix"]
+authors = ["Wuping Xin"]
 language = "en"
 multilingual = false
 src = "src"
 title = "Modern C++ Explained"
+
+[output.html]
+additional-css      = [ "section-lines.css" , "version-commit.css" ]
+curly-quotes        = false
+git-repository-url  = "https://github.com/wxinix/cpp-explained"
+no-section-label    = true
