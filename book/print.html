@@ -187,7 +187,7 @@
 <p>In C++, the <code>char</code> type is considered a distinct type that can be used to represent individual characters in text string. It is technically not considered an integer type, but does have an integer representation according to the ASCII or Unicode standard, which allows it to be used for integer calculations in some context.</p>
 <p>When <code>signed</code> or <code>unsigned</code> is applied to <code>char</code>, it creates a type for small integers that can hold values between 0 and 255 (or -128 to 127 in the case of signed char).Therefore, <code>signed char</code> and <code>unsigned char</code> are both considered integer types.</p>
 <p>Note that <code>char</code> is a distinct type from <code>signed char</code> and <code>unsigned char</code>, and it is not guaranteed to be signed or unsigned. The signedness of <code>char</code> is implementation-defined, and it can vary depending on the platform and the compiler.</p>
-<h2 id="type-qualifiers-and-cv-correctness"><a class="header" href="#type-qualifiers-and-cv-correctness">Type Qualifiers and CV-Correctness</a></h2>
+<h2 id="type-qualifiers-and-cv-correctness"><a class="header" href="#type-qualifiers-and-cv-correctness">Type qualifiers and cv-correctness</a></h2>
 <p>Type specifiers can be combined with type qualifiers. In C++, there are two type qualifiers: <code>const</code> and <code>volatile</code>.</p>
 <ul>
 <li><code>const</code> indicates that a variable's value cannot be modified after it has been initialized.</li>
@@ -245,7 +245,7 @@ private:
 </code></pre>
 <p>In this example, <code>cachedValue_</code> is declared as <code>mutable</code>, which allows it to be modified even if the containing object is declared <code>const</code>. The <code>getValue()</code> function is declared <code>const</code>, which means it cannot modify any non-mutable members of the Example object, but it can modify the <code>mutable</code> member <code>cachedValue_</code>.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="integer-types"><a class="header" href="#integer-types">Integer Types</a></h1>
-<h2 id="common-integer-types"><a class="header" href="#common-integer-types">Common Integer Types</a></h2>
+<h2 id="common-integer-types"><a class="header" href="#common-integer-types">Common integer types</a></h2>
 <p>C++ supports several integer types with varying sizes and ranges. Here is a list of the most commonly used integer types in C++, available since the earlier versions of the language. Note that <code>char</code> is treated as integer type here for practical reason, though technically it is not.</p>
 <div class="table-wrapper"><table><thead><tr><th>Type name</th><th>Typical Size (in bytes)</th><th>Range</th></tr></thead><tbody>
 <tr><td><code>bool</code></td><td>1</td><td>Boolean literal <code>true</code> or <code>false</code>, added in C++98</td></tr>
@@ -274,7 +274,7 @@ sizeof(long)      *  CHAR_BIT &gt;= 32     // Rule 9
 sizeof(long long) *  CHAR_BIT &gt;= 64     // Rule 10
 </code></pre>
 <p><code>CHAR_BIT</code> represents the number of bits in a char type. Although most modern architectures use 8 bits per byte, this is not always the case as some older machines may have used 7-bit bytes. Under Rule 4, C/C++ allows <code>long</code> and <code>int</code> to have the same size, but it must be at least 32 bits according to Rule 9.</p>
-<h2 id="fixed-size-integer-types"><a class="header" href="#fixed-size-integer-types">Fixed Size Integer Types</a></h2>
+<h2 id="fixed-size-integer-types"><a class="header" href="#fixed-size-integer-types">Fixed size integer types</a></h2>
 <p>The C++11 standard introduced new integer types such as <code>int8_t</code>, <code>int16_t</code>, <code>int32_t</code>, and <code>int64_t</code> with fixed sizes, as well as their unsigned counterparts, <code>uint8_t</code>, <code>uint16_t</code>, <code>uint32_t</code>, and <code>uint64_t</code>. These types are guaranteed to have the specified size and range on any conforming implementation. </p>
 <p>The following table summarizes fixed size integer types - note that the <code>intN_t</code> and <code>uintN_t</code> types are guaranteed to have exactly <code>N</code> bits, where <code>N</code> is 8, 16, 32, or 64.</p>
 <div class="table-wrapper"><table><thead><tr><th>Type</th><th>Size (in bytes)</th><th>Range</th></tr></thead><tbody>
@@ -288,7 +288,7 @@ sizeof(long long) *  CHAR_BIT &gt;= 64     // Rule 10
 <tr><td><code>uint64_t</code></td><td>8</td><td>[0, 18,446,744,073,709,551,615]</td></tr>
 </tbody></table>
 </div>
-<h2 id="128-bit-integer-types"><a class="header" href="#128-bit-integer-types">128-bit Integer Types</a></h2>
+<h2 id="128-bit-integer-types"><a class="header" href="#128-bit-integer-types">128-bit integer types</a></h2>
 <p>The C++ standard does not define a 128-bit integer type, as of the latest version C++20.</p>
 <p>However, some compilers and libraries provide extensions that define a 128-bit integer type. For example, the GCC and Clang compilers provide an __int128 type, which is a 128-bit signed integer type. The Boost Multiprecision library provides several integer types with arbitrary precision, including a boost::multiprecision::int128_t type.</p>
 <div class="table-wrapper"><table><thead><tr><th>Type name</th><th>Library/Compiler</th><th>Description</th></tr></thead><tbody>
@@ -303,10 +303,10 @@ sizeof(long long) *  CHAR_BIT &gt;= 64     // Rule 10
 <h2 id="history"><a class="header" href="#history">History</a></h2>
 <p>Before <code>long long</code> was officially added to the C++11 standard in 2011, C++ programmers already knew about the <code>long long</code>  integer type for a long time. It has been part of the C language since the C99 standard, and many major C++ compilers supported <code>long long</code> for compatibility with C.</p>
 <p>As early as 1995, Roland Hartinger first proposed to add <code>long long</code>  to C++. At the time, the C committee had not yet considered this type. As a result, the C++ committee was reluctant to add a fundamental type that was not also in C. After <code>long long</code> had been added to C99, Stephen Adamczyk proposed to reconsider its addition to C++ in 2005. Finally, <code>long long</code> was accepted as part of C++ in 2011, more than ten years after it was first included in the C standard.</p>
-<h2 id="bit-size"><a class="header" href="#bit-size">Bit Size</a></h2>
+<h2 id="bit-size"><a class="header" href="#bit-size">Bit size</a></h2>
 <p>The C++ standard defines <code>long long</code> as an integer type that is at least 64 bits long, but it does not guarantee that <code>long long</code> will always be 64 bits on all platforms. The size of <code>long long</code> can depend on the architecture and the compiler being used. However, most modern platforms do support a 64-bit <code>long long</code> type. To ensure portability and avoid any potential issues, it's best to use the <code>sizeof</code> operator to determine the size of <code>long long</code> on a specific platform.</p>
 <p>Keep in mind, <code>long long</code> is a signed type in C++, and its corresponding unsigned type is <code>unsigned long long</code>. In practice, <code>long long int</code> and <code>unsigned long long int</code>  have the same meaning as <code>long long</code> and <code>unsigned long long</code>, respectively. </p>
-<h2 id="literal-suffix"><a class="header" href="#literal-suffix">Literal Suffix</a></h2>
+<h2 id="literal-suffix"><a class="header" href="#literal-suffix">Literal suffix</a></h2>
 <p>The C++ standard defines <code>LL</code> and <code>ULL</code> as literal suffixes for <code>long long</code> and <code>unsigned long long</code>, respectively. When initializing a <code>long long</code> type variable, you can write it like this:</p>
 <pre><code class="language-cpp">long long x = 65536LL;
 </code></pre>
@@ -321,7 +321,7 @@ std::cout &lt;&lt; &quot;y = &quot; &lt;&lt; y &lt;&lt; std::endl;
 </code></pre>
 <p>The code <code>long long x = 65536 &lt;&lt; 16</code> performs a bitwise left shift operation on the decimal value 65536 by 16 bits, which can result in an overflow and unexpected behavior.</p>
 <p>To prevent overflowing, we should use the <code>LL</code> literal suffix to ensure that the value is treated as a <code>long long</code> data type, as in <code>long long y = 65536LL &lt;&lt; 16</code>. This will ensure that the code runs as intended and the value is not unexpectedly truncated or overflowed.</p>
-<h2 id="numerical-limits"><a class="header" href="#numerical-limits">Numerical Limits</a></h2>
+<h2 id="numerical-limits"><a class="header" href="#numerical-limits">Numerical limits</a></h2>
 <p>We should avoid using <code>macro</code> as much as possible for defining the maximum and minimum values:</p>
 <pre><code class="language-cpp">#define LLONG_MAX 9223372036854775807LL        // long long max value
 #define LLONG_MIN (-9223372036854775807LL - 1) // long long min value
@@ -394,11 +394,11 @@ int main()
 <p>This lack of standardization has led to portability issues when writing cross-platform code. Code that relies on <code>wchar_t</code> may not work as expected when compiled on a different system with a different <code>wchar_t</code> size. This can result in problems with data alignment, byte order, and other issues that can cause the program to behave incorrectly.</p>
 <p>To address this issue, the C++11 standard introduced new character types, <code>char16_t</code> and <code>char32_t</code>, which have fixed sizes of 16 and 32 bits, respectively. These types are recommended for use in portable code, rather than <code>wchar_t</code>.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="character-sets-and-encodings"><a class="header" href="#character-sets-and-encodings">Character Sets and Encodings</a></h1>
-<h2 id="character-set"><a class="header" href="#character-set">Character Set</a></h2>
+<h2 id="character-set"><a class="header" href="#character-set">Character set</a></h2>
 <p>A character set, also known as a character repertoire, is a collection of characters and symbols that are used to represent written language in computing. Each character in a character set is assigned a unique code point, which is a numerical value that represents that character in digital form.</p>
 <p>Character sets can include characters from many different writing systems and languages, such as the Latin alphabet used in English, the Cyrillic alphabet used in Russian, or the Chinese characters used in Mandarin Chinese. Some character sets are designed for specific languages or scripts, while others are designed to be universal and include characters from many different languages.</p>
 <p>Examples of character sets include ASCII, which includes characters commonly used in the English language, and Unicode, which is a universal character set that can represent all characters used in modern computing, including characters from many different writing systems.</p>
-<h3 id="code-point"><a class="header" href="#code-point"><em>Code Point</em></a></h3>
+<h3 id="code-point"><a class="header" href="#code-point"><em>Code point</em></a></h3>
 <p>A code point is a numerical value that represents a single character or symbol in a character set. Each character in a character set is assigned a unique code point, which is a specific number that identifies that character.</p>
 <p>Code points are typically expressed as hexadecimal numbers, which means that they use a base-16 numbering system. For example, the code point for the letter &quot;A&quot; in the ASCII character set is 0x41, while the code point for the Greek letter alpha in the Unicode character set is 0x03B1.</p>
 <p>Code points are used to represent characters in digital form and are used by various encoding schemes to represent characters as binary data. Encoding schemes such as UTF-8, UTF-16, and UTF-32 map each code point to a specific sequence of bytes, allowing characters to be stored and transmitted in a digital format.</p>
@@ -407,7 +407,7 @@ int main()
 <p>Encoding involves mapping each code point (i.e., the numerical value that represents a character in a character set) to a specific sequence of bits or bytes that can be used to represent that character in digital form.</p>
 <p>Different encoding schemes use different methods for mapping code points to binary sequences. For example, UTF-8 encoding uses a variable-length encoding scheme that can represent each Unicode code point using 1 to 4 bytes, depending on the code point value, while UTF-16 encoding uses a fixed-length encoding scheme that represents each Unicode code point using 2 bytes.</p>
 <p>The goal of encoding is to allow characters and symbols to be represented in digital form, which is necessary for storing, transmitting, and processing text data using computer systems.</p>
-<h3 id="utf-8-encoding"><a class="header" href="#utf-8-encoding"><em>UTF-8 Encoding</em></a></h3>
+<h3 id="utf-8-encoding"><a class="header" href="#utf-8-encoding"><em>UTF-8 encoding</em></a></h3>
 <p>UTF-8 is a variable-length encoding scheme used to represent Unicode characters as binary data. UTF-8 encoding works by mapping each Unicode code point to a sequence of 1 to 4 bytes, depending on the code point value. </p>
 <div class="table-wrapper"><table><thead><tr><th>Code Point Range</th><th>Number of Bytes</th><th>Binary Format</th></tr></thead><tbody>
 <tr><td>0 to 127</td><td>1 byte</td><td><code>0xxx'xxxx</code></td></tr>
@@ -433,7 +433,7 @@ int main()
 </ul>
 <p>By using a variable-length encoding scheme, UTF-8 encoding can represent all Unicode code points using a sequence of 1 to 4 bytes. This allows UTF-8 to be a compact and efficient encoding scheme, while still supporting a wide range of characters and symbols from many different writing systems. </p>
 <p>UTF-8 is compatible with ASCII. The advantage of UTF-8 is that the lead bytes are unique patterns, and trailing bytes are a unique pattern, which allows for easy validation of a correct UTF-8 sequence, quick &quot;scrolling&quot; to a random position and synchronizing quickly where a character will start.</p>
-<h3 id="utf-16-encoding"><a class="header" href="#utf-16-encoding"><em>UTF-16 Encoding</em></a></h3>
+<h3 id="utf-16-encoding"><a class="header" href="#utf-16-encoding"><em>UTF-16 encoding</em></a></h3>
 <div class="table-wrapper"><table><thead><tr><th>Code Point Range</th><th>Number of Bytes</th><th>Binary Format</th></tr></thead><tbody>
 <tr><td>0 to 65535</td><td>1 code unit (2 bytes)</td><td><code>xxxxxxxx xxxxxxxx</code></td></tr>
 <tr><td>65536 to 1114111</td><td>2 code units (4 bytes)</td><td><code>110110yy yyyyyyyy 110111xx xxxxxxxx</code></td></tr>
@@ -443,16 +443,16 @@ int main()
 <li>For code points in the range of 0 to 65535, UTF-16 encoding represents each code point using a single 16-bit code unit. </li>
 <li>For code points in the range of 65536 to 1114111, UTF-16 encoding represents each code point using a pair of 16-bit code units, known as a surrogate pair. The first 16-bit code unit (known as the high surrogate) has a value in the range of 0xD800 to 0xDBFF, while the second 16-bit code unit (known as the low surrogate) has a value in the range of 0xDC00 to 0xDFFF.</li>
 </ul>
-<h3 id="utf-32-encoding"><a class="header" href="#utf-32-encoding"><em>UTF-32 Encoding</em></a></h3>
+<h3 id="utf-32-encoding"><a class="header" href="#utf-32-encoding"><em>UTF-32 encoding</em></a></h3>
 <div class="table-wrapper"><table><thead><tr><th>Code Point Range</th><th>Number of Code Units</th><th>Binary Format</th></tr></thead><tbody>
 <tr><td>0 to 1114111</td><td>1 code unit (4 bytes)</td><td><code>00000000 0000xxxx xxxxxxxx xxxxxxxx</code></td></tr>
 </tbody></table>
 </div>
 <p>UTF-32 encoding represents each code point using a single 32-bit code unit, which means that every Unicode code point is represented using exactly 4 bytes of memory. The binary format for UTF-32 encoding uses the first 12 bits to store zeros, followed by 10 bits that represent the most significant bits of the code point value, and then 10 bits that represent the least significant bits of the code point value.</p>
-<h3 id="why-not-utf-24-encoding"><a class="header" href="#why-not-utf-24-encoding"><em>Why Not UTF-24 Encoding</em></a></h3>
+<h3 id="why-not-utf-24-encoding"><a class="header" href="#why-not-utf-24-encoding"><em>Why not UTF-24 encoding</em></a></h3>
 <p>UTF-24 is not an official Unicode encoding and is not widely used or supported. Three-byte encoding is not commonly used because it does not offer significant advantages over UTF-16 or UTF-32, which are the most widely used Unicode encodings.</p>
 <p>While it is theoretically possible to use a fixed-length encoding scheme that uses 3 bytes to represent each Unicode code point, such as in UTF-24 (if it ever exists), this encoding scheme would not offer significant benefits over UTF-8, UTF-16, or UTF-32 in terms of processing or space efficiency. Many software systems and programming languages are optimized for UTF-8, UTF-16, or UTF-32. Additionally, the most commonly used Unicode code points are smaller than 65536, so the use of three bytes per code point would result in wasted space. </p>
-<h3 id="byte-order-mark"><a class="header" href="#byte-order-mark"><em>Byte Order Mark</em></a></h3>
+<h3 id="byte-order-mark"><a class="header" href="#byte-order-mark"><em>Byte order mark</em></a></h3>
 <p>The Unicode encoding of a text file can be determined by examining the byte order mark (BOM) at the beginning of the file, or by analyzing the byte sequences of the file.</p>
 <div class="table-wrapper"><table><thead><tr><th>Encoding</th><th>Byte Order Mark</th></tr></thead><tbody>
 <tr><td>UTF-8</td><td><code>EF BB BF</code> (optional)</td></tr>
@@ -507,6 +507,44 @@ std::cout &lt;&lt; utf8str &lt;&lt; std::endl;
 </code></pre>
 <p>Also the following code would fail compiling because the value cannot fit a single byte.</p>
 <pre><code class="language-cpp">char utf8c = u8'好';
+</code></pre>
+<h2 id="print-utf-8-string-to-console"><a class="header" href="#print-utf-8-string-to-console">Print UTF-8 string to console</a></h2>
+<p><code>std::cout</code> cannot be used to output UTF-8 string to console. Use <code>printf</code> instead.</p>
+<pre><code class="language-cpp">#include &lt;iostream&gt;
+
+using namespace std;
+
+int main() {
+  char8_t utf8Chars[] = u8&quot;你好世界&quot;; // Null terminator automatically appended.
+  char8_t utf8CharsWithNullTerminator[] = u8&quot;你好世界\0&quot;; // Will have two null terminators.
+
+  auto len_1 = std::char_traits&lt;char8_t&gt;::length(utf8Chars);
+  auto len_2 = std::char_traits&lt;char8_t&gt;::length(utf8CharsWithNullTerminator);
+
+  cout &lt;&lt; &quot;length(utf8Chars) = &quot; 
+       &lt;&lt; len_1 
+       &lt;&lt; endl; // output 12
+
+  cout &lt;&lt; &quot;length(utf8CharsWithNullTerminator) = &quot; 
+       &lt;&lt; len_2 
+       &lt;&lt; endl; // output 12
+
+  cout &lt;&lt; &quot;sizeof(char8_t) = &quot; 
+       &lt;&lt; sizeof(char8_t) 
+       &lt;&lt; endl; // output 1
+  
+  // std::cout &lt;&lt; utf8Words &lt;&lt; std::endl; // This would fail compiling.  
+  printf(&quot;%s&quot;, reinterpret_cast&lt;char*&gt;(&amp;utf8Chars[0]));
+
+  /*
+  for (std::size_t i = 0; i &lt; len; i++) {
+    std::cout &lt;&lt; utf8Chars[i] &lt;&lt; '\n'; // This would fail compiling.
+  }
+  */
+
+  return 0;
+}
+
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="string-literal-concatenation"><a class="header" href="#string-literal-concatenation">String Literal Concatenation</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="library-support"><a class="header" href="#library-support">Library Support</a></h1>

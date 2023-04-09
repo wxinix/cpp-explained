@@ -184,6 +184,44 @@ std::cout &lt;&lt; utf8str &lt;&lt; std::endl;
 <p>Also the following code would fail compiling because the value cannot fit a single byte.</p>
 <pre><code class="language-cpp">char utf8c = u8'好';
 </code></pre>
+<h2 id="print-utf-8-string-to-console"><a class="header" href="#print-utf-8-string-to-console">Print UTF-8 string to console</a></h2>
+<p><code>std::cout</code> cannot be used to output UTF-8 string to console. Use <code>printf</code> instead.</p>
+<pre><code class="language-cpp">#include &lt;iostream&gt;
+
+using namespace std;
+
+int main() {
+  char8_t utf8Chars[] = u8&quot;你好世界&quot;; // Null terminator automatically appended.
+  char8_t utf8CharsWithNullTerminator[] = u8&quot;你好世界\0&quot;; // Will have two null terminators.
+
+  auto len_1 = std::char_traits&lt;char8_t&gt;::length(utf8Chars);
+  auto len_2 = std::char_traits&lt;char8_t&gt;::length(utf8CharsWithNullTerminator);
+
+  cout &lt;&lt; &quot;length(utf8Chars) = &quot; 
+       &lt;&lt; len_1 
+       &lt;&lt; endl; // output 12
+
+  cout &lt;&lt; &quot;length(utf8CharsWithNullTerminator) = &quot; 
+       &lt;&lt; len_2 
+       &lt;&lt; endl; // output 12
+
+  cout &lt;&lt; &quot;sizeof(char8_t) = &quot; 
+       &lt;&lt; sizeof(char8_t) 
+       &lt;&lt; endl; // output 1
+  
+  // std::cout &lt;&lt; utf8Words &lt;&lt; std::endl; // This would fail compiling.  
+  printf(&quot;%s&quot;, reinterpret_cast&lt;char*&gt;(&amp;utf8Chars[0]));
+
+  /*
+  for (std::size_t i = 0; i &lt; len; i++) {
+    std::cout &lt;&lt; utf8Chars[i] &lt;&lt; '\n'; // This would fail compiling.
+  }
+  */
+
+  return 0;
+}
+
+</code></pre>
 
                     </main>
 

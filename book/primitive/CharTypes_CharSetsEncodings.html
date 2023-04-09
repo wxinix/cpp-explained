@@ -150,11 +150,11 @@
                 <div id="content" class="content">
                     <main>
                         <h1 id="character-sets-and-encodings"><a class="header" href="#character-sets-and-encodings">Character Sets and Encodings</a></h1>
-<h2 id="character-set"><a class="header" href="#character-set">Character Set</a></h2>
+<h2 id="character-set"><a class="header" href="#character-set">Character set</a></h2>
 <p>A character set, also known as a character repertoire, is a collection of characters and symbols that are used to represent written language in computing. Each character in a character set is assigned a unique code point, which is a numerical value that represents that character in digital form.</p>
 <p>Character sets can include characters from many different writing systems and languages, such as the Latin alphabet used in English, the Cyrillic alphabet used in Russian, or the Chinese characters used in Mandarin Chinese. Some character sets are designed for specific languages or scripts, while others are designed to be universal and include characters from many different languages.</p>
 <p>Examples of character sets include ASCII, which includes characters commonly used in the English language, and Unicode, which is a universal character set that can represent all characters used in modern computing, including characters from many different writing systems.</p>
-<h3 id="code-point"><a class="header" href="#code-point"><em>Code Point</em></a></h3>
+<h3 id="code-point"><a class="header" href="#code-point"><em>Code point</em></a></h3>
 <p>A code point is a numerical value that represents a single character or symbol in a character set. Each character in a character set is assigned a unique code point, which is a specific number that identifies that character.</p>
 <p>Code points are typically expressed as hexadecimal numbers, which means that they use a base-16 numbering system. For example, the code point for the letter &quot;A&quot; in the ASCII character set is 0x41, while the code point for the Greek letter alpha in the Unicode character set is 0x03B1.</p>
 <p>Code points are used to represent characters in digital form and are used by various encoding schemes to represent characters as binary data. Encoding schemes such as UTF-8, UTF-16, and UTF-32 map each code point to a specific sequence of bytes, allowing characters to be stored and transmitted in a digital format.</p>
@@ -163,7 +163,7 @@
 <p>Encoding involves mapping each code point (i.e., the numerical value that represents a character in a character set) to a specific sequence of bits or bytes that can be used to represent that character in digital form.</p>
 <p>Different encoding schemes use different methods for mapping code points to binary sequences. For example, UTF-8 encoding uses a variable-length encoding scheme that can represent each Unicode code point using 1 to 4 bytes, depending on the code point value, while UTF-16 encoding uses a fixed-length encoding scheme that represents each Unicode code point using 2 bytes.</p>
 <p>The goal of encoding is to allow characters and symbols to be represented in digital form, which is necessary for storing, transmitting, and processing text data using computer systems.</p>
-<h3 id="utf-8-encoding"><a class="header" href="#utf-8-encoding"><em>UTF-8 Encoding</em></a></h3>
+<h3 id="utf-8-encoding"><a class="header" href="#utf-8-encoding"><em>UTF-8 encoding</em></a></h3>
 <p>UTF-8 is a variable-length encoding scheme used to represent Unicode characters as binary data. UTF-8 encoding works by mapping each Unicode code point to a sequence of 1 to 4 bytes, depending on the code point value. </p>
 <div class="table-wrapper"><table><thead><tr><th>Code Point Range</th><th>Number of Bytes</th><th>Binary Format</th></tr></thead><tbody>
 <tr><td>0 to 127</td><td>1 byte</td><td><code>0xxx'xxxx</code></td></tr>
@@ -189,7 +189,7 @@
 </ul>
 <p>By using a variable-length encoding scheme, UTF-8 encoding can represent all Unicode code points using a sequence of 1 to 4 bytes. This allows UTF-8 to be a compact and efficient encoding scheme, while still supporting a wide range of characters and symbols from many different writing systems. </p>
 <p>UTF-8 is compatible with ASCII. The advantage of UTF-8 is that the lead bytes are unique patterns, and trailing bytes are a unique pattern, which allows for easy validation of a correct UTF-8 sequence, quick &quot;scrolling&quot; to a random position and synchronizing quickly where a character will start.</p>
-<h3 id="utf-16-encoding"><a class="header" href="#utf-16-encoding"><em>UTF-16 Encoding</em></a></h3>
+<h3 id="utf-16-encoding"><a class="header" href="#utf-16-encoding"><em>UTF-16 encoding</em></a></h3>
 <div class="table-wrapper"><table><thead><tr><th>Code Point Range</th><th>Number of Bytes</th><th>Binary Format</th></tr></thead><tbody>
 <tr><td>0 to 65535</td><td>1 code unit (2 bytes)</td><td><code>xxxxxxxx xxxxxxxx</code></td></tr>
 <tr><td>65536 to 1114111</td><td>2 code units (4 bytes)</td><td><code>110110yy yyyyyyyy 110111xx xxxxxxxx</code></td></tr>
@@ -199,16 +199,16 @@
 <li>For code points in the range of 0 to 65535, UTF-16 encoding represents each code point using a single 16-bit code unit. </li>
 <li>For code points in the range of 65536 to 1114111, UTF-16 encoding represents each code point using a pair of 16-bit code units, known as a surrogate pair. The first 16-bit code unit (known as the high surrogate) has a value in the range of 0xD800 to 0xDBFF, while the second 16-bit code unit (known as the low surrogate) has a value in the range of 0xDC00 to 0xDFFF.</li>
 </ul>
-<h3 id="utf-32-encoding"><a class="header" href="#utf-32-encoding"><em>UTF-32 Encoding</em></a></h3>
+<h3 id="utf-32-encoding"><a class="header" href="#utf-32-encoding"><em>UTF-32 encoding</em></a></h3>
 <div class="table-wrapper"><table><thead><tr><th>Code Point Range</th><th>Number of Code Units</th><th>Binary Format</th></tr></thead><tbody>
 <tr><td>0 to 1114111</td><td>1 code unit (4 bytes)</td><td><code>00000000 0000xxxx xxxxxxxx xxxxxxxx</code></td></tr>
 </tbody></table>
 </div>
 <p>UTF-32 encoding represents each code point using a single 32-bit code unit, which means that every Unicode code point is represented using exactly 4 bytes of memory. The binary format for UTF-32 encoding uses the first 12 bits to store zeros, followed by 10 bits that represent the most significant bits of the code point value, and then 10 bits that represent the least significant bits of the code point value.</p>
-<h3 id="why-not-utf-24-encoding"><a class="header" href="#why-not-utf-24-encoding"><em>Why Not UTF-24 Encoding</em></a></h3>
+<h3 id="why-not-utf-24-encoding"><a class="header" href="#why-not-utf-24-encoding"><em>Why not UTF-24 encoding</em></a></h3>
 <p>UTF-24 is not an official Unicode encoding and is not widely used or supported. Three-byte encoding is not commonly used because it does not offer significant advantages over UTF-16 or UTF-32, which are the most widely used Unicode encodings.</p>
 <p>While it is theoretically possible to use a fixed-length encoding scheme that uses 3 bytes to represent each Unicode code point, such as in UTF-24 (if it ever exists), this encoding scheme would not offer significant benefits over UTF-8, UTF-16, or UTF-32 in terms of processing or space efficiency. Many software systems and programming languages are optimized for UTF-8, UTF-16, or UTF-32. Additionally, the most commonly used Unicode code points are smaller than 65536, so the use of three bytes per code point would result in wasted space. </p>
-<h3 id="byte-order-mark"><a class="header" href="#byte-order-mark"><em>Byte Order Mark</em></a></h3>
+<h3 id="byte-order-mark"><a class="header" href="#byte-order-mark"><em>Byte order mark</em></a></h3>
 <p>The Unicode encoding of a text file can be determined by examining the byte order mark (BOM) at the beginning of the file, or by analyzing the byte sequences of the file.</p>
 <div class="table-wrapper"><table><thead><tr><th>Encoding</th><th>Byte Order Mark</th></tr></thead><tbody>
 <tr><td>UTF-8</td><td><code>EF BB BF</code> (optional)</td></tr>
