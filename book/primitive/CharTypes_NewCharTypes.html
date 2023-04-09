@@ -150,6 +150,40 @@
                 <div id="content" class="content">
                     <main>
                         <h1 id="new-character-types"><a class="header" href="#new-character-types">New Character Types</a></h1>
+<h2 id="why-char-not-good-for-utf-8"><a class="header" href="#why-char-not-good-for-utf-8">Why <code>char</code> not good for UTF-8</a></h2>
+<p>In C++, <code>char</code> is a fundamental type that represents a byte-sized unit of data. Historically, it has been used to represent both ASCII characters and other narrow character sets, depending on the execution environment. However, the use of char for representing Unicode text can be problematic, as the encoding and interpretation of Unicode text can vary between platforms and locales.</p>
+<p>Suppose we have the following UTF-8 string:</p>
+<pre><code class="language-cpp">const char* utf8str = u8&quot;你吃饭了吗?&quot;;
+std::cout &lt;&lt; utf8str &lt;&lt; std::endl;
+</code></pre>
+<p>We might expect to see the output &quot;你吃饭了吗?&quot; in the console. However, if the execution character set of the platform is not set to UTF-8, the output may appear garbled or incorrect.</p>
+<blockquote>
+<p>The &quot;execution character set of the platform&quot; refers to the character encoding scheme used by the operating system and/or the compiler to represent text data internally in a computer program.</p>
+</blockquote>
+<blockquote>
+<p>In C and C++, the execution character set determines how characters are represented in the char data type. The specific character set used can vary depending on the platform, compiler, and locale settings.</p>
+</blockquote>
+<blockquote>
+<p>For example, on Windows systems, the default execution character set is typically based on the Windows-1252 code page, which is a superset of ASCII that includes characters for European languages. On Unix-based systems, the default execution character set is typically based on the ASCII encoding.</p>
+</blockquote>
+<h2 id="utf-related-character-types"><a class="header" href="#utf-related-character-types">UTF-related character types</a></h2>
+<p><code>char8_t</code> was introduced in C++20 to provide a distinct type that is guaranteed to represent an 8-bit code unit of UTF-8 encoded Unicode text. This allows for safer and more efficient handling of UTF-8 strings, as developers can use char8_t to represent individual code units of the UTF-8 encoding. This can help to avoid issues such as misinterpreting multi-byte sequences or incorrectly handling invalid code points. For example, in the following code, the output will be correct regardless of the execution character set of the platform.</p>
+<pre><code class="language-cpp">const char8_t* utf8str = u8&quot;你吃饭了吗?&quot;;
+std::cout &lt;&lt; utf8str &lt;&lt; std::endl;
+</code></pre>
+<p><code>char16_t</code> and <code>char32_t</code> were introduced in C++11 to provide support for Unicode text encoding. <code>char16_t</code> represents a 16-bit code unit of UTF-16 encoded Unicode text, while <code>char32_t</code> represents a 32-bit code unit of UTF-32 encoded Unicode text. </p>
+<div class="table-wrapper"><table><thead><tr><th>Type</th><th>Introduced in</th><th>Main Reason for Introduction</th><th>Literal Prefix</th><th>Sample Code</th></tr></thead><tbody>
+<tr><td><code>char8_t</code></td><td>C++20</td><td>UTF-8 encoding</td><td><code>u8</code></td><td><code>const char8_t* str = u8&quot;吃了吗&quot;;</code></td></tr>
+<tr><td><code>char16_t</code></td><td>C++11</td><td>UTF-16 encoding</td><td><code>u</code></td><td><code>const char16_t* str = u&quot;吃了吗&quot;;</code></td></tr>
+<tr><td><code>char32_t</code></td><td>C++11</td><td>UTF-32 encoding</td><td><code>U</code></td><td><code>const char32_t* str = U&quot;吃了吗&quot;;</code></td></tr>
+</tbody></table>
+</div>
+<p>The string literal prefix <code>u8</code>, <code>u</code>, <code>U</code> were introduced in C++11. The following code won't pass compilation with C++11 because they cannot be applied to characters. It is since C++17 that these literal prefix are allowed to be used with a character.</p>
+<pre><code class="language-cpp">char utf8c = u8'a'; // C++11 will fail but C++17/20 can pass
+</code></pre>
+<p>Also the following code would fail compiling because the value cannot fit a single byte.</p>
+<pre><code class="language-cpp">char utf8c = u8'好';
+</code></pre>
 
                     </main>
 

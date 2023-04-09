@@ -181,7 +181,7 @@ sizeof(long long) *  CHAR_BIT &gt;= 64     // Rule 10
 <p><code>CHAR_BIT</code> represents the number of bits in a char type. Although most modern architectures use 8 bits per byte, this is not always the case as some older machines may have used 7-bit bytes. Under Rule 4, C/C++ allows <code>long</code> and <code>int</code> to have the same size, but it must be at least 32 bits according to Rule 9.</p>
 <h2 id="fixed-size-integer-types"><a class="header" href="#fixed-size-integer-types">Fixed Size Integer Types</a></h2>
 <p>The C++11 standard introduced new integer types such as <code>int8_t</code>, <code>int16_t</code>, <code>int32_t</code>, and <code>int64_t</code> with fixed sizes, as well as their unsigned counterparts, <code>uint8_t</code>, <code>uint16_t</code>, <code>uint32_t</code>, and <code>uint64_t</code>. These types are guaranteed to have the specified size and range on any conforming implementation. </p>
-<p>The following table summarizing these fixed size integer types - note that the <code>intN_t</code> and <code>uintN_t</code> types are guaranteed to have exactly <code>N</code> bits, where <code>N</code> is 8, 16, 32, or 64.</p>
+<p>The following table summarizes fixed size integer types - note that the <code>intN_t</code> and <code>uintN_t</code> types are guaranteed to have exactly <code>N</code> bits, where <code>N</code> is 8, 16, 32, or 64.</p>
 <div class="table-wrapper"><table><thead><tr><th>Type</th><th>Size (in bytes)</th><th>Range</th></tr></thead><tbody>
 <tr><td><code>int8_t</code></td><td>1</td><td>[-128, 127]</td></tr>
 <tr><td><code>uint8_t</code></td><td>1</td><td>[0, 255]</td></tr>
