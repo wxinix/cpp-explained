@@ -55,8 +55,8 @@ UTF-8 is compatible with ASCII. The advantage of UTF-8 is that the lead bytes ar
 
 | Code Point Range | Number of Bytes | Binary Format |
 | --- | --- | --- |
-| 0 to 65535 | 1 code unit | `xxxxxxxx xxxxxxxx` |
-| 65536 to 1114111 | 2 code units | `110110yy yyyyyyyy 110111xx xxxxxxxx` |
+| 0 to 65535 | 1 code unit (2 bytes) | `xxxxxxxx xxxxxxxx` |
+| 65536 to 1114111 | 2 code units (4 bytes) | `110110yy yyyyyyyy 110111xx xxxxxxxx` |
 
 - For code points in the range of 0 to 65535, UTF-16 encoding represents each code point using a single 16-bit code unit. 
 - For code points in the range of 65536 to 1114111, UTF-16 encoding represents each code point using a pair of 16-bit code units, known as a surrogate pair. The first 16-bit code unit (known as the high surrogate) has a value in the range of 0xD800 to 0xDBFF, while the second 16-bit code unit (known as the low surrogate) has a value in the range of 0xDC00 to 0xDFFF.
@@ -65,7 +65,7 @@ UTF-8 is compatible with ASCII. The advantage of UTF-8 is that the lead bytes ar
 
 | Code Point Range | Number of Code Units | Binary Format |
 | --- | --- | --- |
-| 0 to 1114111 | 1 code unit | `00000000 0000xxxx xxxxxxxx xxxxxxxx` |
+| 0 to 1114111 | 1 code unit (4 bytes) | `00000000 0000xxxx xxxxxxxx xxxxxxxx` |
 
 
 UTF-32 encoding represents each code point using a single 32-bit code unit, which means that every Unicode code point is represented using exactly 4 bytes of memory. The binary format for UTF-32 encoding uses the first 12 bits to store zeros, followed by 10 bits that represent the most significant bits of the code point value, and then 10 bits that represent the least significant bits of the code point value.
