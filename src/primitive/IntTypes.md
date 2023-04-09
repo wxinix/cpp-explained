@@ -1,7 +1,7 @@
 # Integer Types
 
 ## Common Integer Types
-C++ supports several integer types with varying sizes and ranges. Here is a list of the most commonly used integer types in C++, available since the earlier versions of the language. 
+C++ supports several integer types with varying sizes and ranges. Here is a list of the most commonly used integer types in C++, available since the earlier versions of the language. Note that `char` is treated as integer type here for practical reason, though technically it is not.
 
 | Type name | Typical Size (in bytes) | Range |
 | --------- | -------------- | ----- |
@@ -33,16 +33,6 @@ sizeof(long long) *  CHAR_BIT >= 64     // Rule 10
 ```
 
 `CHAR_BIT` represents the number of bits in a char type. Although most modern architectures use 8 bits per byte, this is not always the case as some older machines may have used 7-bit bytes. Under Rule 4, C/C++ allows `long` and `int` to have the same size, but it must be at least 32 bits according to Rule 9.
-
-## Distinction of char Types
-
-In C++, `char` is not necessarily the same type as `signed char`, although on most platforms they are equivalent.
-
-The C++ standard defines `char`, `signed char`, and `unsigned char` as three distinct integral types, each with its own range of representable values. The C++ standard does not specify whether `char` is signed or unsigned by default, which means that it is implementation-defined.
-
-On most platforms, char is implemented as a signed type, and its range of representable values is the same as that of `signed char`. However, on some rare platforms, `char` may be implemented as an unsigned type, in which case it would have the same range of representable values as `unsigned char`.
-
-So, while `char` and `signed char` are often the same type in C++, it is not guaranteed by the standard. To ensure portability of code that relies on the signedness of `char`, it is recommended to use `signed char` explicitly.
 
 ## Fixed Size Integer Types
 
