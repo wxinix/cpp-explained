@@ -4,30 +4,26 @@
 
 A character set, also known as a character repertoire, is a collection of characters and symbols that are used to represent written language in computing. Each character in a character set is assigned a unique code point, which is a numerical value that represents that character in digital form.
 
-Character sets can include characters from many different writing systems and languages, such as the Latin alphabet used in English, the Cyrillic alphabet used in Russian, or the Chinese characters used in Mandarin Chinese. Some character sets are designed for specific languages or scripts, while others are designed to be universal and include characters from many different languages.
+Character sets can include characters from many different writing systems and languages, such as the Latin alphabet used in English, or the Chinese characters used in Mandarin Chinese. Some character sets are designed for specific languages or scripts, while others are designed to be universal and include characters from many different languages.
 
 Examples of character sets include ASCII, which includes characters commonly used in the English language, and Unicode, which is a universal character set that can represent all characters used in modern computing, including characters from many different writing systems.
 
-### *Code point*
+### *Code point explained*
 
 A code point is a numerical value that represents a single character or symbol in a character set. Each character in a character set is assigned a unique code point, which is a specific number that identifies that character.
 
-Code points are typically expressed as hexadecimal numbers, which means that they use a base-16 numbering system. For example, the code point for the letter "A" in the ASCII character set is 0x41, while the code point for the Greek letter alpha in the Unicode character set is 0x03B1.
+Code points are typically expressed as hexadecimal numbers, which means that they use a base-16 numbering system. For example, the code point for the letter "A" in the ASCII character set is 0x41, while the code point for the Greek letter "α" in the Unicode character set is 0x03B1.
 
-Code points are used to represent characters in digital form and are used by various encoding schemes to represent characters as binary data. Encoding schemes such as UTF-8, UTF-16, and UTF-32 map each code point to a specific sequence of bytes, allowing characters to be stored and transmitted in a digital format.
-
-Unicode comprises 1,114,112 code points in the range [0, 1,114,111].
+Unicode comprises 1,114,112 code points in the range [0, 1,114,111]. The maximum value of Unicode code point is 1,114,111 (0x10FFFF).
 
 ## Encodings
 
-Encoding involves mapping each code point (i.e., the numerical value that represents a character in a character set) to a specific sequence of bits or bytes that can be used to represent that character in digital form.
+Encoding involves mapping each code point to a specific sequence of bits or bytes that can be used to represent that character in digital form.
 
-Different encoding schemes use different methods for mapping code points to binary sequences. For example, UTF-8 encoding uses a variable-length encoding scheme that can represent each Unicode code point using 1 to 4 bytes, depending on the code point value, while UTF-16 encoding uses a fixed-length encoding scheme that represents each Unicode code point using 2 bytes.
-
-The goal of encoding is to allow characters and symbols to be represented in digital form, which is necessary for storing, transmitting, and processing text data using computer systems.
+Different encoding schemes use different methods for mapping code points to binary sequences. For example, UTF-8 encoding uses a variable-length encoding scheme that can represent each Unicode code point using 1 to 4 bytes, depending on the code point value, while UTF-32 encoding uses a fixed-length encoding scheme that represents each Unicode code point using 4 bytes.
 
 ### *UTF-8 encoding*
-UTF-8 is a variable-length encoding scheme used to represent Unicode characters as binary data. UTF-8 encoding works by mapping each Unicode code point to a sequence of 1 to 4 bytes, depending on the code point value. 
+UTF-8 is a variable-length encoding scheme.It works by mapping each Unicode code point to a sequence of 1 to 4 bytes, depending on the code point value. 
 
 | Code Point Range | Number of Bytes | Binary Format |
 | --- | --- | --- |
@@ -39,7 +35,7 @@ UTF-8 is a variable-length encoding scheme used to represent Unicode characters 
 
 Here's how UTF-8 encoding works:
 
-- If the code point value is between 0 and 127 (inclusive), the code point is represented as a single byte with the same value. This means that ASCII characters (which have code point values between 0 and 127) are represented in UTF-8 encoding using a single byte.
+- If the code point value is between 0 and 127 (inclusive), the code point is represented as a single byte with the same value. This means that ASCII characters (which have code point values between 0 and 127) can be represented in UTF-8 encoding using a single byte.
 
 - If the code point value is between 128 and 2047 (inclusive), the code point is represented as 2 bytes. The first byte starts with the binary value `110`, followed by 5 bits that represent the most significant bits of the code point value. The second byte starts with the binary value `10`, followed by 6 bits that represent the least significant bits of the code point value.
 
@@ -47,9 +43,9 @@ Here's how UTF-8 encoding works:
 
 - If the code point value is between 65536 and 1114111 (inclusive), the code point is represented as 4 bytes. The first byte starts with the binary value `11110`, followed by 3 bits that represent the most significant bits of the code point value. The second, third, and fourth bytes start with the binary value `10`, followed by 6 bits each that represent the remaining bits of the code point value.
 
-By using a variable-length encoding scheme, UTF-8 encoding can represent all Unicode code points using a sequence of 1 to 4 bytes. This allows UTF-8 to be a compact and efficient encoding scheme, while still supporting a wide range of characters and symbols from many different writing systems. 
+By using a variable-length encoding scheme, UTF-8 encoding can represent all Unicode code points using a sequence of 1 to 4 bytes. This allows UTF-8 to be a compact and efficient encoding scheme. 
 
-UTF-8 is compatible with ASCII. The advantage of UTF-8 is that the lead bytes are unique patterns, and trailing bytes are a unique pattern, which allows for easy validation of a correct UTF-8 sequence, quick "scrolling" to a random position and synchronizing quickly where a character will start.
+UTF-8 has unique patterns with the first byte, and a fixed pattern with trailing bytes. This allows for easy validation of a correct UTF-8 sequence, quick "scrolling" to a random position and synchronizing quickly where a character will start.
 
 ### *UTF-16 encoding*
 
@@ -65,16 +61,14 @@ UTF-8 is compatible with ASCII. The advantage of UTF-8 is that the lead bytes ar
 
 | Code Point Range | Number of Code Units | Binary Format |
 | --- | --- | --- |
-| 0 to 1114111 | 1 code unit (4 bytes) | `00000000 0000xxxx xxxxxxxx xxxxxxxx` |
+| 0 to 1114111 | 1 code unit (4 bytes) | `00000000 xxxxxxxx xxxxxxxx xxxxxxxx` |
 
 
-UTF-32 encoding represents each code point using a single 32-bit code unit, which means that every Unicode code point is represented using exactly 4 bytes of memory. The binary format for UTF-32 encoding uses the first 12 bits to store zeros, followed by 10 bits that represent the most significant bits of the code point value, and then 10 bits that represent the least significant bits of the code point value.
+UTF-32 encoding represents each code point using a single 32-bit code unit, which means that every Unicode code point is represented using exactly 4 bytes of memory.
 
 ### *Why not UTF-24 encoding*
 
-UTF-24 is not an official Unicode encoding and is not widely used or supported. Three-byte encoding is not commonly used because it does not offer significant advantages over UTF-16 or UTF-32, which are the most widely used Unicode encodings.
-
-While it is theoretically possible to use a fixed-length encoding scheme that uses 3 bytes to represent each Unicode code point, such as in UTF-24 (if it ever exists), this encoding scheme would not offer significant benefits over UTF-8, UTF-16, or UTF-32 in terms of processing or space efficiency. Many software systems and programming languages are optimized for UTF-8, UTF-16, or UTF-32. Additionally, the most commonly used Unicode code points are smaller than 65536, so the use of three bytes per code point would result in wasted space. 
+Theoretically it is possible to use a fixed-length encoding scheme that uses 3 bytes to represent each Unicode code point, this encoding scheme would not offer significant benefits over UTF-8, UTF-16, or UTF-32 in terms of processing or space efficiency. Many software systems and programming languages are optimized for UTF-8, UTF-16, or UTF-32. Additionally, the most commonly used Unicode code points are smaller than 65536, so the use of three bytes per code point would result in wasted space as well. 
 
 ### *Byte order mark*
 
