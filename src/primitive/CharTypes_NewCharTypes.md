@@ -45,3 +45,46 @@ Also the following code would fail compiling because the value cannot fit a sing
 ```cpp
 char utf8c = u8'好';
 ```
+
+## Print UTF-8 string to console
+
+`std::cout` cannot be used to output UTF-8 string to console. Use `printf` instead.
+
+```cpp
+#include <iostream>
+
+using namespace std;
+
+int main() {
+  char8_t utf8Chars[] = u8"你好世界"; // Null terminator automatically appended.
+  char8_t utf8CharsWithNullTerminator[] = u8"你好世界\0"; // Will have two null terminators.
+
+  auto len_1 = std::char_traits<char8_t>::length(utf8Chars);
+  auto len_2 = std::char_traits<char8_t>::length(utf8CharsWithNullTerminator);
+
+  cout << "length(utf8Chars) = " 
+       << len_1 
+       << endl; // output 12
+
+  cout << "length(utf8CharsWithNullTerminator) = " 
+       << len_2 
+       << endl; // output 12
+
+  cout << "sizeof(char8_t) = " 
+       << sizeof(char8_t) 
+       << endl; // output 1
+  
+  // std::cout << utf8Words << std::endl; // This would fail compiling.  
+  printf("%s", reinterpret_cast<char*>(&utf8Chars[0]));
+
+  /*
+  for (std::size_t i = 0; i < len; i++) {
+    std::cout << utf8Chars[i] << '\n'; // This would fail compiling.
+  }
+  */
+
+  return 0;
+}
+
+```
+

@@ -1,6 +1,6 @@
 # Integer Types
 
-## Common Integer Types
+## Common integer types
 C++ supports several integer types with varying sizes and ranges. Here is a list of the most commonly used integer types in C++, available since the earlier versions of the language. Note that `char` is treated as integer type here for practical reason, though technically it is not.
 
 | Type name | Typical Size (in bytes) | Range |
@@ -34,7 +34,7 @@ sizeof(long long) *  CHAR_BIT >= 64     // Rule 10
 
 `CHAR_BIT` represents the number of bits in a char type. Although most modern architectures use 8 bits per byte, this is not always the case as some older machines may have used 7-bit bytes. Under Rule 4, C/C++ allows `long` and `int` to have the same size, but it must be at least 32 bits according to Rule 9.
 
-## Fixed Size Integer Types
+## Fixed size integer types
 
 The C++11 standard introduced new integer types such as `int8_t`, `int16_t`, `int32_t`, and `int64_t` with fixed sizes, as well as their unsigned counterparts, `uint8_t`, `uint16_t`, `uint32_t`, and `uint64_t`. These types are guaranteed to have the specified size and range on any conforming implementation. 
 
@@ -52,7 +52,7 @@ The following table summarizes fixed size integer types - note that the `intN_t`
 | `uint64_t` | 8              | [0, 18,446,744,073,709,551,615]                 |
 
 
-## 128-bit Integer Types
+## 128-bit integer types
 
 The C++ standard does not define a 128-bit integer type, as of the latest version C++20.
 

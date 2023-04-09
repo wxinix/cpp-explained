@@ -32,7 +32,7 @@ When `signed` or `unsigned` is applied to `char`, it creates a type for small in
 
 Note that `char` is a distinct type from `signed char` and `unsigned char`, and it is not guaranteed to be signed or unsigned. The signedness of `char` is implementation-defined, and it can vary depending on the platform and the compiler.
 
-## Type Qualifiers and CV-Correctness
+## Type qualifiers and cv-correctness
 Type specifiers can be combined with type qualifiers. In C++, there are two type qualifiers: `const` and `volatile`.
 
 - `const` indicates that a variable's value cannot be modified after it has been initialized.

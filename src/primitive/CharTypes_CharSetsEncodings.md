@@ -1,6 +1,6 @@
 # Character Sets and Encodings
 
-## Character Set
+## Character set
 
 A character set, also known as a character repertoire, is a collection of characters and symbols that are used to represent written language in computing. Each character in a character set is assigned a unique code point, which is a numerical value that represents that character in digital form.
 
@@ -8,7 +8,7 @@ Character sets can include characters from many different writing systems and la
 
 Examples of character sets include ASCII, which includes characters commonly used in the English language, and Unicode, which is a universal character set that can represent all characters used in modern computing, including characters from many different writing systems.
 
-### *Code Point*
+### *Code point*
 
 A code point is a numerical value that represents a single character or symbol in a character set. Each character in a character set is assigned a unique code point, which is a specific number that identifies that character.
 
@@ -26,7 +26,7 @@ Different encoding schemes use different methods for mapping code points to bina
 
 The goal of encoding is to allow characters and symbols to be represented in digital form, which is necessary for storing, transmitting, and processing text data using computer systems.
 
-### *UTF-8 Encoding*
+### *UTF-8 encoding*
 UTF-8 is a variable-length encoding scheme used to represent Unicode characters as binary data. UTF-8 encoding works by mapping each Unicode code point to a sequence of 1 to 4 bytes, depending on the code point value. 
 
 | Code Point Range | Number of Bytes | Binary Format |
@@ -51,7 +51,7 @@ By using a variable-length encoding scheme, UTF-8 encoding can represent all Uni
 
 UTF-8 is compatible with ASCII. The advantage of UTF-8 is that the lead bytes are unique patterns, and trailing bytes are a unique pattern, which allows for easy validation of a correct UTF-8 sequence, quick "scrolling" to a random position and synchronizing quickly where a character will start.
 
-### *UTF-16 Encoding*
+### *UTF-16 encoding*
 
 | Code Point Range | Number of Bytes | Binary Format |
 | --- | --- | --- |
@@ -61,7 +61,7 @@ UTF-8 is compatible with ASCII. The advantage of UTF-8 is that the lead bytes ar
 - For code points in the range of 0 to 65535, UTF-16 encoding represents each code point using a single 16-bit code unit. 
 - For code points in the range of 65536 to 1114111, UTF-16 encoding represents each code point using a pair of 16-bit code units, known as a surrogate pair. The first 16-bit code unit (known as the high surrogate) has a value in the range of 0xD800 to 0xDBFF, while the second 16-bit code unit (known as the low surrogate) has a value in the range of 0xDC00 to 0xDFFF.
 
-### *UTF-32 Encoding*
+### *UTF-32 encoding*
 
 | Code Point Range | Number of Code Units | Binary Format |
 | --- | --- | --- |
@@ -70,13 +70,13 @@ UTF-8 is compatible with ASCII. The advantage of UTF-8 is that the lead bytes ar
 
 UTF-32 encoding represents each code point using a single 32-bit code unit, which means that every Unicode code point is represented using exactly 4 bytes of memory. The binary format for UTF-32 encoding uses the first 12 bits to store zeros, followed by 10 bits that represent the most significant bits of the code point value, and then 10 bits that represent the least significant bits of the code point value.
 
-### *Why Not UTF-24 Encoding*
+### *Why not UTF-24 encoding*
 
 UTF-24 is not an official Unicode encoding and is not widely used or supported. Three-byte encoding is not commonly used because it does not offer significant advantages over UTF-16 or UTF-32, which are the most widely used Unicode encodings.
 
 While it is theoretically possible to use a fixed-length encoding scheme that uses 3 bytes to represent each Unicode code point, such as in UTF-24 (if it ever exists), this encoding scheme would not offer significant benefits over UTF-8, UTF-16, or UTF-32 in terms of processing or space efficiency. Many software systems and programming languages are optimized for UTF-8, UTF-16, or UTF-32. Additionally, the most commonly used Unicode code points are smaller than 65536, so the use of three bytes per code point would result in wasted space. 
 
-### *Byte Order Mark*
+### *Byte order mark*
 
 The Unicode encoding of a text file can be determined by examining the byte order mark (BOM) at the beginning of the file, or by analyzing the byte sequences of the file.
 

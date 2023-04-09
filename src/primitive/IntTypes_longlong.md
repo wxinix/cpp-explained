@@ -5,12 +5,12 @@ Before `long long` was officially added to the C++11 standard in 2011, C++ progr
 
 As early as 1995, Roland Hartinger first proposed to add `long long`  to C++. At the time, the C committee had not yet considered this type. As a result, the C++ committee was reluctant to add a fundamental type that was not also in C. After `long long` had been added to C99, Stephen Adamczyk proposed to reconsider its addition to C++ in 2005. Finally, `long long` was accepted as part of C++ in 2011, more than ten years after it was first included in the C standard.
 
-## Bit Size
+## Bit size
 The C++ standard defines `long long` as an integer type that is at least 64 bits long, but it does not guarantee that `long long` will always be 64 bits on all platforms. The size of `long long` can depend on the architecture and the compiler being used. However, most modern platforms do support a 64-bit `long long` type. To ensure portability and avoid any potential issues, it's best to use the `sizeof` operator to determine the size of `long long` on a specific platform.
 
 Keep in mind, `long long` is a signed type in C++, and its corresponding unsigned type is `unsigned long long`. In practice, `long long int` and `unsigned long long int`  have the same meaning as `long long` and `unsigned long long`, respectively. 
 
-## Literal Suffix
+## Literal suffix
 The C++ standard defines `LL` and `ULL` as literal suffixes for `long long` and `unsigned long long`, respectively. When initializing a `long long` type variable, you can write it like this:
 
 ```cpp
@@ -36,7 +36,7 @@ The code `long long x = 65536 << 16` performs a bitwise left shift operation on 
 
 To prevent overflowing, we should use the `LL` literal suffix to ensure that the value is treated as a `long long` data type, as in `long long y = 65536LL << 16`. This will ensure that the code runs as intended and the value is not unexpectedly truncated or overflowed.
 
-## Numerical Limits
+## Numerical limits
 
 We should avoid using `macro` as much as possible for defining the maximum and minimum values:
 ```cpp
