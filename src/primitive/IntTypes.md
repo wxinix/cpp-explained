@@ -38,7 +38,7 @@ sizeof(long long) *  CHAR_BIT >= 64     // Rule 10
 
 The C++11 standard introduced new integer types such as `int8_t`, `int16_t`, `int32_t`, and `int64_t` with fixed sizes, as well as their unsigned counterparts, `uint8_t`, `uint16_t`, `uint32_t`, and `uint64_t`. These types are guaranteed to have the specified size and range on any conforming implementation. 
 
-The following table summarizing these fixed size integer types - note that the `intN_t` and `uintN_t` types are guaranteed to have exactly `N` bits, where `N` is 8, 16, 32, or 64.
+The following table summarizes fixed size integer types - note that the `intN_t` and `uintN_t` types are guaranteed to have exactly `N` bits, where `N` is 8, 16, 32, or 64.
 
 | Type       | Size (in bytes) | Range                                          |
 |------------|----------------|------------------------------------------------|
