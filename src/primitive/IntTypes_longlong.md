@@ -8,7 +8,7 @@ As early as 1995, Roland Hartinger first proposed to add `long long`  to C++. At
 ## Bit size
 The C++ standard defines `long long` as an integer type that is at least 64 bits long, but it does not guarantee that `long long` will always be 64 bits on all platforms. The size of `long long` can depend on the architecture and the compiler being used. However, most modern platforms do support a 64-bit `long long` type. To ensure portability and avoid any potential issues, it's best to use the `sizeof` operator to determine the size of `long long` on a specific platform.
 
-Keep in mind, `long long` is a signed type in C++, and its corresponding unsigned type is `unsigned long long`. In practice, `long long int` and `unsigned long long int`  have the same meaning as `long long` and `unsigned long long`, respectively. 
+Remember that in C++, `long long` is a signed data type, and its corresponding unsigned data type is `unsigned long long`. It's important to note that `long long int` and `unsigned long long int` have the same meaning as `long long` and `unsigned long long`, respectively, with the latter forms being shorthand for the former ones.
 
 ## Literal suffix
 The C++ standard defines `LL` and `ULL` as literal suffixes for `long long` and `unsigned long long`, respectively. When initializing a `long long` type variable, you can write it like this:
