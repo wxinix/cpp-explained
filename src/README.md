@@ -1,6 +1,6 @@
 # Preface
 
-## The Evolution of C++: From Classical to Modern
+## The Evolution of C++: from classical to modern
 
 Since its inception as "C with classes", C++ has experienced numerous significant revisions and improvements. The language is now standardized by ISO JTC1/SC22/WG21, a working group composed of C++ experts from various countries. The first standardized version of C++ was `ISO/IEC 14882:1998`, commonly known as `C++98`. The next edition, `ISO/IEC 14882:2003`, was a minor revision that addressed issues found in `C++98`.
 
