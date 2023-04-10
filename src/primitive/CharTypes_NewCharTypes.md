@@ -3,13 +3,17 @@
 ## Why `char` not good for UTF-8
 In C++, `char` is a fundamental type that represents a byte-sized unit of data. Historically, it has been used to represent both ASCII characters and other narrow character sets, depending on the execution environment. 
 
-Suppose we have the following C++ code, with the source file saved as UTF-8 text:
+Suppose we have the following C++ code (in C++11), with the source file saved as UTF-8 text:
 
 ```cpp 
+// "你吃饭了吗?" literal is treated as a plain array of bytes, interpreted by
+// the compiler as Windows-1252 single byte encoding.
 const char* utf8_str = "你吃饭了吗?"; 
 ```
 
-"你吃饭了吗?" is UTF-8 encoded Chinese characters when the source file is saved as UTF-8 text. However, if the platform is using a different encoding, such as Windows-1252, the compiler will try to interpret "你吃饭了吗?" using the single byte Windows-1252 encoding. "你" has three bytes UTF-8 `0xE4 0xBD 0xA0`. The compiler is interpreting the first byte of the Chinese character "你" as an invalid character and replacing it with the ASCII replacement character `0x3F`.  This results in every byte of `utf8_str` is filled with ASCII replacement character `0x3F`. 
+If the source file containing the Chinese characters "你吃饭了吗?" is saved as UTF-8 text, then the encoded representation of the text will also be in UTF-8 format. However, if the platform where the code is compiled is using a different encoding, such as Windows-1252, then the compiler may attempt to interpret the Chinese characters as single-byte characters in the Windows-1252 encoding, because the type of the variable `utf8_str` is declared as a plain `char` array, which relies on the execution environment to provide the encoding context. 
+
+For example, the Chinese character "你" is represented by three bytes in UTF-8, which are `0xE4 0xBD 0xA0`. When interpreted as Windows-1252, the first byte `0xE4` is an invalid character, so the compiler replaces it with the ASCII replacement character `0x3F`. As a result, every byte of the UTF-8 encoded string "你吃饭了吗?" is replaced with the ASCII replacement character `0x3F` before being assigned to `utf8_str`. The mismatched data can cause unexpected results and errors in the program. 
 
 ### *Execution environment explained*
 The "execution character set of the platform" refers to the character encoding scheme used by the operating system and/or the compiler to represent text data internally in a computer program.
@@ -22,10 +26,14 @@ For example, on Windows systems, the default execution character set is typicall
 
 `char8_t` was introduced in C++20 to provide a distinct type that is guaranteed to represent an 8-bit code unit of UTF-8 encoded Unicode text. This allows for safer and more efficient handling of UTF-8 strings, as developers can use char8_t to represent individual code units of the UTF-8 encoding. This can help to avoid issues such as misinterpreting multi-byte sequences or incorrectly handling invalid code points. 
 
-In the following code, `utf8_str` will have the correct UTF-8code point values, regardless of the execution character set of the platform.
+In the following code, `utf8_str` will have the correct UTF-8 code point values, regardless of the execution character set of the platform.
 
   ```cpp
-const char8_t* utf8_str = u8"你吃饭了吗?";
+// char8_t is a new C++20 type. The "u8" prefix makes sure the string literal is 
+// interpreted as UTF-8 encoded text while enforcing type safety with char8_t.
+// Without "u8" prefix, the string literal will be treated as "const char*" type,
+// which is a type mismatch with char8_t, thus failing compiling.
+const char8_t* utf8_str = u8"你吃饭了吗?"; 
 // std::cout << utf8_str << std::endl; // This won't compile
 ```
 

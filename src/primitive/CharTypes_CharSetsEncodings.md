@@ -8,7 +8,7 @@ Character sets can include characters from many different writing systems and la
 
 Examples of character sets include ASCII, which includes characters commonly used in the English language, and Unicode, which is a universal character set that can represent all characters used in modern computing, including characters from many different writing systems.
 
-### *Code point explained*
+### *Code point*
 
 A code point is a numerical value that represents a single character or symbol in a character set. Each character in a character set is assigned a unique code point, which is a specific number that identifies that character.
 
@@ -20,10 +20,10 @@ Unicode comprises 1,114,112 code points in the range [0, 1,114,111]. The maximum
 
 Encoding involves mapping each code point to a specific sequence of bits or bytes that can be used to represent that character in digital form.
 
-Different encoding schemes use different methods for mapping code points to binary sequences. For example, UTF-8 encoding uses a variable-length encoding scheme that can represent each Unicode code point using 1 to 4 bytes, depending on the code point value, while UTF-32 encoding uses a fixed-length encoding scheme that represents each Unicode code point using 4 bytes.
+The Unicode standard defines a character set that includes 1,114,111 characters, each with a unique code point, and provides several encoding schemes, including UTF-8, UTF-16, and UTF-32, that allow characters to be represented using variable-length sequences of bytes.
 
 ### *UTF-8 encoding*
-UTF-8 is a variable-length encoding scheme.It works by mapping each Unicode code point to a sequence of 1 to 4 bytes, depending on the code point value. 
+UTF-8 is a variable-length encoding scheme. It works by mapping each Unicode code point to a sequence of 1 to 4 bytes, depending on the code point value. 
 
 | Code Point Range | Number of Bytes | Binary Format |
 | --- | --- | --- |
@@ -31,7 +31,6 @@ UTF-8 is a variable-length encoding scheme.It works by mapping each Unicode code
 | 128 to 2047 | 2 bytes | `110x'xxxx, 10xx'xxxx` |
 | 2048 to 65535 | 3 bytes | `111'0xxxx 10x'xxxxx 10xx'xxxx` |
 | 65536 to 1114111 | 4 bytes | `1111'0xxx 10xx'xxxx 10xx'xxxx 10xx'xxxx` |
-
 
 Here's how UTF-8 encoding works:
 
@@ -43,7 +42,7 @@ Here's how UTF-8 encoding works:
 
 - If the code point value is between 65536 and 1114111 (inclusive), the code point is represented as 4 bytes. The first byte starts with the binary value `11110`, followed by 3 bits that represent the most significant bits of the code point value. The second, third, and fourth bytes start with the binary value `10`, followed by 6 bits each that represent the remaining bits of the code point value.
 
-By using a variable-length encoding scheme, UTF-8 encoding can represent all Unicode code points using a sequence of 1 to 4 bytes. This allows UTF-8 to be a compact and efficient encoding scheme. 
+By using a variable-length encoding scheme, UTF-8 encoding can represent all Unicode code points using a sequence of 1 to 4 bytes. This allows UTF-8 to be a compact and efficient encoding scheme. UTF-8 is a superset of ASCII and fully compatible with it.
 
 UTF-8 has unique patterns with the first byte, and a fixed pattern with trailing bytes. This allows for easy validation of a correct UTF-8 sequence, quick "scrolling" to a random position and synchronizing quickly where a character will start.
 
@@ -68,7 +67,9 @@ UTF-32 encoding represents each code point using a single 32-bit code unit, whic
 
 ### *Why not UTF-24 encoding*
 
-Theoretically it is possible to use a fixed-length encoding scheme that uses 3 bytes to represent each Unicode code point, this encoding scheme would not offer significant benefits over UTF-8, UTF-16, or UTF-32 in terms of processing or space efficiency. Many software systems and programming languages are optimized for UTF-8, UTF-16, or UTF-32. Additionally, the most commonly used Unicode code points are smaller than 65536, so the use of three bytes per code point would result in wasted space as well. 
+Although it is theoretically possible to create a fixed-length encoding scheme that uses 3 bytes to represent each Unicode code point, such an encoding scheme would not provide any significant advantages over existing encoding schemes like UTF-8, UTF-16, or UTF-32 in terms of processing or space efficiency. Many software systems and programming languages are optimized for these standard Unicode encoding schemes, making them more convenient and widely supported.
+
+Furthermore, most of the commonly used Unicode code points are smaller than 65536, which means that using three bytes per code point would result in unnecessary wastage of space. Therefore, despite the theoretical possibility of a 3-byte fixed-length encoding scheme, it is not practical to use it in most real-world scenarios.
 
 ### *Byte order mark*
 
@@ -81,19 +82,27 @@ The Unicode encoding of a text file can be determined by examining the byte orde
 | UTF-32 | `00 00 FE FF` (big-endian) or `FF FE 00 00` (little-endian) |
 
 
----
+## Code page
+The legacy term "code page" originated from IBM's EBCDIC-based mainframe systems, but Microsoft, SAP, and Oracle are among the vendors that use this term. The majority of vendors identify their own character sets by a code page name. Originally, the code page numbers referred to the page numbers in the IBM standard character set manual, a condition which has not held for a long time. Vendors that use a code page system allocate their own code page number to a character set and its encoding, even if it is better known by another name; for example, UTF-8 has been assigned page numbers 1208 at IBM, 65001 at Microsoft, and 4110 at SAP. 
 
+The following table lists Windows code pages used by Microsoft in its own Windows operating system.
 
-The following table summarizes common charset and their respective encodings.
-
-| Character Set | Description | Encodings |
-| --- | --- | --- |
-| ASCII | A 7-bit character set that includes characters commonly used in the English language, such as letters, numbers, and punctuation. | ASCII, various 8-bit and 16-bit extensions, including ISO 8859 and Unicode |
-| ISO-8859 | A series of 8-bit character sets that include characters used in different regions of the world, such as ISO-8859-1 for Western Europe and ISO-8859-5 for Cyrillic languages. | Various, depending on the specific ISO-8859 variant |
-| EBCDIC | A family of character encodings used primarily on IBM mainframe systems. | Various, depending on the specific EBCDIC variant |
-| JIS | A set of character sets used for Japanese text, including JIS X 0201 for single-byte characters and JIS X 0213 for multi-byte characters. | Shift JIS |
-| GB2312 | A character set used for simplified Chinese text. | GBK, GB18030 |
-| Unicode | A universal character set that can represent all characters used in modern computing, including characters from many different writing systems. | UTF-8, UTF-16, UTF-32 |
-| Big5 | A character set used for traditional Chinese text. | Big5, Big5-HKSCS |
-| KOI8 | A series of character sets used for various Cyrillic-based languages. | KOI8-R, KOI8-U, KOI8-T |
-| TIS-620 | A character set used for the Thai language. | TIS-620-2533, ISO-8859-11, Windows-874 |
+| Microsoft Code Page     | Code Page Number | Description                                |
+|-------------------------|------------------|--------------------------------------------|
+| Windows-1252            | 1252             | Western European languages                 |
+| Windows-1250            | 1250             | Central and Eastern European languages     |
+| Windows-1251            | 1251             | Cyrillic languages                         |
+| Windows-1253            | 1253             | Greek language                             |
+| Windows-1254            | 1254             | Turkish language                           |
+| Windows-1255            | 1255             | Hebrew language                            |
+| Windows-1256            | 1256             | Arabic language                            |
+| Windows-1257            | 1257             | Baltic languages                           |
+| Windows-1258            | 1258             | Vietnamese language                        |
+| UTF-8                   | 65001            | 8-bit Unicode                              |
+| UTF-16LE                | 1200             | 16-bit Unicode, Little Endian              |
+| UTF-16BE                | 1201             | 16-bit Unicode, Big Endian                 |
+| UTF-32LE                | 12000            | 32-bit Unicode, Little Endian              |
+| UTF-32BE                | 12001            | 32-bit Unicode, Big Endian                 |
+| UTF-7                   | 65000            | 7-bit Unicode                              |
+| UTF-1                   | 12000            | 8-bit Unicode                              |
+| UTF-EBCDIC              | 1200             | EBCDIC-based Unicode                       |
