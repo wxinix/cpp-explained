@@ -1,16 +1,15 @@
 # New Character Types
 
 ## Why `char` not good for UTF-8
-In C++, `char` is a fundamental type that represents a byte-sized unit of data. Historically, it has been used to represent both ASCII characters and other narrow character sets, depending on the execution environment. However, the use of char for representing Unicode text can be problematic, as the encoding and interpretation of Unicode text can vary between platforms and locales.
+In C++, `char` is a fundamental type that represents a byte-sized unit of data. Historically, it has been used to represent both ASCII characters and other narrow character sets, depending on the execution environment. 
 
-Suppose we have the following UTF-8 string:
+Suppose we have the following C++ code, with the source file saved as UTF-8 text:
 
-```cpp
-const char* utf8str = u8"你吃饭了吗?";
-std::cout << utf8str << std::endl;
+```cpp 
+const char* utf8_str = "你吃饭了吗?"; 
 ```
 
-We might expect to see the output "你吃饭了吗?" in the console. However, if the execution character set of the platform is not set to UTF-8, the output may appear garbled or incorrect.
+"你吃饭了吗?" is UTF-8 encoded Chinese characters when the source file is saved as UTF-8 text. However, if the platform is using a different encoding, such as Windows-1252, the compiler will try to interpret "你吃饭了吗?" using the single byte Windows-1252 encoding. "你" has three bytes UTF-8 `0xE4 0xBD 0xA0`. The compiler is interpreting the first byte of the Chinese character "你" as an invalid character and replacing it with the ASCII replacement character `0x3F`.  This results in every byte of `utf8_str` is filled with ASCII replacement character `0x3F`. 
 
 ### *Execution environment explained*
 The "execution character set of the platform" refers to the character encoding scheme used by the operating system and/or the compiler to represent text data internally in a computer program.
@@ -23,11 +22,14 @@ For example, on Windows systems, the default execution character set is typicall
 
 `char8_t` was introduced in C++20 to provide a distinct type that is guaranteed to represent an 8-bit code unit of UTF-8 encoded Unicode text. This allows for safer and more efficient handling of UTF-8 strings, as developers can use char8_t to represent individual code units of the UTF-8 encoding. This can help to avoid issues such as misinterpreting multi-byte sequences or incorrectly handling invalid code points. 
 
-  > With C++20, the following code cannot be compiled. There is no `char8_t`-aware I/O streams (the overloaded std::cout for char8_t, char16_t and char32_t are marked as "delete". We would at best still have to use `char`. The related issues will probably be resolved in C++23 or C++26.
-> ```cpp
->const char8_t* utf8str = u8"你吃饭了吗?";
->std::cout << utf8str << std::endl;
->```
+In the following code, `utf8_str` will have the correct UTF-8code point values, regardless of the execution character set of the platform.
+
+  ```cpp
+const char8_t* utf8_str = u8"你吃饭了吗?";
+// std::cout << utf8_str << std::endl; // This won't compile
+```
+
+ > In C++20, there is no `char8_t`-aware I/O streams (the overloaded std::cout for `char8_t`, `char16_t` and `char32_t` are marked as "delete". It is expected that the issue will be resolved in C++23 or C++26.
 
 `char16_t` and `char32_t` were introduced in C++11 to provide support for Unicode text encoding. `char16_t` represents a 16-bit code unit of UTF-16 encoded Unicode text, while `char32_t` represents a 32-bit code unit of UTF-32 encoded Unicode text. 
 
