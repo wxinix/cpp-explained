@@ -152,18 +152,25 @@
                         <h1 id="new-character-types"><a class="header" href="#new-character-types">New Character Types</a></h1>
 <h2 id="why-char-not-good-for-utf-8"><a class="header" href="#why-char-not-good-for-utf-8">Why <code>char</code> not good for UTF-8</a></h2>
 <p>In C++, <code>char</code> is a fundamental type that represents a byte-sized unit of data. Historically, it has been used to represent both ASCII characters and other narrow character sets, depending on the execution environment. </p>
-<p>Suppose we have the following C++ code, with the source file saved as UTF-8 text:</p>
-<pre><code class="language-cpp">const char* utf8_str = &quot;你吃饭了吗?&quot;; 
+<p>Suppose we have the following C++ code (in C++11), with the source file saved as UTF-8 text:</p>
+<pre><code class="language-cpp">// &quot;你吃饭了吗?&quot; literal is treated as a plain array of bytes, interpreted by
+// the compiler as Windows-1252 single byte encoding.
+const char* utf8_str = &quot;你吃饭了吗?&quot;; 
 </code></pre>
-<p>&quot;你吃饭了吗?&quot; is UTF-8 encoded Chinese characters when the source file is saved as UTF-8 text. However, if the platform is using a different encoding, such as Windows-1252, the compiler will try to interpret &quot;你吃饭了吗?&quot; using the single byte Windows-1252 encoding. &quot;你&quot; has three bytes UTF-8 <code>0xE4 0xBD 0xA0</code>. The compiler is interpreting the first byte of the Chinese character &quot;你&quot; as an invalid character and replacing it with the ASCII replacement character <code>0x3F</code>.  This results in every byte of <code>utf8_str</code> is filled with ASCII replacement character <code>0x3F</code>. </p>
+<p>If the source file containing the Chinese characters &quot;你吃饭了吗?&quot; is saved as UTF-8 text, then the encoded representation of the text will also be in UTF-8 format. However, if the platform where the code is compiled is using a different encoding, such as Windows-1252, then the compiler may attempt to interpret the Chinese characters as single-byte characters in the Windows-1252 encoding, because the type of the variable <code>utf8_str</code> is declared as a plain <code>char</code> array, which relies on the execution environment to provide the encoding context. </p>
+<p>For example, the Chinese character &quot;你&quot; is represented by three bytes in UTF-8, which are <code>0xE4 0xBD 0xA0</code>. When interpreted as Windows-1252, the first byte <code>0xE4</code> is an invalid character, so the compiler replaces it with the ASCII replacement character <code>0x3F</code>. As a result, every byte of the UTF-8 encoded string &quot;你吃饭了吗?&quot; is replaced with the ASCII replacement character <code>0x3F</code> before being assigned to <code>utf8_str</code>. The mismatched data can cause unexpected results and errors in the program. </p>
 <h3 id="execution-environment-explained"><a class="header" href="#execution-environment-explained"><em>Execution environment explained</em></a></h3>
 <p>The &quot;execution character set of the platform&quot; refers to the character encoding scheme used by the operating system and/or the compiler to represent text data internally in a computer program.</p>
 <p>In C and C++, the execution character set determines how characters are represented in the char data type. The specific character set used can vary depending on the platform, compiler, and locale settings.</p>
 <p>For example, on Windows systems, the default execution character set is typically based on the Windows-1252 code page, which is a superset of ASCII that includes characters for European languages. On Unix-based systems, the default execution character set is typically based on the ASCII encoding.</p>
 <h2 id="utf-related-character-types"><a class="header" href="#utf-related-character-types">UTF-related character types</a></h2>
 <p><code>char8_t</code> was introduced in C++20 to provide a distinct type that is guaranteed to represent an 8-bit code unit of UTF-8 encoded Unicode text. This allows for safer and more efficient handling of UTF-8 strings, as developers can use char8_t to represent individual code units of the UTF-8 encoding. This can help to avoid issues such as misinterpreting multi-byte sequences or incorrectly handling invalid code points. </p>
-<p>In the following code, <code>utf8_str</code> will have the correct UTF-8code point values, regardless of the execution character set of the platform.</p>
-<pre><code class="language-cpp">const char8_t* utf8_str = u8&quot;你吃饭了吗?&quot;;
+<p>In the following code, <code>utf8_str</code> will have the correct UTF-8 code point values, regardless of the execution character set of the platform.</p>
+<pre><code class="language-cpp">// char8_t is a new C++20 type. The &quot;u8&quot; prefix makes sure the string literal is 
+// interpreted as UTF-8 encoded text while enforcing type safety with char8_t.
+// Without &quot;u8&quot; prefix, the string literal will be treated as &quot;const char*&quot; type,
+// which is a type mismatch with char8_t, thus failing compiling.
+const char8_t* utf8_str = u8&quot;你吃饭了吗?&quot;; 
 // std::cout &lt;&lt; utf8_str &lt;&lt; std::endl; // This won't compile
 </code></pre>
 <blockquote>
@@ -308,6 +315,22 @@ int main() {
 
         </div>
 
+        <!-- Livereload script (if served using the cli tool) -->
+        <script>
+            const wsProtocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
+            const wsAddress = wsProtocol + "//" + location.host + "/" + "__livereload";
+            const socket = new WebSocket(wsAddress);
+            socket.onmessage = function (event) {
+                if (event.data === "reload") {
+                    socket.close();
+                    location.reload();
+                }
+            };
+
+            window.onbeforeunload = function() {
+                socket.close();
+            }
+        </script>
 
 
 

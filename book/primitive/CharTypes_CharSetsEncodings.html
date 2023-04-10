@@ -154,15 +154,15 @@
 <p>A character set, also known as a character repertoire, is a collection of characters and symbols that are used to represent written language in computing. Each character in a character set is assigned a unique code point, which is a numerical value that represents that character in digital form.</p>
 <p>Character sets can include characters from many different writing systems and languages, such as the Latin alphabet used in English, or the Chinese characters used in Mandarin Chinese. Some character sets are designed for specific languages or scripts, while others are designed to be universal and include characters from many different languages.</p>
 <p>Examples of character sets include ASCII, which includes characters commonly used in the English language, and Unicode, which is a universal character set that can represent all characters used in modern computing, including characters from many different writing systems.</p>
-<h3 id="code-point-explained"><a class="header" href="#code-point-explained"><em>Code point explained</em></a></h3>
+<h3 id="code-point"><a class="header" href="#code-point"><em>Code point</em></a></h3>
 <p>A code point is a numerical value that represents a single character or symbol in a character set. Each character in a character set is assigned a unique code point, which is a specific number that identifies that character.</p>
 <p>Code points are typically expressed as hexadecimal numbers, which means that they use a base-16 numbering system. For example, the code point for the letter &quot;A&quot; in the ASCII character set is 0x41, while the code point for the Greek letter &quot;α&quot; in the Unicode character set is 0x03B1.</p>
 <p>Unicode comprises 1,114,112 code points in the range [0, 1,114,111]. The maximum value of Unicode code point is 1,114,111 (0x10FFFF).</p>
 <h2 id="encodings"><a class="header" href="#encodings">Encodings</a></h2>
 <p>Encoding involves mapping each code point to a specific sequence of bits or bytes that can be used to represent that character in digital form.</p>
-<p>Different encoding schemes use different methods for mapping code points to binary sequences. For example, UTF-8 encoding uses a variable-length encoding scheme that can represent each Unicode code point using 1 to 4 bytes, depending on the code point value, while UTF-32 encoding uses a fixed-length encoding scheme that represents each Unicode code point using 4 bytes.</p>
+<p>The Unicode standard defines a character set that includes 1,114,111 characters, each with a unique code point, and provides several encoding schemes, including UTF-8, UTF-16, and UTF-32, that allow characters to be represented using variable-length sequences of bytes.</p>
 <h3 id="utf-8-encoding"><a class="header" href="#utf-8-encoding"><em>UTF-8 encoding</em></a></h3>
-<p>UTF-8 is a variable-length encoding scheme.It works by mapping each Unicode code point to a sequence of 1 to 4 bytes, depending on the code point value. </p>
+<p>UTF-8 is a variable-length encoding scheme. It works by mapping each Unicode code point to a sequence of 1 to 4 bytes, depending on the code point value. </p>
 <div class="table-wrapper"><table><thead><tr><th>Code Point Range</th><th>Number of Bytes</th><th>Binary Format</th></tr></thead><tbody>
 <tr><td>0 to 127</td><td>1 byte</td><td><code>0xxx'xxxx</code></td></tr>
 <tr><td>128 to 2047</td><td>2 bytes</td><td><code>110x'xxxx, 10xx'xxxx</code></td></tr>
@@ -185,7 +185,7 @@
 <p>If the code point value is between 65536 and 1114111 (inclusive), the code point is represented as 4 bytes. The first byte starts with the binary value <code>11110</code>, followed by 3 bits that represent the most significant bits of the code point value. The second, third, and fourth bytes start with the binary value <code>10</code>, followed by 6 bits each that represent the remaining bits of the code point value.</p>
 </li>
 </ul>
-<p>By using a variable-length encoding scheme, UTF-8 encoding can represent all Unicode code points using a sequence of 1 to 4 bytes. This allows UTF-8 to be a compact and efficient encoding scheme. </p>
+<p>By using a variable-length encoding scheme, UTF-8 encoding can represent all Unicode code points using a sequence of 1 to 4 bytes. This allows UTF-8 to be a compact and efficient encoding scheme. UTF-8 is a superset of ASCII and fully compatible with it.</p>
 <p>UTF-8 has unique patterns with the first byte, and a fixed pattern with trailing bytes. This allows for easy validation of a correct UTF-8 sequence, quick &quot;scrolling&quot; to a random position and synchronizing quickly where a character will start.</p>
 <h3 id="utf-16-encoding"><a class="header" href="#utf-16-encoding"><em>UTF-16 encoding</em></a></h3>
 <div class="table-wrapper"><table><thead><tr><th>Code Point Range</th><th>Number of Bytes</th><th>Binary Format</th></tr></thead><tbody>
@@ -204,7 +204,8 @@
 </div>
 <p>UTF-32 encoding represents each code point using a single 32-bit code unit, which means that every Unicode code point is represented using exactly 4 bytes of memory.</p>
 <h3 id="why-not-utf-24-encoding"><a class="header" href="#why-not-utf-24-encoding"><em>Why not UTF-24 encoding</em></a></h3>
-<p>Theoretically it is possible to use a fixed-length encoding scheme that uses 3 bytes to represent each Unicode code point, this encoding scheme would not offer significant benefits over UTF-8, UTF-16, or UTF-32 in terms of processing or space efficiency. Many software systems and programming languages are optimized for UTF-8, UTF-16, or UTF-32. Additionally, the most commonly used Unicode code points are smaller than 65536, so the use of three bytes per code point would result in wasted space as well. </p>
+<p>Although it is theoretically possible to create a fixed-length encoding scheme that uses 3 bytes to represent each Unicode code point, such an encoding scheme would not provide any significant advantages over existing encoding schemes like UTF-8, UTF-16, or UTF-32 in terms of processing or space efficiency. Many software systems and programming languages are optimized for these standard Unicode encoding schemes, making them more convenient and widely supported.</p>
+<p>Furthermore, most of the commonly used Unicode code points are smaller than 65536, which means that using three bytes per code point would result in unnecessary wastage of space. Therefore, despite the theoretical possibility of a 3-byte fixed-length encoding scheme, it is not practical to use it in most real-world scenarios.</p>
 <h3 id="byte-order-mark"><a class="header" href="#byte-order-mark"><em>Byte order mark</em></a></h3>
 <p>The Unicode encoding of a text file can be determined by examining the byte order mark (BOM) at the beginning of the file, or by analyzing the byte sequences of the file.</p>
 <div class="table-wrapper"><table><thead><tr><th>Encoding</th><th>Byte Order Mark</th></tr></thead><tbody>
@@ -213,18 +214,27 @@
 <tr><td>UTF-32</td><td><code>00 00 FE FF</code> (big-endian) or <code>FF FE 00 00</code> (little-endian)</td></tr>
 </tbody></table>
 </div>
-<hr />
-<p>The following table summarizes common charset and their respective encodings.</p>
-<div class="table-wrapper"><table><thead><tr><th>Character Set</th><th>Description</th><th>Encodings</th></tr></thead><tbody>
-<tr><td>ASCII</td><td>A 7-bit character set that includes characters commonly used in the English language, such as letters, numbers, and punctuation.</td><td>ASCII, various 8-bit and 16-bit extensions, including ISO 8859 and Unicode</td></tr>
-<tr><td>ISO-8859</td><td>A series of 8-bit character sets that include characters used in different regions of the world, such as ISO-8859-1 for Western Europe and ISO-8859-5 for Cyrillic languages.</td><td>Various, depending on the specific ISO-8859 variant</td></tr>
-<tr><td>EBCDIC</td><td>A family of character encodings used primarily on IBM mainframe systems.</td><td>Various, depending on the specific EBCDIC variant</td></tr>
-<tr><td>JIS</td><td>A set of character sets used for Japanese text, including JIS X 0201 for single-byte characters and JIS X 0213 for multi-byte characters.</td><td>Shift JIS</td></tr>
-<tr><td>GB2312</td><td>A character set used for simplified Chinese text.</td><td>GBK, GB18030</td></tr>
-<tr><td>Unicode</td><td>A universal character set that can represent all characters used in modern computing, including characters from many different writing systems.</td><td>UTF-8, UTF-16, UTF-32</td></tr>
-<tr><td>Big5</td><td>A character set used for traditional Chinese text.</td><td>Big5, Big5-HKSCS</td></tr>
-<tr><td>KOI8</td><td>A series of character sets used for various Cyrillic-based languages.</td><td>KOI8-R, KOI8-U, KOI8-T</td></tr>
-<tr><td>TIS-620</td><td>A character set used for the Thai language.</td><td>TIS-620-2533, ISO-8859-11, Windows-874</td></tr>
+<h2 id="code-page"><a class="header" href="#code-page">Code page</a></h2>
+<p>The legacy term &quot;code page&quot; originated from IBM's EBCDIC-based mainframe systems, but Microsoft, SAP, and Oracle are among the vendors that use this term. The majority of vendors identify their own character sets by a code page name. Originally, the code page numbers referred to the page numbers in the IBM standard character set manual, a condition which has not held for a long time. Vendors that use a code page system allocate their own code page number to a character set and its encoding, even if it is better known by another name; for example, UTF-8 has been assigned page numbers 1208 at IBM, 65001 at Microsoft, and 4110 at SAP. </p>
+<p>The following table lists Windows code pages used by Microsoft in its own Windows operating system.</p>
+<div class="table-wrapper"><table><thead><tr><th>Microsoft Code Page</th><th>Code Page Number</th><th>Description</th></tr></thead><tbody>
+<tr><td>Windows-1252</td><td>1252</td><td>Western European languages</td></tr>
+<tr><td>Windows-1250</td><td>1250</td><td>Central and Eastern European languages</td></tr>
+<tr><td>Windows-1251</td><td>1251</td><td>Cyrillic languages</td></tr>
+<tr><td>Windows-1253</td><td>1253</td><td>Greek language</td></tr>
+<tr><td>Windows-1254</td><td>1254</td><td>Turkish language</td></tr>
+<tr><td>Windows-1255</td><td>1255</td><td>Hebrew language</td></tr>
+<tr><td>Windows-1256</td><td>1256</td><td>Arabic language</td></tr>
+<tr><td>Windows-1257</td><td>1257</td><td>Baltic languages</td></tr>
+<tr><td>Windows-1258</td><td>1258</td><td>Vietnamese language</td></tr>
+<tr><td>UTF-8</td><td>65001</td><td>8-bit Unicode</td></tr>
+<tr><td>UTF-16LE</td><td>1200</td><td>16-bit Unicode, Little Endian</td></tr>
+<tr><td>UTF-16BE</td><td>1201</td><td>16-bit Unicode, Big Endian</td></tr>
+<tr><td>UTF-32LE</td><td>12000</td><td>32-bit Unicode, Little Endian</td></tr>
+<tr><td>UTF-32BE</td><td>12001</td><td>32-bit Unicode, Big Endian</td></tr>
+<tr><td>UTF-7</td><td>65000</td><td>7-bit Unicode</td></tr>
+<tr><td>UTF-1</td><td>12000</td><td>8-bit Unicode</td></tr>
+<tr><td>UTF-EBCDIC</td><td>1200</td><td>EBCDIC-based Unicode</td></tr>
 </tbody></table>
 </div>
                     </main>
@@ -256,6 +266,22 @@
 
         </div>
 
+        <!-- Livereload script (if served using the cli tool) -->
+        <script>
+            const wsProtocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
+            const wsAddress = wsProtocol + "//" + location.host + "/" + "__livereload";
+            const socket = new WebSocket(wsAddress);
+            socket.onmessage = function (event) {
+                if (event.data === "reload") {
+                    socket.close();
+                    location.reload();
+                }
+            };
+
+            window.onbeforeunload = function() {
+                socket.close();
+            }
+        </script>
 
 
 
