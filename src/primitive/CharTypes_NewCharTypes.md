@@ -23,7 +23,7 @@ For example, on Windows systems, the default execution character set is typicall
 
 `char8_t` was introduced in C++20 to provide a distinct type that is guaranteed to represent an 8-bit code unit of UTF-8 encoded Unicode text. This allows for safer and more efficient handling of UTF-8 strings, as developers can use char8_t to represent individual code units of the UTF-8 encoding. This can help to avoid issues such as misinterpreting multi-byte sequences or incorrectly handling invalid code points. 
 
-  > With the current implementation of C++20, the following code cannot be compiled. There is no `char8_t`-aware I/O streams (the overloaded std::cout for char8_t, char16_t and char32_t are marked as "delete". We would still have to use `char`. The related issues will probably resolved in C++23 or C++26.
+  > With C++20, the following code cannot be compiled. There is no `char8_t`-aware I/O streams (the overloaded std::cout for char8_t, char16_t and char32_t are marked as "delete". We would at best still have to use `char`. The related issues will probably be resolved in C++23 or C++26.
 > ```cpp
 >const char8_t* utf8str = u8"你吃饭了吗?";
 >std::cout << utf8str << std::endl;
