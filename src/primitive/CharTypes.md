@@ -10,7 +10,7 @@ So, while `char` and `signed char` are often the same type in C++, it is not gua
 
 ## Issue with `wchar_t`
 
-`wchar_t` is a character type in C++ that is used to represent wide characters. It was introduced into C++ with the C++98 standard. Many Windows API functions have a wide character version that takes `wchar_`t strings as arguments. The wide character version of these functions has a suffix of `W` added to the function name. For example, the function `CreateFile()` in the Windows API has a wide character version named `CreateFileW()`. 
+`wchar_t` is a character type in C++ that is used to represent wide characters. It was introduced into C++ with the C++98 standard. Many Windows API functions have a wide character version that takes `wchar_t` strings as arguments. The wide character version of these functions has a suffix of `W` added to the function name. For example, the function `CreateFile()` in the Windows API has a wide character version named `CreateFileW()`. 
 
 The C++ standard specifies that a string literal with an `L` prefix creates a wide character string literal. 
 
@@ -20,9 +20,15 @@ The C++ standard specifies that a string literal with an `L` prefix creates a wi
 int main()
 {
     LPCWSTR fileName = L"C:\\example\\test.txt";
-    HANDLE hFile = CreateFileW(fileName, GENERIC_READ, FILE_SHARE_READ, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
-    if (hFile == INVALID_HANDLE_VALUE)
-    {
+    HANDLE hFile = CreateFileW(fileName, 
+                               GENERIC_READ, 
+                               FILE_SHARE_READ, 
+                               NULL, 
+                               OPEN_EXISTING, 
+                               FILE_ATTRIBUTE_NORMAL, 
+                               NULL);
+
+    if (hFile == INVALID_HANDLE_VALUE) {
         // Handle error
         return 1;
     }

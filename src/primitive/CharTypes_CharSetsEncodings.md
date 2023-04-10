@@ -67,7 +67,7 @@ UTF-32 encoding represents each code point using a single 32-bit code unit, whic
 
 ### *Why not UTF-24 encoding*
 
-Although it is theoretically possible to create a fixed-length encoding scheme that uses 3 bytes to represent each Unicode code point, such an encoding scheme would not provide any significant advantages over existing encoding schemes like UTF-8, UTF-16, or UTF-32 in terms of processing or space efficiency. Many software systems and programming languages are optimized for these standard Unicode encoding schemes, making them more convenient and widely supported.
+Although it is theoretically possible to create a fixed-length encoding scheme using 3 bytes to represent each Unicode code point, such a scheme would not provide any significant advantages over existing ones like UTF-8, UTF-16, or UTF-32 in terms of processing or space efficiency. Many software systems and programming languages are optimized for these standard Unicode encoding schemes, making them more convenient and widely supported.
 
 Furthermore, most of the commonly used Unicode code points are smaller than 65536, which means that using three bytes per code point would result in unnecessary wastage of space. Therefore, despite the theoretical possibility of a 3-byte fixed-length encoding scheme, it is not practical to use it in most real-world scenarios.
 
@@ -83,7 +83,9 @@ The Unicode encoding of a text file can be determined by examining the byte orde
 
 
 ## Code page
-The legacy term "code page" originated from IBM's EBCDIC-based mainframe systems, but Microsoft, SAP, and Oracle are among the vendors that use this term. The majority of vendors identify their own character sets by a code page name. Originally, the code page numbers referred to the page numbers in the IBM standard character set manual, a condition which has not held for a long time. Vendors that use a code page system allocate their own code page number to a character set and its encoding, even if it is better known by another name; for example, UTF-8 has been assigned page numbers 1208 at IBM, 65001 at Microsoft, and 4110 at SAP. 
+The legacy term "code page" originated from IBM's EBCDIC-based mainframe systems. Originally, the code page numbers referred to the page numbers in the IBM standard character set manual.
+
+Vendors that use a code page system allocate their own code page number to a character set and its encoding, even if it is better known by another name; for example, UTF-8 has been assigned page numbers 1208 at IBM, 65001 at Microsoft, and 4110 at SAP. 
 
 The following table lists Windows code pages used by Microsoft in its own Windows operating system.
 
