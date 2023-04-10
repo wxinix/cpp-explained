@@ -155,16 +155,22 @@
 <p>On most platforms, <code>char</code> is implemented as a signed type, and its range of representable values is the same as that of <code>signed char</code>. However, on some rare platforms, <code>char</code> may be implemented as an unsigned type, in which case it would have the same range of representable values as <code>unsigned char</code>.</p>
 <p>So, while <code>char</code> and <code>signed char</code> are often the same type in C++, it is not guaranteed by the standard. To ensure portability of code that relies on the signedness of <code>char</code>, it is recommended to use <code>signed char</code> explicitly.</p>
 <h2 id="issue-with-wchar_t"><a class="header" href="#issue-with-wchar_t">Issue with <code>wchar_t</code></a></h2>
-<p><code>wchar_t</code> is a character type in C++ that is used to represent wide characters. It was introduced into C++ with the C++98 standard. Many Windows API functions have a wide character version that takes <code>wchar_</code>t strings as arguments. The wide character version of these functions has a suffix of <code>W</code> added to the function name. For example, the function <code>CreateFile()</code> in the Windows API has a wide character version named <code>CreateFileW()</code>. </p>
+<p><code>wchar_t</code> is a character type in C++ that is used to represent wide characters. It was introduced into C++ with the C++98 standard. Many Windows API functions have a wide character version that takes <code>wchar_t</code> strings as arguments. The wide character version of these functions has a suffix of <code>W</code> added to the function name. For example, the function <code>CreateFile()</code> in the Windows API has a wide character version named <code>CreateFileW()</code>. </p>
 <p>The C++ standard specifies that a string literal with an <code>L</code> prefix creates a wide character string literal. </p>
 <pre><code class="language-cpp">#include &lt;windows.h&gt;
 
 int main()
 {
     LPCWSTR fileName = L&quot;C:\\example\\test.txt&quot;;
-    HANDLE hFile = CreateFileW(fileName, GENERIC_READ, FILE_SHARE_READ, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
-    if (hFile == INVALID_HANDLE_VALUE)
-    {
+    HANDLE hFile = CreateFileW(fileName, 
+                               GENERIC_READ, 
+                               FILE_SHARE_READ, 
+                               NULL, 
+                               OPEN_EXISTING, 
+                               FILE_ATTRIBUTE_NORMAL, 
+                               NULL);
+
+    if (hFile == INVALID_HANDLE_VALUE) {
         // Handle error
         return 1;
     }
@@ -207,22 +213,6 @@ int main()
 
         </div>
 
-        <!-- Livereload script (if served using the cli tool) -->
-        <script>
-            const wsProtocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
-            const wsAddress = wsProtocol + "//" + location.host + "/" + "__livereload";
-            const socket = new WebSocket(wsAddress);
-            socket.onmessage = function (event) {
-                if (event.data === "reload") {
-                    socket.close();
-                    location.reload();
-                }
-            };
-
-            window.onbeforeunload = function() {
-                socket.close();
-            }
-        </script>
 
 
 
