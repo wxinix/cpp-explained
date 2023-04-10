@@ -305,7 +305,7 @@ sizeof(long long) *  CHAR_BIT &gt;= 64     // Rule 10
 <p>As early as 1995, Roland Hartinger first proposed to add <code>long long</code>  to C++. At the time, the C committee had not yet considered this type. As a result, the C++ committee was reluctant to add a fundamental type that was not also in C. After <code>long long</code> had been added to C99, Stephen Adamczyk proposed to reconsider its addition to C++ in 2005. Finally, <code>long long</code> was accepted as part of C++ in 2011, more than ten years after it was first included in the C standard.</p>
 <h2 id="bit-size"><a class="header" href="#bit-size">Bit size</a></h2>
 <p>The C++ standard defines <code>long long</code> as an integer type that is at least 64 bits long, but it does not guarantee that <code>long long</code> will always be 64 bits on all platforms. The size of <code>long long</code> can depend on the architecture and the compiler being used. However, most modern platforms do support a 64-bit <code>long long</code> type. To ensure portability and avoid any potential issues, it's best to use the <code>sizeof</code> operator to determine the size of <code>long long</code> on a specific platform.</p>
-<p>Keep in mind, <code>long long</code> is a signed type in C++, and its corresponding unsigned type is <code>unsigned long long</code>. In practice, <code>long long int</code> and <code>unsigned long long int</code>  have the same meaning as <code>long long</code> and <code>unsigned long long</code>, respectively. </p>
+<p>Remember that in C++, <code>long long</code> is a signed data type, and its corresponding unsigned data type is <code>unsigned long long</code>. It's important to note that <code>long long int</code> and <code>unsigned long long int</code> have the same meaning as <code>long long</code> and <code>unsigned long long</code>, respectively, with the latter forms being shorthand for the former ones.</p>
 <h2 id="literal-suffix"><a class="header" href="#literal-suffix">Literal suffix</a></h2>
 <p>The C++ standard defines <code>LL</code> and <code>ULL</code> as literal suffixes for <code>long long</code> and <code>unsigned long long</code>, respectively. When initializing a <code>long long</code> type variable, you can write it like this:</p>
 <pre><code class="language-cpp">long long x = 65536LL;
@@ -396,19 +396,17 @@ int main()
 <div style="break-before: page; page-break-before: always;"></div><h1 id="character-sets-and-encodings"><a class="header" href="#character-sets-and-encodings">Character Sets and Encodings</a></h1>
 <h2 id="character-set"><a class="header" href="#character-set">Character set</a></h2>
 <p>A character set, also known as a character repertoire, is a collection of characters and symbols that are used to represent written language in computing. Each character in a character set is assigned a unique code point, which is a numerical value that represents that character in digital form.</p>
-<p>Character sets can include characters from many different writing systems and languages, such as the Latin alphabet used in English, the Cyrillic alphabet used in Russian, or the Chinese characters used in Mandarin Chinese. Some character sets are designed for specific languages or scripts, while others are designed to be universal and include characters from many different languages.</p>
+<p>Character sets can include characters from many different writing systems and languages, such as the Latin alphabet used in English, or the Chinese characters used in Mandarin Chinese. Some character sets are designed for specific languages or scripts, while others are designed to be universal and include characters from many different languages.</p>
 <p>Examples of character sets include ASCII, which includes characters commonly used in the English language, and Unicode, which is a universal character set that can represent all characters used in modern computing, including characters from many different writing systems.</p>
-<h3 id="code-point"><a class="header" href="#code-point"><em>Code point</em></a></h3>
+<h3 id="code-point-explained"><a class="header" href="#code-point-explained"><em>Code point explained</em></a></h3>
 <p>A code point is a numerical value that represents a single character or symbol in a character set. Each character in a character set is assigned a unique code point, which is a specific number that identifies that character.</p>
-<p>Code points are typically expressed as hexadecimal numbers, which means that they use a base-16 numbering system. For example, the code point for the letter &quot;A&quot; in the ASCII character set is 0x41, while the code point for the Greek letter alpha in the Unicode character set is 0x03B1.</p>
-<p>Code points are used to represent characters in digital form and are used by various encoding schemes to represent characters as binary data. Encoding schemes such as UTF-8, UTF-16, and UTF-32 map each code point to a specific sequence of bytes, allowing characters to be stored and transmitted in a digital format.</p>
-<p>Unicode comprises 1,114,112 code points in the range [0, 1,114,111].</p>
+<p>Code points are typically expressed as hexadecimal numbers, which means that they use a base-16 numbering system. For example, the code point for the letter &quot;A&quot; in the ASCII character set is 0x41, while the code point for the Greek letter &quot;α&quot; in the Unicode character set is 0x03B1.</p>
+<p>Unicode comprises 1,114,112 code points in the range [0, 1,114,111]. The maximum value of Unicode code point is 1,114,111 (0x10FFFF).</p>
 <h2 id="encodings"><a class="header" href="#encodings">Encodings</a></h2>
-<p>Encoding involves mapping each code point (i.e., the numerical value that represents a character in a character set) to a specific sequence of bits or bytes that can be used to represent that character in digital form.</p>
-<p>Different encoding schemes use different methods for mapping code points to binary sequences. For example, UTF-8 encoding uses a variable-length encoding scheme that can represent each Unicode code point using 1 to 4 bytes, depending on the code point value, while UTF-16 encoding uses a fixed-length encoding scheme that represents each Unicode code point using 2 bytes.</p>
-<p>The goal of encoding is to allow characters and symbols to be represented in digital form, which is necessary for storing, transmitting, and processing text data using computer systems.</p>
+<p>Encoding involves mapping each code point to a specific sequence of bits or bytes that can be used to represent that character in digital form.</p>
+<p>Different encoding schemes use different methods for mapping code points to binary sequences. For example, UTF-8 encoding uses a variable-length encoding scheme that can represent each Unicode code point using 1 to 4 bytes, depending on the code point value, while UTF-32 encoding uses a fixed-length encoding scheme that represents each Unicode code point using 4 bytes.</p>
 <h3 id="utf-8-encoding"><a class="header" href="#utf-8-encoding"><em>UTF-8 encoding</em></a></h3>
-<p>UTF-8 is a variable-length encoding scheme used to represent Unicode characters as binary data. UTF-8 encoding works by mapping each Unicode code point to a sequence of 1 to 4 bytes, depending on the code point value. </p>
+<p>UTF-8 is a variable-length encoding scheme.It works by mapping each Unicode code point to a sequence of 1 to 4 bytes, depending on the code point value. </p>
 <div class="table-wrapper"><table><thead><tr><th>Code Point Range</th><th>Number of Bytes</th><th>Binary Format</th></tr></thead><tbody>
 <tr><td>0 to 127</td><td>1 byte</td><td><code>0xxx'xxxx</code></td></tr>
 <tr><td>128 to 2047</td><td>2 bytes</td><td><code>110x'xxxx, 10xx'xxxx</code></td></tr>
@@ -419,7 +417,7 @@ int main()
 <p>Here's how UTF-8 encoding works:</p>
 <ul>
 <li>
-<p>If the code point value is between 0 and 127 (inclusive), the code point is represented as a single byte with the same value. This means that ASCII characters (which have code point values between 0 and 127) are represented in UTF-8 encoding using a single byte.</p>
+<p>If the code point value is between 0 and 127 (inclusive), the code point is represented as a single byte with the same value. This means that ASCII characters (which have code point values between 0 and 127) can be represented in UTF-8 encoding using a single byte.</p>
 </li>
 <li>
 <p>If the code point value is between 128 and 2047 (inclusive), the code point is represented as 2 bytes. The first byte starts with the binary value <code>110</code>, followed by 5 bits that represent the most significant bits of the code point value. The second byte starts with the binary value <code>10</code>, followed by 6 bits that represent the least significant bits of the code point value.</p>
@@ -431,8 +429,8 @@ int main()
 <p>If the code point value is between 65536 and 1114111 (inclusive), the code point is represented as 4 bytes. The first byte starts with the binary value <code>11110</code>, followed by 3 bits that represent the most significant bits of the code point value. The second, third, and fourth bytes start with the binary value <code>10</code>, followed by 6 bits each that represent the remaining bits of the code point value.</p>
 </li>
 </ul>
-<p>By using a variable-length encoding scheme, UTF-8 encoding can represent all Unicode code points using a sequence of 1 to 4 bytes. This allows UTF-8 to be a compact and efficient encoding scheme, while still supporting a wide range of characters and symbols from many different writing systems. </p>
-<p>UTF-8 is compatible with ASCII. The advantage of UTF-8 is that the lead bytes are unique patterns, and trailing bytes are a unique pattern, which allows for easy validation of a correct UTF-8 sequence, quick &quot;scrolling&quot; to a random position and synchronizing quickly where a character will start.</p>
+<p>By using a variable-length encoding scheme, UTF-8 encoding can represent all Unicode code points using a sequence of 1 to 4 bytes. This allows UTF-8 to be a compact and efficient encoding scheme. </p>
+<p>UTF-8 has unique patterns with the first byte, and a fixed pattern with trailing bytes. This allows for easy validation of a correct UTF-8 sequence, quick &quot;scrolling&quot; to a random position and synchronizing quickly where a character will start.</p>
 <h3 id="utf-16-encoding"><a class="header" href="#utf-16-encoding"><em>UTF-16 encoding</em></a></h3>
 <div class="table-wrapper"><table><thead><tr><th>Code Point Range</th><th>Number of Bytes</th><th>Binary Format</th></tr></thead><tbody>
 <tr><td>0 to 65535</td><td>1 code unit (2 bytes)</td><td><code>xxxxxxxx xxxxxxxx</code></td></tr>
@@ -445,13 +443,12 @@ int main()
 </ul>
 <h3 id="utf-32-encoding"><a class="header" href="#utf-32-encoding"><em>UTF-32 encoding</em></a></h3>
 <div class="table-wrapper"><table><thead><tr><th>Code Point Range</th><th>Number of Code Units</th><th>Binary Format</th></tr></thead><tbody>
-<tr><td>0 to 1114111</td><td>1 code unit (4 bytes)</td><td><code>00000000 0000xxxx xxxxxxxx xxxxxxxx</code></td></tr>
+<tr><td>0 to 1114111</td><td>1 code unit (4 bytes)</td><td><code>00000000 xxxxxxxx xxxxxxxx xxxxxxxx</code></td></tr>
 </tbody></table>
 </div>
-<p>UTF-32 encoding represents each code point using a single 32-bit code unit, which means that every Unicode code point is represented using exactly 4 bytes of memory. The binary format for UTF-32 encoding uses the first 12 bits to store zeros, followed by 10 bits that represent the most significant bits of the code point value, and then 10 bits that represent the least significant bits of the code point value.</p>
+<p>UTF-32 encoding represents each code point using a single 32-bit code unit, which means that every Unicode code point is represented using exactly 4 bytes of memory.</p>
 <h3 id="why-not-utf-24-encoding"><a class="header" href="#why-not-utf-24-encoding"><em>Why not UTF-24 encoding</em></a></h3>
-<p>UTF-24 is not an official Unicode encoding and is not widely used or supported. Three-byte encoding is not commonly used because it does not offer significant advantages over UTF-16 or UTF-32, which are the most widely used Unicode encodings.</p>
-<p>While it is theoretically possible to use a fixed-length encoding scheme that uses 3 bytes to represent each Unicode code point, such as in UTF-24 (if it ever exists), this encoding scheme would not offer significant benefits over UTF-8, UTF-16, or UTF-32 in terms of processing or space efficiency. Many software systems and programming languages are optimized for UTF-8, UTF-16, or UTF-32. Additionally, the most commonly used Unicode code points are smaller than 65536, so the use of three bytes per code point would result in wasted space. </p>
+<p>Theoretically it is possible to use a fixed-length encoding scheme that uses 3 bytes to represent each Unicode code point, this encoding scheme would not offer significant benefits over UTF-8, UTF-16, or UTF-32 in terms of processing or space efficiency. Many software systems and programming languages are optimized for UTF-8, UTF-16, or UTF-32. Additionally, the most commonly used Unicode code points are smaller than 65536, so the use of three bytes per code point would result in wasted space as well. </p>
 <h3 id="byte-order-mark"><a class="header" href="#byte-order-mark"><em>Byte order mark</em></a></h3>
 <p>The Unicode encoding of a text file can be determined by examining the byte order mark (BOM) at the beginning of the file, or by analyzing the byte sequences of the file.</p>
 <div class="table-wrapper"><table><thead><tr><th>Encoding</th><th>Byte Order Mark</th></tr></thead><tbody>
@@ -481,20 +478,18 @@ int main()
 std::cout &lt;&lt; utf8str &lt;&lt; std::endl;
 </code></pre>
 <p>We might expect to see the output &quot;你吃饭了吗?&quot; in the console. However, if the execution character set of the platform is not set to UTF-8, the output may appear garbled or incorrect.</p>
-<blockquote>
+<h3 id="execution-environment-explained"><a class="header" href="#execution-environment-explained"><em>Execution environment explained</em></a></h3>
 <p>The &quot;execution character set of the platform&quot; refers to the character encoding scheme used by the operating system and/or the compiler to represent text data internally in a computer program.</p>
-</blockquote>
-<blockquote>
 <p>In C and C++, the execution character set determines how characters are represented in the char data type. The specific character set used can vary depending on the platform, compiler, and locale settings.</p>
-</blockquote>
-<blockquote>
 <p>For example, on Windows systems, the default execution character set is typically based on the Windows-1252 code page, which is a superset of ASCII that includes characters for European languages. On Unix-based systems, the default execution character set is typically based on the ASCII encoding.</p>
-</blockquote>
 <h2 id="utf-related-character-types"><a class="header" href="#utf-related-character-types">UTF-related character types</a></h2>
-<p><code>char8_t</code> was introduced in C++20 to provide a distinct type that is guaranteed to represent an 8-bit code unit of UTF-8 encoded Unicode text. This allows for safer and more efficient handling of UTF-8 strings, as developers can use char8_t to represent individual code units of the UTF-8 encoding. This can help to avoid issues such as misinterpreting multi-byte sequences or incorrectly handling invalid code points. For example, in the following code, the output will be correct regardless of the execution character set of the platform.</p>
+<p><code>char8_t</code> was introduced in C++20 to provide a distinct type that is guaranteed to represent an 8-bit code unit of UTF-8 encoded Unicode text. This allows for safer and more efficient handling of UTF-8 strings, as developers can use char8_t to represent individual code units of the UTF-8 encoding. This can help to avoid issues such as misinterpreting multi-byte sequences or incorrectly handling invalid code points. </p>
+<blockquote>
+<p>With the current implementation of C++20, the following code cannot be compiled. There is no <code>char8_t</code>-aware I/O streams. We would still have to use <code>char</code>.</p>
 <pre><code class="language-cpp">const char8_t* utf8str = u8&quot;你吃饭了吗?&quot;;
 std::cout &lt;&lt; utf8str &lt;&lt; std::endl;
 </code></pre>
+</blockquote>
 <p><code>char16_t</code> and <code>char32_t</code> were introduced in C++11 to provide support for Unicode text encoding. <code>char16_t</code> represents a 16-bit code unit of UTF-16 encoded Unicode text, while <code>char32_t</code> represents a 32-bit code unit of UTF-32 encoded Unicode text. </p>
 <div class="table-wrapper"><table><thead><tr><th>Type</th><th>Introduced in</th><th>Main Reason for Introduction</th><th>Literal Prefix</th><th>Sample Code</th></tr></thead><tbody>
 <tr><td><code>char8_t</code></td><td>C++20</td><td>UTF-8 encoding</td><td><code>u8</code></td><td><code>const char8_t* str = u8&quot;吃了吗&quot;;</code></td></tr>
@@ -509,23 +504,31 @@ std::cout &lt;&lt; utf8str &lt;&lt; std::endl;
 <pre><code class="language-cpp">char utf8c = u8'好';
 </code></pre>
 <h2 id="print-utf-8-string-to-console"><a class="header" href="#print-utf-8-string-to-console">Print UTF-8 string to console</a></h2>
-<p><code>std::cout</code> cannot be used to output UTF-8 string to console. Use <code>printf</code> instead.</p>
+<p><code>std::cout</code> cannot be used to output UTF-8 string to console. Use <code>printf</code> instead. On Windows, remember to set the active code page of the Windows commandline console to UTF-8 by running <code>chcp</code> command first.</p>
+<pre><code class="language-bash">chcp 65001
+</code></pre>
+<p>The following code uses <code>printf</code> to output an UTF-8 string.</p>
 <pre><code class="language-cpp">#include &lt;iostream&gt;
 
 using namespace std;
 
+// Remember to run Windows commandline command &quot;chcp 65001&quot; first to set the active
+// code page to UTF-8.
+
 int main() {
-  char8_t utf8Chars[] = u8&quot;你好世界&quot;; // Null terminator automatically appended.
-  char8_t utf8CharsWithNullTerminator[] = u8&quot;你好世界\0&quot;; // Will have two null terminators.
+  // Null terminator automatically appended.
+  char8_t utf8Chars[] = u8&quot;你好世界&quot;;
+  // Will have two null terminators. 
+  char8_t utf8CharsWithNull[] = u8&quot;你好世界\0&quot;; 
 
   auto len_1 = std::char_traits&lt;char8_t&gt;::length(utf8Chars);
-  auto len_2 = std::char_traits&lt;char8_t&gt;::length(utf8CharsWithNullTerminator);
+  auto len_2 = std::char_traits&lt;char8_t&gt;::length(utf8CharsWithNull);
 
   cout &lt;&lt; &quot;length(utf8Chars) = &quot; 
        &lt;&lt; len_1 
        &lt;&lt; endl; // output 12
 
-  cout &lt;&lt; &quot;length(utf8CharsWithNullTerminator) = &quot; 
+  cout &lt;&lt; &quot;length(utf8CharsWithNull) = &quot; 
        &lt;&lt; len_2 
        &lt;&lt; endl; // output 12
 
@@ -545,6 +548,56 @@ int main() {
   return 0;
 }
 
+</code></pre>
+<h2 id="print-a-character-of-utf-8-text-to-console"><a class="header" href="#print-a-character-of-utf-8-text-to-console">Print a character of UTF-8 text to console</a></h2>
+<p>In C++20, the use of the <code>std::codecvt</code> facet is deprecated and discouraged. To display a UTF-8 string character on the Windows commandline console, we need to utilize the platform-specific <code>MultiByteToWideChar</code> function provided by Windows. This will convert the UTF-8 text to wide characters, which can then be output using <code>std::wcout</code>. If we need to access a particular character in the UTF-16 or UTF-32 text based on its position, we should apply the same approach.</p>
+<pre><code class="language-cpp">#include &lt;iostream&gt;
+#include &lt;locale&gt;
+#include &lt;string&gt;
+#include &lt;Windows.h&gt;
+
+using namespace std;
+
+// Remember to run Windows commandline command &quot;chcp 65001&quot; first to set the active
+// code page to UTF-8.
+
+int main() {
+    u8string my_string = u8&quot;こんにちは&quot;;
+
+    // my_string[0] is the byte value of the UTF-8 text at byte position 0.
+    // The actual character could have multiple bytes.
+    // std::cout &lt;&lt; my_string[0] &lt;&lt; std::endl; would fail compiling.
+
+    // Get the required buffer size  
+    int len = MultiByteToWideChar(CP_UTF8,
+                                  0, 
+                                  reinterpret_cast&lt;const char*&gt;(my_string.data()), 
+                                  static_cast&lt;int&gt;(my_string.size()), 
+                                  nullptr, 
+                                  0);
+
+    // Create a buffer of the required size
+    wstring my_wstring(len, 0);
+
+    // Convert to UTF-16 
+    MultiByteToWideChar(CP_UTF8, 
+                        0, 
+                        reinterpret_cast&lt;const char*&gt;(my_string.data()), 
+                        static_cast&lt;int&gt;(my_string.size()), 
+                        &amp;my_wstring[0], 
+                        len); 
+
+    locale::global(locale(&quot;en_US.UTF-8&quot;));
+
+    // Output the string
+    wcout &lt;&lt; my_wstring &lt;&lt; endl; 
+
+    for (int i = 0; i &lt; len; i++) {
+       wcout &lt;&lt; my_wstring[i] &lt;&lt; endl;    
+    }
+
+    return 0;
+}
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="string-literal-concatenation"><a class="header" href="#string-literal-concatenation">String Literal Concatenation</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="library-support"><a class="header" href="#library-support">Library Support</a></h1>
@@ -569,6 +622,22 @@ int main() {
 
         </div>
 
+        <!-- Livereload script (if served using the cli tool) -->
+        <script>
+            const wsProtocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
+            const wsAddress = wsProtocol + "//" + location.host + "/" + "__livereload";
+            const socket = new WebSocket(wsAddress);
+            socket.onmessage = function (event) {
+                if (event.data === "reload") {
+                    socket.close();
+                    location.reload();
+                }
+            };
+
+            window.onbeforeunload = function() {
+                socket.close();
+            }
+        </script>
 
 
 

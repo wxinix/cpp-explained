@@ -157,20 +157,18 @@
 std::cout &lt;&lt; utf8str &lt;&lt; std::endl;
 </code></pre>
 <p>We might expect to see the output &quot;你吃饭了吗?&quot; in the console. However, if the execution character set of the platform is not set to UTF-8, the output may appear garbled or incorrect.</p>
-<blockquote>
+<h3 id="execution-environment-explained"><a class="header" href="#execution-environment-explained"><em>Execution environment explained</em></a></h3>
 <p>The &quot;execution character set of the platform&quot; refers to the character encoding scheme used by the operating system and/or the compiler to represent text data internally in a computer program.</p>
-</blockquote>
-<blockquote>
 <p>In C and C++, the execution character set determines how characters are represented in the char data type. The specific character set used can vary depending on the platform, compiler, and locale settings.</p>
-</blockquote>
-<blockquote>
 <p>For example, on Windows systems, the default execution character set is typically based on the Windows-1252 code page, which is a superset of ASCII that includes characters for European languages. On Unix-based systems, the default execution character set is typically based on the ASCII encoding.</p>
-</blockquote>
 <h2 id="utf-related-character-types"><a class="header" href="#utf-related-character-types">UTF-related character types</a></h2>
-<p><code>char8_t</code> was introduced in C++20 to provide a distinct type that is guaranteed to represent an 8-bit code unit of UTF-8 encoded Unicode text. This allows for safer and more efficient handling of UTF-8 strings, as developers can use char8_t to represent individual code units of the UTF-8 encoding. This can help to avoid issues such as misinterpreting multi-byte sequences or incorrectly handling invalid code points. For example, in the following code, the output will be correct regardless of the execution character set of the platform.</p>
+<p><code>char8_t</code> was introduced in C++20 to provide a distinct type that is guaranteed to represent an 8-bit code unit of UTF-8 encoded Unicode text. This allows for safer and more efficient handling of UTF-8 strings, as developers can use char8_t to represent individual code units of the UTF-8 encoding. This can help to avoid issues such as misinterpreting multi-byte sequences or incorrectly handling invalid code points. </p>
+<blockquote>
+<p>With the current implementation of C++20, the following code cannot be compiled. There is no <code>char8_t</code>-aware I/O streams. We would still have to use <code>char</code>.</p>
 <pre><code class="language-cpp">const char8_t* utf8str = u8&quot;你吃饭了吗?&quot;;
 std::cout &lt;&lt; utf8str &lt;&lt; std::endl;
 </code></pre>
+</blockquote>
 <p><code>char16_t</code> and <code>char32_t</code> were introduced in C++11 to provide support for Unicode text encoding. <code>char16_t</code> represents a 16-bit code unit of UTF-16 encoded Unicode text, while <code>char32_t</code> represents a 32-bit code unit of UTF-32 encoded Unicode text. </p>
 <div class="table-wrapper"><table><thead><tr><th>Type</th><th>Introduced in</th><th>Main Reason for Introduction</th><th>Literal Prefix</th><th>Sample Code</th></tr></thead><tbody>
 <tr><td><code>char8_t</code></td><td>C++20</td><td>UTF-8 encoding</td><td><code>u8</code></td><td><code>const char8_t* str = u8&quot;吃了吗&quot;;</code></td></tr>
@@ -185,23 +183,31 @@ std::cout &lt;&lt; utf8str &lt;&lt; std::endl;
 <pre><code class="language-cpp">char utf8c = u8'好';
 </code></pre>
 <h2 id="print-utf-8-string-to-console"><a class="header" href="#print-utf-8-string-to-console">Print UTF-8 string to console</a></h2>
-<p><code>std::cout</code> cannot be used to output UTF-8 string to console. Use <code>printf</code> instead.</p>
+<p><code>std::cout</code> cannot be used to output UTF-8 string to console. Use <code>printf</code> instead. On Windows, remember to set the active code page of the Windows commandline console to UTF-8 by running <code>chcp</code> command first.</p>
+<pre><code class="language-bash">chcp 65001
+</code></pre>
+<p>The following code uses <code>printf</code> to output an UTF-8 string.</p>
 <pre><code class="language-cpp">#include &lt;iostream&gt;
 
 using namespace std;
 
+// Remember to run Windows commandline command &quot;chcp 65001&quot; first to set the active
+// code page to UTF-8.
+
 int main() {
-  char8_t utf8Chars[] = u8&quot;你好世界&quot;; // Null terminator automatically appended.
-  char8_t utf8CharsWithNullTerminator[] = u8&quot;你好世界\0&quot;; // Will have two null terminators.
+  // Null terminator automatically appended.
+  char8_t utf8Chars[] = u8&quot;你好世界&quot;;
+  // Will have two null terminators. 
+  char8_t utf8CharsWithNull[] = u8&quot;你好世界\0&quot;; 
 
   auto len_1 = std::char_traits&lt;char8_t&gt;::length(utf8Chars);
-  auto len_2 = std::char_traits&lt;char8_t&gt;::length(utf8CharsWithNullTerminator);
+  auto len_2 = std::char_traits&lt;char8_t&gt;::length(utf8CharsWithNull);
 
   cout &lt;&lt; &quot;length(utf8Chars) = &quot; 
        &lt;&lt; len_1 
        &lt;&lt; endl; // output 12
 
-  cout &lt;&lt; &quot;length(utf8CharsWithNullTerminator) = &quot; 
+  cout &lt;&lt; &quot;length(utf8CharsWithNull) = &quot; 
        &lt;&lt; len_2 
        &lt;&lt; endl; // output 12
 
@@ -221,6 +227,56 @@ int main() {
   return 0;
 }
 
+</code></pre>
+<h2 id="print-a-character-of-utf-8-text-to-console"><a class="header" href="#print-a-character-of-utf-8-text-to-console">Print a character of UTF-8 text to console</a></h2>
+<p>In C++20, the use of the <code>std::codecvt</code> facet is deprecated and discouraged. To display a UTF-8 string character on the Windows commandline console, we need to utilize the platform-specific <code>MultiByteToWideChar</code> function provided by Windows. This will convert the UTF-8 text to wide characters, which can then be output using <code>std::wcout</code>. If we need to access a particular character in the UTF-16 or UTF-32 text based on its position, we should apply the same approach.</p>
+<pre><code class="language-cpp">#include &lt;iostream&gt;
+#include &lt;locale&gt;
+#include &lt;string&gt;
+#include &lt;Windows.h&gt;
+
+using namespace std;
+
+// Remember to run Windows commandline command &quot;chcp 65001&quot; first to set the active
+// code page to UTF-8.
+
+int main() {
+    u8string my_string = u8&quot;こんにちは&quot;;
+
+    // my_string[0] is the byte value of the UTF-8 text at byte position 0.
+    // The actual character could have multiple bytes.
+    // std::cout &lt;&lt; my_string[0] &lt;&lt; std::endl; would fail compiling.
+
+    // Get the required buffer size  
+    int len = MultiByteToWideChar(CP_UTF8,
+                                  0, 
+                                  reinterpret_cast&lt;const char*&gt;(my_string.data()), 
+                                  static_cast&lt;int&gt;(my_string.size()), 
+                                  nullptr, 
+                                  0);
+
+    // Create a buffer of the required size
+    wstring my_wstring(len, 0);
+
+    // Convert to UTF-16 
+    MultiByteToWideChar(CP_UTF8, 
+                        0, 
+                        reinterpret_cast&lt;const char*&gt;(my_string.data()), 
+                        static_cast&lt;int&gt;(my_string.size()), 
+                        &amp;my_wstring[0], 
+                        len); 
+
+    locale::global(locale(&quot;en_US.UTF-8&quot;));
+
+    // Output the string
+    wcout &lt;&lt; my_wstring &lt;&lt; endl; 
+
+    for (int i = 0; i &lt; len; i++) {
+       wcout &lt;&lt; my_wstring[i] &lt;&lt; endl;    
+    }
+
+    return 0;
+}
 </code></pre>
 
                     </main>
@@ -252,6 +308,22 @@ int main() {
 
         </div>
 
+        <!-- Livereload script (if served using the cli tool) -->
+        <script>
+            const wsProtocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
+            const wsAddress = wsProtocol + "//" + location.host + "/" + "__livereload";
+            const socket = new WebSocket(wsAddress);
+            socket.onmessage = function (event) {
+                if (event.data === "reload") {
+                    socket.close();
+                    location.reload();
+                }
+            };
+
+            window.onbeforeunload = function() {
+                socket.close();
+            }
+        </script>
 
 
 
