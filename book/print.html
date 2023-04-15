@@ -624,7 +624,7 @@ int main() {
 }
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="automatic-string-literal-concatenation"><a class="header" href="#automatic-string-literal-concatenation">Automatic String Literal Concatenation</a></h1>
-<p>Automatic concatenation of adjacent string literals is a feature present in both C and C++ programming languages. It allows the compiler to automatically merge two or more string literals that are placed next to each other, without any explicit concatenation operator.  This can be useful for breaking long strings into shorter, more manageable pieces, while still treating them as a single string constant.</p>
+<p>Automatic concatenation of adjacent string literals is a feature present in both C and C++ programming languages. It allows the compiler to automatically merge two or more string literals that are placed next to each other, without any explicit concatenation operator. This can be useful for breaking long strings into shorter, more manageable pieces, while still treating them as a single string constant.</p>
 <p>Here is an example:</p>
 <pre><code class="language-cpp">const char* my_string = &quot;Hello,&quot;
                         &quot;World!&quot;;
@@ -633,9 +633,9 @@ int main() {
 <pre><code class="language-cpp">const char* my_string = &quot;Hello,World!&quot;;
 </code></pre>
 <blockquote>
-<p>This feature has its roots in the C programming language, created by Dennis Ritchie in the early 1970s. It was inherited by C++ when it was developed by Bjarne Stroustrup in the early 1980s. programming.</p>
+<p>This feature has its roots in the C programming language. It was inherited by C++ in the early 1980s.</p>
 </blockquote>
-<h2 id="nuances-and-caveats"><a class="header" href="#nuances-and-caveats">Nuances and caveats</a></h2>
+<h2 id="notes-on-automatic-string-literal-concatenation"><a class="header" href="#notes-on-automatic-string-literal-concatenation">Notes on automatic string literal concatenation</a></h2>
 <p>Some nuances and caveats of using automatic concatenation of adjacent string literals:</p>
 <h3 id="whitespace-not-strictly-required"><a class="header" href="#whitespace-not-strictly-required"><em>Whitespace not strictly required</em></a></h3>
 <p>Adjacent string literals can be separated by whitespace, like a <code>space</code>, a <code>tab</code>, or a <code>newline</code>, for the concatenation to occur. However, white space between the literals is not strictly required, so the following is still valid in both C and C++:</p>
@@ -646,7 +646,7 @@ int main() {
 
 </code></pre>
 <blockquote>
-<p>It's a good practice to include whitespace between adjacent string literals for better readability and maintainability of your code.</p>
+<p>It's a good practice to include whitespace between adjacent string literals for better readability and maintainability.</p>
 </blockquote>
 <h3 id="compile-time-concatenation"><a class="header" href="#compile-time-concatenation"><em>Compile time concatenation</em></a></h3>
 <p>The concatenation happens at compile-time, not at runtime, which means it has no performance overhead.</p>
@@ -655,7 +655,7 @@ int main() {
 <h3 id="mixed-encodings"><a class="header" href="#mixed-encodings"><em>Mixed encodings</em></a></h3>
 <p>Be aware that trying to concatenate string literals with different character encodings may lead to compilation errors or unexpected behavior. For example, the following code will result in compiler error <em>&quot;concatenation of string literals with conflicting encoding prefixes&quot;</em>.</p>
 <pre><code class="language-cpp">const char8_t* utf8Chars = u8&quot;Hello,&quot; 
-                        L&quot;World!&quot;;
+                           L&quot;World!&quot;;
 </code></pre>
 <p>If one of the string literals does not have prefix, it will be treated as having the same as others, hence the following is a valid operation:</p>
 <pre><code class="language-cpp">const char8_t* utf8Chars = u8&quot;Hello,&quot; 
@@ -737,22 +737,6 @@ str3 after strncat: I am a string.worl
 
         </div>
 
-        <!-- Livereload script (if served using the cli tool) -->
-        <script>
-            const wsProtocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
-            const wsAddress = wsProtocol + "//" + location.host + "/" + "__livereload";
-            const socket = new WebSocket(wsAddress);
-            socket.onmessage = function (event) {
-                if (event.data === "reload") {
-                    socket.close();
-                    location.reload();
-                }
-            };
-
-            window.onbeforeunload = function() {
-                socket.close();
-            }
-        </script>
 
 
 
