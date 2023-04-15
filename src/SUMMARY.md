@@ -10,7 +10,7 @@
   - [Character Types](primitive/CharTypes.md)
     - [Character Sets and Encodings](primitive/CharTypes_CharSetsEncodings.md)
     - [New Character Types](primitive/CharTypes_NewCharTypes.md)
-    - [String Literal Concatenation](primitive/CharTypes_StringLiteralCat.md)
+    - [Automatic String Literal Concatenation](primitive/CharTypes_StringLiteralCat.md)
     - [Library Support](primitive/CharTypes_LibrarySuppor.md)
 
 - [Namespace](namespace/README.md)
