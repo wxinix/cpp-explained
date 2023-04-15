@@ -1,6 +1,6 @@
 # Automatic String Literal Concatenation
 
-Automatic concatenation of adjacent string literals is a feature present in both C and C++ programming languages. It allows the compiler to automatically merge two or more string literals that are placed next to each other, without any explicit concatenation operator.  This can be useful for breaking long strings into shorter, more manageable pieces, while still treating them as a single string constant.
+Automatic concatenation of adjacent string literals is a feature present in both C and C++ programming languages. It allows the compiler to automatically merge two or more string literals that are placed next to each other, without any explicit concatenation operator. This can be useful for breaking long strings into shorter, more manageable pieces, while still treating them as a single string constant.
 
 Here is an example:
 
@@ -14,10 +14,9 @@ The compiler will automatically concatenate the two string literals, resulting i
 const char* my_string = "Hello,World!";
 ```
 
-> This feature has its roots in the C programming language, created by Dennis Ritchie in the early 1970s. It was inherited by C++ when it was developed by Bjarne Stroustrup in the early 1980s. programming.
+> This feature has its roots in the C programming language. It was inherited by C++ in the early 1980s.
 
-
-## Nuances and caveats
+## Notes on automatic string literal concatenation
 Some nuances and caveats of using automatic concatenation of adjacent string literals:
 
 ### *Whitespace not strictly required*
@@ -31,7 +30,7 @@ The compile will automatically concatenate the adjacent string literals, resulti
   const char* my_string = "Hello,World";
 
   ```
-> It's a good practice to include whitespace between adjacent string literals for better readability and maintainability of your code.
+> It's a good practice to include whitespace between adjacent string literals for better readability and maintainability.
 
 ### *Compile time concatenation*
 The concatenation happens at compile-time, not at runtime, which means it has no performance overhead.
@@ -43,7 +42,7 @@ Automatic concatenation can only be used with string literals, not with variable
 Be aware that trying to concatenate string literals with different character encodings may lead to compilation errors or unexpected behavior. For example, the following code will result in compiler error *"concatenation of string literals with conflicting encoding prefixes"*.
 ```cpp
 const char8_t* utf8Chars = u8"Hello," 
-                        L"World!";
+                           L"World!";
 ```
 
 If one of the string literals does not have prefix, it will be treated as having the same as others, hence the following is a valid operation:
