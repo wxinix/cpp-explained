@@ -150,6 +150,76 @@
                 <div id="content" class="content">
                     <main>
                         <h1 id="library-support"><a class="header" href="#library-support">Library Support</a></h1>
+<h2 id="deprecated-library-support"><a class="header" href="#deprecated-library-support">Deprecated library support</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>Component</th><th>Purpose</th><th>Status</th></tr></thead><tbody>
+<tr><td><code>template&lt;class InternT, class ExternT, class StateT&gt; class codecvt</code> defined in header <code>&lt;locale&gt;</code></td><td>Provides a template class for converting between different character encodings</td><td>Deprecated in C++20</td></tr>
+<tr><td><code>&lt;codecvt&gt;</code> header</td><td>Provides a set of templates for character encoding conversion, including <code>std::codecvt_utf8</code>, <code>std::codecvt_utf16</code>, and <code>std::codecvt_utf8_utf16</code></td><td>Deprecated in C++17</td></tr>
+<tr><td><code>std::wstring_convert</code></td><td>Provides a higher-level interface for converting between wide character strings (<code>std::wstring</code>) and narrow character strings (<code>std::string</code>)</td><td>Deprecated in C++17</td></tr>
+</tbody></table>
+</div>
+<h2 id="new-string-types"><a class="header" href="#new-string-types">New string types</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>String Type</th><th>Description</th><th>Basic Definition</th><th>Introduced in C++</th></tr></thead><tbody>
+<tr><td>u8string</td><td>A string of 8-bit characters encoded in UTF-8</td><td><code>std::basic_string&lt;char8_t&gt;</code></td><td>C++20</td></tr>
+<tr><td>u16string</td><td>A string of 16-bit characters encoded in UTF-16</td><td><code>std::basic_string&lt;char16_t&gt;</code></td><td>C++11</td></tr>
+<tr><td>u32string</td><td>A string of 32-bit characters encoded in UTF-32</td><td><code>std::basic_string&lt;char32_t&gt;</code></td><td>C++11</td></tr>
+</tbody></table>
+</div>
+<h2 id="stdpmru8string"><a class="header" href="#stdpmru8string"><code>std::pmr::u8string</code></a></h2>
+<p><code>std::pmr::u8string</code> is a variant of the <code>std::basic_string</code> template that represents a sequence of 8-bit characters encoded in UTF-8 format, and allows for custom memory allocation using user-defined memory resources. It is part of the C++20 <em>Polymorphic Memory Resource</em> library (<code>std::pmr</code>).</p>
+<p>To use <code>std::pmr::u8string</code>, you need to include the <code>&lt;string&gt;</code> and <code>&lt;memory_resource&gt;</code> headers, and create a <code>std::pmr::memory_resource</code> object to use as the memory allocator. You can then create an instance of <code>std::pmr::u8string</code> by passing the memory allocator as a constructor argument.</p>
+<p>Here's an example of how to use <code>std::pmr::u8string</code>:</p>
+<pre><code class="language-cpp">#include &lt;iostream&gt;
+#include &lt;string&gt;
+#include &lt;memory_resource&gt;
+
+int main()
+{
+    // create a memory pool using std::pmr::monotonic_buffer_resource
+    std::pmr::monotonic_buffer_resource pool(1024);
+
+    // create an std::pmr::u8string using the memory pool
+    std::pmr::u8string str(u8&quot;Hello, world!&quot;, &amp;pool);
+
+    // print the string to the console
+    printf(reinterpret_cast&lt;char*&gt;(str.data()));
+
+    return 0;
+}
+</code></pre>
+<h2 id="c11-way"><a class="header" href="#c11-way">C11 way</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>Function</th><th>Description</th></tr></thead><tbody>
+<tr><td><code>mbrtoc16</code></td><td>Converts a multibyte sequence to a 16-bit wide character</td></tr>
+<tr><td><code>c16rtomb</code></td><td>Converts a 16-bit wide character to a multibyte sequence</td></tr>
+<tr><td><code>mbrtoc32</code></td><td>Converts a multibyte sequence to a 32-bit wide character</td></tr>
+<tr><td><code>c32rtomb</code></td><td>Converts a 32-bit wide character to a multibyte sequence</td></tr>
+</tbody></table>
+</div>
+<p>These are C11 functions. </p>
+<blockquote>
+<p>In the function name <code>mbrtoc16</code>, the &quot;rto&quot; stands for &quot;read to&quot;. This function reads a multibyte character sequence and converts it to a 16-bit wide character. The &quot;c16&quot; part of the function name indicates that the output is a 16-bit character, while the &quot;mb&quot; part indicates that the input is a multibyte character sequence.</p>
+</blockquote>
+<p>Here's an example of using the <code>mbrtoc16</code> function to convert a multibyte sequence to a 16-bit wide character:</p>
+<pre><code class="language-cpp">#include &lt;stdio.h&gt;
+#include &lt;uchar.h&gt;
+#include &lt;locale.h&gt;
+#include &lt;wchar.h&gt;
+
+int main() {
+    setlocale(LC_ALL, &quot;en_US.UTF-8&quot;);
+
+    char mbstr[] = &quot;Hello, world!&quot;; // Note char8_t is not part of C language yet.
+    char16_t wc16;
+    mbstate_t state = { 0 };
+    size_t res = mbrtoc16(&amp;wc16, mbstr, sizeof(mbstr), &amp;state);
+    if (res == (size_t)-1 || res == (size_t)-2) {
+        printf(&quot;Error: invalid multibyte sequence\n&quot;);
+        return 1;
+    }
+    printf(&quot;The first character is: %lc\n&quot;, (wint_t)wc16);
+
+    return 0;
+}
+</code></pre>
 
                     </main>
 
@@ -180,6 +250,22 @@
 
         </div>
 
+        <!-- Livereload script (if served using the cli tool) -->
+        <script>
+            const wsProtocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
+            const wsAddress = wsProtocol + "//" + location.host + "/" + "__livereload";
+            const socket = new WebSocket(wsAddress);
+            socket.onmessage = function (event) {
+                if (event.data === "reload") {
+                    socket.close();
+                    location.reload();
+                }
+            };
+
+            window.onbeforeunload = function() {
+                socket.close();
+            }
+        </script>
 
 
 
