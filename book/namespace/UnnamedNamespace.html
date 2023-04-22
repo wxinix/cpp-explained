@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Integer Types - Modern C++ Explained</title>
+        <title>Unnamed Namespace - Modern C++ Explained</title>
 
 
         <!-- Custom HTML head -->
@@ -85,7 +85,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../index.html">Preface</a></li><li class="chapter-item expanded affix "><li class="part-title">Modern C++ Elements</li><li class="chapter-item expanded "><a href="../primitive/index.html">Fundamental Data Types</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../primitive/IntTypes.html" class="active">Integer Types</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../primitive/IntTypes_longlong.html">Integer Type long long</a></li></ol></li><li class="chapter-item expanded "><a href="../primitive/CharTypes.html">Character Types</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../primitive/CharTypes_CharSetsEncodings.html">Character Sets and Encodings</a></li><li class="chapter-item expanded "><a href="../primitive/CharTypes_NewCharTypes.html">New Character Types</a></li><li class="chapter-item expanded "><a href="../primitive/CharTypes_StringLiteralCat.html">Automatic String Literal Concatenation</a></li><li class="chapter-item expanded "><a href="../primitive/CharTypes_LibrarySuppor.html">Library Support</a></li></ol></li></ol></li><li class="chapter-item expanded "><a href="../namespace/index.html">Namespace</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../namespace/InlineNamespace.html">Inline Namespace</a></li><li class="chapter-item expanded "><a href="../namespace/NewNestedNamespaceSyntax.html">New Nested Namespace Syntax</a></li><li class="chapter-item expanded "><a href="../namespace/UnnamedNamespace.html">Unnamed Namespace</a></li><li class="chapter-item expanded "><a href="../namespace/MergedNamespace.html">Merged Namespace</a></li><li class="chapter-item expanded "><a href="../namespace/GlobalNamespace.html">Global Namespace</a></li></ol></li><li class="chapter-item expanded "><li class="part-title">Meta-template Programming</li><li class="chapter-item expanded affix "><li class="part-title">Algorithms</li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../index.html">Preface</a></li><li class="chapter-item expanded affix "><li class="part-title">Modern C++ Elements</li><li class="chapter-item expanded "><a href="../primitive/index.html">Fundamental Data Types</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../primitive/IntTypes.html">Integer Types</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../primitive/IntTypes_longlong.html">Integer Type long long</a></li></ol></li><li class="chapter-item expanded "><a href="../primitive/CharTypes.html">Character Types</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../primitive/CharTypes_CharSetsEncodings.html">Character Sets and Encodings</a></li><li class="chapter-item expanded "><a href="../primitive/CharTypes_NewCharTypes.html">New Character Types</a></li><li class="chapter-item expanded "><a href="../primitive/CharTypes_StringLiteralCat.html">Automatic String Literal Concatenation</a></li><li class="chapter-item expanded "><a href="../primitive/CharTypes_LibrarySuppor.html">Library Support</a></li></ol></li></ol></li><li class="chapter-item expanded "><a href="../namespace/index.html">Namespace</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../namespace/InlineNamespace.html">Inline Namespace</a></li><li class="chapter-item expanded "><a href="../namespace/NewNestedNamespaceSyntax.html">New Nested Namespace Syntax</a></li><li class="chapter-item expanded "><a href="../namespace/UnnamedNamespace.html" class="active">Unnamed Namespace</a></li><li class="chapter-item expanded "><a href="../namespace/MergedNamespace.html">Merged Namespace</a></li><li class="chapter-item expanded "><a href="../namespace/GlobalNamespace.html">Global Namespace</a></li></ol></li><li class="chapter-item expanded "><li class="part-title">Meta-template Programming</li><li class="chapter-item expanded affix "><li class="part-title">Algorithms</li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -149,71 +149,55 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="integer-types"><a class="header" href="#integer-types">Integer Types</a></h1>
-<h2 id="common-integer-types"><a class="header" href="#common-integer-types">Common integer types</a></h2>
-<p>C++ supports several integer types with varying sizes and ranges. Here is a list of the most commonly used integer types in C++, available since the earlier versions of the language. Note that <code>char</code> is treated as integer type here for practical reason, though technically it is not.</p>
-<div class="table-wrapper"><table><thead><tr><th>Type name</th><th>Typical Size (in bytes)</th><th>Range</th></tr></thead><tbody>
-<tr><td><code>bool</code></td><td>1</td><td>Boolean literal <code>true</code> or <code>false</code>, added in C++98</td></tr>
-<tr><td><code>char</code></td><td>1</td><td>[-128, 127] or [0, 255] depending on signedness</td></tr>
-<tr><td><code>short</code></td><td>2</td><td>[-32,768, 32,767]</td></tr>
-<tr><td><code>int</code></td><td>4</td><td>[-2,147,483,648, 2,147,483,647]</td></tr>
-<tr><td><code>long</code></td><td>4 or 8</td><td>[-2,147,483,648, 2,147,483,647] or [-9,223,372,036,854,775,808, 9,223,372,036,854,775,807] depending on platform</td></tr>
-<tr><td><code>long long</code></td><td>8</td><td>[-9,223,372,036,854,775,808, 9,223,372,036,854,775,807]</td></tr>
-<tr><td><code>unsigned char</code></td><td>1</td><td>[0, 255]</td></tr>
-<tr><td><code>unsigned short</code></td><td>2</td><td>[0, 65,535]</td></tr>
-<tr><td><code>unsigned int</code></td><td>4</td><td>[0, 4,294,967,295]</td></tr>
-<tr><td><code>unsigned long</code></td><td>4 or 8</td><td>[0, 4,294,967,295] or [0, 18,446,744,073,709,551,615] depending on platform</td></tr>
-<tr><td><code>unsigned long long</code></td><td>8</td><td>[0, 18,446,744,073,709,551,615]</td></tr>
-</tbody></table>
-</div>
-<p>The C++ standard does not specify the minimum bytes for these integer types, except the following constraints:</p>
-<pre><code class="language-cpp">sizeof(char)      == 1                  // Rule 1
-sizeof(char)      &lt;= sizeof(short)      // Rule 2
-sizeof(short)     &lt;= sizeof(int)        // Rule 3
-sizeof(int)       &lt;= sizeof(long)       // Rule 4
-sizeof(long)      &lt;= sizeof(long long)  // Rule 5
-sizeof(char)      *  CHAR_BIT &gt;= 8      // Rule 6
-sizeof(short)     *  CHAR_BIT &gt;= 16     // Rule 7
-sizeof(int)       *  CHAR_BIT &gt;= 16     // Rule 8
-sizeof(long)      *  CHAR_BIT &gt;= 32     // Rule 9
-sizeof(long long) *  CHAR_BIT &gt;= 64     // Rule 10
+                        <h1 id="unnamed-namespace"><a class="header" href="#unnamed-namespace">Unnamed Namespace</a></h1>
+<p>The <code>unnamed namespace</code> (or anonymous namespace) is a feature in C++ that was introduced in the C++98 standard. It provides a way to declare identifiers (e.g., functions, variables, or types) with internal linkage, meaning they are only visible within the scope of their parent namespace, or translation unit (i.e., the source file) in which they are defined.</p>
+<p><code>Unnamed namespaces</code> can be declared using the <code>namespace</code> keyword, followed by a pair of braces, like this:</p>
+<pre><code class="language-cpp">namespace {
+    // Your code here
+}
 </code></pre>
-<p><code>CHAR_BIT</code> represents the number of bits in a char type. Although most modern architectures use 8 bits per byte, this is not always the case as some older machines may have used 7-bit bytes. Under Rule 4, C/C++ allows <code>long</code> and <code>int</code> to have the same size, but it must be at least 32 bits according to Rule 9.</p>
-<h2 id="fixed-size-integer-types"><a class="header" href="#fixed-size-integer-types">Fixed size integer types</a></h2>
-<p>The C++11 standard introduced new integer types such as <code>int8_t</code>, <code>int16_t</code>, <code>int32_t</code>, and <code>int64_t</code> with fixed sizes, as well as their unsigned counterparts, <code>uint8_t</code>, <code>uint16_t</code>, <code>uint32_t</code>, and <code>uint64_t</code>. These types are guaranteed to have the specified size and range on any conforming implementation. </p>
-<p>The following table summarizes fixed size integer types - note that the <code>intN_t</code> and <code>uintN_t</code> types are guaranteed to have exactly <code>N</code> bits, where <code>N</code> is 8, 16, 32, or 64.</p>
-<div class="table-wrapper"><table><thead><tr><th>Type</th><th>Size (in bytes)</th><th>Range</th></tr></thead><tbody>
-<tr><td><code>int8_t</code></td><td>1</td><td>[-128, 127]</td></tr>
-<tr><td><code>uint8_t</code></td><td>1</td><td>[0, 255]</td></tr>
-<tr><td><code>int16_t</code></td><td>2</td><td>[-32,768, 32,767]</td></tr>
-<tr><td><code>uint16_t</code></td><td>2</td><td>[0, 65,535]</td></tr>
-<tr><td><code>int32_t</code></td><td>4</td><td>[-2,147,483,648, 2,147,483,647]</td></tr>
-<tr><td><code>uint32_t</code></td><td>4</td><td>[0, 4,294,967,295]</td></tr>
-<tr><td><code>int64_t</code></td><td>8</td><td>[-9,223,372,036,854,775,808, 9,223,372,036,854,775,807]</td></tr>
-<tr><td><code>uint64_t</code></td><td>8</td><td>[0, 18,446,744,073,709,551,615]</td></tr>
-</tbody></table>
-</div>
-<h2 id="128-bit-integer-types"><a class="header" href="#128-bit-integer-types">128-bit integer types</a></h2>
-<p>The C++ standard does not define a 128-bit integer type, as of the latest version C++20.</p>
-<p>However, some compilers and libraries provide extensions that define a 128-bit integer type. For example, the GCC and Clang compilers provide an __int128 type, which is a 128-bit signed integer type. The Boost Multiprecision library provides several integer types with arbitrary precision, including a boost::multiprecision::int128_t type.</p>
-<div class="table-wrapper"><table><thead><tr><th>Type name</th><th>Library/Compiler</th><th>Description</th></tr></thead><tbody>
-<tr><td><code>__int128</code></td><td>GCC, Clang</td><td>A 128-bit signed integer type</td></tr>
-<tr><td><code>unsigned __int128</code></td><td>GCC, Clang</td><td>A 128-bit unsigned integer type</td></tr>
-<tr><td><code>int128_t</code></td><td>Boost Multiprecision</td><td>A 128-bit signed integer type</td></tr>
-<tr><td><code>uint128_t</code></td><td>Boost Multiprecision</td><td>A 128-bit unsigned integer type</td></tr>
-</tbody></table>
-</div>
-<p>It's important to note that the availability and behavior of non-standard integer types may vary depending on the platform and compiler used.</p>
+<p>For example, a helper function or a constant that is only needed within a single source file, can be put in an unnamed namespace to prevent it from being accessible in other parts of the program:</p>
+<pre><code class="language-cpp">// File: my_file.cpp
+#include &quot;my_file.h&quot;
+
+namespace {
+    const int someConstant = 42;
+
+    void helperFunction() {
+        // Implementation here
+    }
+}
+
+void myPublicFunction() {
+    helperFunction();
+    // Other implementation details
+}
+</code></pre>
+<p>In this example, <code>someConstant</code> and <code>helperFunction</code> are only visible within <code>my_file.cpp</code> and won't conflict with any other code using the same names.</p>
+<p>Another example:</p>
+<pre><code class="language-cpp">namespace my_namespace {
+    namespace {
+        void helperFunction() {
+            // Implementation here
+        }
+    }
+
+    void publicFunction() {
+        helperFunction(); // This is allowed since helperFunction() is in the same parent namespace
+    }
+}
+</code></pre>
+<p>In this example, <code>helperFunction()</code> is declared within an unnamed namespace inside <code>my_namespace</code>. Although <code>helperFunction()</code> has internal linkage and is not visible outside of the translation unit, it can still be accessed by other functions within the same parent namespace (<code>my_namespace</code>), such as <code>publicFunction()</code>.</p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="../primitive/index.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../namespace/NewNestedNamespaceSyntax.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next" href="../primitive/IntTypes_longlong.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next" href="../namespace/MergedNamespace.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -223,11 +207,11 @@ sizeof(long long) *  CHAR_BIT &gt;= 64     // Rule 10
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="../primitive/index.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../namespace/NewNestedNamespaceSyntax.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next" href="../primitive/IntTypes_longlong.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next" href="../namespace/MergedNamespace.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>

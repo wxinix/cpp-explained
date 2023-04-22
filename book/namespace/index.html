@@ -85,7 +85,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../index.html">Preface</a></li><li class="chapter-item expanded affix "><li class="part-title">Modern C++ Elements</li><li class="chapter-item expanded "><a href="../primitive/index.html">Fundamental Data Types</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../primitive/IntTypes.html">Integer Types</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../primitive/IntTypes_longlong.html">Integer Type long long</a></li></ol></li><li class="chapter-item expanded "><a href="../primitive/CharTypes.html">Character Types</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../primitive/CharTypes_CharSetsEncodings.html">Character Sets and Encodings</a></li><li class="chapter-item expanded "><a href="../primitive/CharTypes_NewCharTypes.html">New Character Types</a></li><li class="chapter-item expanded "><a href="../primitive/CharTypes_StringLiteralCat.html">Automatic String Literal Concatenation</a></li><li class="chapter-item expanded "><a href="../primitive/CharTypes_LibrarySuppor.html">Library Support</a></li></ol></li></ol></li><li class="chapter-item expanded "><a href="../namespace/index.html" class="active">Namespace</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../namespace/InlineNamespace.html">Inline Namespace</a></li><li class="chapter-item expanded "><a href="../namespace/NestedNamespace.html">Nested Namespace</a></li></ol></li><li class="chapter-item expanded "><li class="part-title">Meta-template Programming</li><li class="chapter-item expanded affix "><li class="part-title">Algorithms</li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../index.html">Preface</a></li><li class="chapter-item expanded affix "><li class="part-title">Modern C++ Elements</li><li class="chapter-item expanded "><a href="../primitive/index.html">Fundamental Data Types</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../primitive/IntTypes.html">Integer Types</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../primitive/IntTypes_longlong.html">Integer Type long long</a></li></ol></li><li class="chapter-item expanded "><a href="../primitive/CharTypes.html">Character Types</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../primitive/CharTypes_CharSetsEncodings.html">Character Sets and Encodings</a></li><li class="chapter-item expanded "><a href="../primitive/CharTypes_NewCharTypes.html">New Character Types</a></li><li class="chapter-item expanded "><a href="../primitive/CharTypes_StringLiteralCat.html">Automatic String Literal Concatenation</a></li><li class="chapter-item expanded "><a href="../primitive/CharTypes_LibrarySuppor.html">Library Support</a></li></ol></li></ol></li><li class="chapter-item expanded "><a href="../namespace/index.html" class="active">Namespace</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../namespace/InlineNamespace.html">Inline Namespace</a></li><li class="chapter-item expanded "><a href="../namespace/NewNestedNamespaceSyntax.html">New Nested Namespace Syntax</a></li><li class="chapter-item expanded "><a href="../namespace/UnnamedNamespace.html">Unnamed Namespace</a></li><li class="chapter-item expanded "><a href="../namespace/MergedNamespace.html">Merged Namespace</a></li><li class="chapter-item expanded "><a href="../namespace/GlobalNamespace.html">Global Namespace</a></li></ol></li><li class="chapter-item expanded "><li class="part-title">Meta-template Programming</li><li class="chapter-item expanded affix "><li class="part-title">Algorithms</li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -150,6 +150,29 @@
                 <div id="content" class="content">
                     <main>
                         <h1 id="namespace"><a class="header" href="#namespace">Namespace</a></h1>
+<p>C++ namespaces provide a way to group related declarations and definitions, such as classes, functions, and variables, under a common name. This helps to avoid naming conflicts between different parts of a program or different libraries that may be used together.</p>
+<p>Namespaces were introduced into the C++ standard with the release of C++98. The syntax for declaring and defining namespaces is similar to that used for classes. Here's an example:</p>
+<pre><code class="language-cpp">// Declaration of a namespace
+namespace MyNamespace {
+    int x;
+    void foo();
+}
+
+// Definition of the namespace's contents
+namespace MyNamespace {
+    int x = 42;
+    void foo() {
+        // Implementation of the function
+    }
+}
+</code></pre>
+<p>In this example, <code>MyNamespace</code> is declared and defined to contain an integer variable <code>x</code> and a function <code>foo()</code>. The namespace's contents can be accessed using the scope resolution operator <code>::</code>, like this:</p>
+<pre><code class="language-cpp">int main() {
+    MyNamespace::x = 10;
+    MyNamespace::foo();
+    return 0;
+}
+</code></pre>
 
                     </main>
 

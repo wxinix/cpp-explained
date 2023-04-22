@@ -85,7 +85,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../index.html">Preface</a></li><li class="chapter-item expanded affix "><li class="part-title">Modern C++ Elements</li><li class="chapter-item expanded "><a href="../primitive/index.html">Fundamental Data Types</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../primitive/IntTypes.html">Integer Types</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../primitive/IntTypes_longlong.html">Integer Type long long</a></li></ol></li><li class="chapter-item expanded "><a href="../primitive/CharTypes.html">Character Types</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../primitive/CharTypes_CharSetsEncodings.html">Character Sets and Encodings</a></li><li class="chapter-item expanded "><a href="../primitive/CharTypes_NewCharTypes.html">New Character Types</a></li><li class="chapter-item expanded "><a href="../primitive/CharTypes_StringLiteralCat.html">Automatic String Literal Concatenation</a></li><li class="chapter-item expanded "><a href="../primitive/CharTypes_LibrarySuppor.html">Library Support</a></li></ol></li></ol></li><li class="chapter-item expanded "><a href="../namespace/index.html">Namespace</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../namespace/InlineNamespace.html" class="active">Inline Namespace</a></li><li class="chapter-item expanded "><a href="../namespace/NestedNamespace.html">Nested Namespace</a></li></ol></li><li class="chapter-item expanded "><li class="part-title">Meta-template Programming</li><li class="chapter-item expanded affix "><li class="part-title">Algorithms</li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../index.html">Preface</a></li><li class="chapter-item expanded affix "><li class="part-title">Modern C++ Elements</li><li class="chapter-item expanded "><a href="../primitive/index.html">Fundamental Data Types</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../primitive/IntTypes.html">Integer Types</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../primitive/IntTypes_longlong.html">Integer Type long long</a></li></ol></li><li class="chapter-item expanded "><a href="../primitive/CharTypes.html">Character Types</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../primitive/CharTypes_CharSetsEncodings.html">Character Sets and Encodings</a></li><li class="chapter-item expanded "><a href="../primitive/CharTypes_NewCharTypes.html">New Character Types</a></li><li class="chapter-item expanded "><a href="../primitive/CharTypes_StringLiteralCat.html">Automatic String Literal Concatenation</a></li><li class="chapter-item expanded "><a href="../primitive/CharTypes_LibrarySuppor.html">Library Support</a></li></ol></li></ol></li><li class="chapter-item expanded "><a href="../namespace/index.html">Namespace</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../namespace/InlineNamespace.html" class="active">Inline Namespace</a></li><li class="chapter-item expanded "><a href="../namespace/NewNestedNamespaceSyntax.html">New Nested Namespace Syntax</a></li><li class="chapter-item expanded "><a href="../namespace/UnnamedNamespace.html">Unnamed Namespace</a></li><li class="chapter-item expanded "><a href="../namespace/MergedNamespace.html">Merged Namespace</a></li><li class="chapter-item expanded "><a href="../namespace/GlobalNamespace.html">Global Namespace</a></li></ol></li><li class="chapter-item expanded "><li class="part-title">Meta-template Programming</li><li class="chapter-item expanded affix "><li class="part-title">Algorithms</li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -150,6 +150,57 @@
                 <div id="content" class="content">
                     <main>
                         <h1 id="inline-namespace"><a class="header" href="#inline-namespace">Inline Namespace</a></h1>
+<h2 id="what-is-inline-namespace"><a class="header" href="#what-is-inline-namespace">What is <code>inline namespace</code></a></h2>
+<p>When a namespace is declared as <code>inline</code>, it means that its members are automatically injected into the enclosing parent namespace, as if they were defined directly in the parent namespace. This allows clients of the namespace to refer to its members without needing to qualify them with the namespace name.</p>
+<p>For example, consider the following code:</p>
+<pre><code class="language-cpp">namespace outer {
+    inline namespace inner {
+        void foo() {}
+    }
+}
+</code></pre>
+<p>Here, <code>inner</code> is an inline namespace that is declared within the <code>outer</code> namespace. This means that <code>foo()</code> can be accessed either as <code>outer::inner::foo()</code> or simply as <code>outer::foo()</code>.</p>
+<h2 id="use-case"><a class="header" href="#use-case">Use case</a></h2>
+<p>C++ <code>inline</code> namespaces were introduced in the C++11 standard to provide a mechanism for versioning and incremental updates of libraries, without breaking backward compatibility. </p>
+<p>An <code>inline</code> namespace can be used to provide an updated version of a library's interface, while still allowing old code to use the previous version. By using an <code>inline</code> namespace, the new version of the library can be introduced without breaking the existing code that depends on the old version.</p>
+<p>Here is an example of how an inline namespace can be used:</p>
+<pre><code class="language-cpp">#include &lt;iostream&gt;
+
+/*
+// Initial version of the library
+namespace MyLib {
+    void foo() {
+        std::cout &lt;&lt; &quot;Hello, world!&quot; &lt;&lt; std::endl;
+    }
+}
+*/
+
+// Updated version of the library, in an inline namespace
+namespace MyLib {
+    inline namespace v1 {
+        void foo() {
+            std::cout &lt;&lt; &quot;Hello, World!&quot; &lt;&lt; std::endl;
+        }
+    }
+    
+    namespace v2 {
+        void foo() {
+            std::cout &lt;&lt; &quot;Hello, C++11!&quot; &lt;&lt; std::endl;
+        }
+    }
+}
+
+// Usage of the library
+int main() {
+    MyLib::foo();     // calls the initial version of foo
+    MyLib::v2::foo(); // calls the updated version of foo
+    return 0;
+}
+</code></pre>
+<p>This code demonstrates how backward compatibility is maintained in a library called <code>MyLib</code>, which defines two versions of a function named <code>foo()</code>. The output of the program will be:</p>
+<pre><code>Hello, World!
+Hello, C++11!
+</code></pre>
 
                     </main>
 
@@ -159,7 +210,7 @@
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next" href="../namespace/NestedNamespace.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next" href="../namespace/NewNestedNamespaceSyntax.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -173,7 +224,7 @@
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next" href="../namespace/NestedNamespace.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next" href="../namespace/NewNestedNamespaceSyntax.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>

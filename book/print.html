@@ -86,7 +86,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="index.html">Preface</a></li><li class="chapter-item expanded affix "><li class="part-title">Modern C++ Elements</li><li class="chapter-item expanded "><a href="primitive/index.html">Fundamental Data Types</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="primitive/IntTypes.html">Integer Types</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="primitive/IntTypes_longlong.html">Integer Type long long</a></li></ol></li><li class="chapter-item expanded "><a href="primitive/CharTypes.html">Character Types</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="primitive/CharTypes_CharSetsEncodings.html">Character Sets and Encodings</a></li><li class="chapter-item expanded "><a href="primitive/CharTypes_NewCharTypes.html">New Character Types</a></li><li class="chapter-item expanded "><a href="primitive/CharTypes_StringLiteralCat.html">Automatic String Literal Concatenation</a></li><li class="chapter-item expanded "><a href="primitive/CharTypes_LibrarySuppor.html">Library Support</a></li></ol></li></ol></li><li class="chapter-item expanded "><a href="namespace/index.html">Namespace</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="namespace/InlineNamespace.html">Inline Namespace</a></li><li class="chapter-item expanded "><a href="namespace/NestedNamespace.html">Nested Namespace</a></li></ol></li><li class="chapter-item expanded "><li class="part-title">Meta-template Programming</li><li class="chapter-item expanded affix "><li class="part-title">Algorithms</li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="index.html">Preface</a></li><li class="chapter-item expanded affix "><li class="part-title">Modern C++ Elements</li><li class="chapter-item expanded "><a href="primitive/index.html">Fundamental Data Types</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="primitive/IntTypes.html">Integer Types</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="primitive/IntTypes_longlong.html">Integer Type long long</a></li></ol></li><li class="chapter-item expanded "><a href="primitive/CharTypes.html">Character Types</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="primitive/CharTypes_CharSetsEncodings.html">Character Sets and Encodings</a></li><li class="chapter-item expanded "><a href="primitive/CharTypes_NewCharTypes.html">New Character Types</a></li><li class="chapter-item expanded "><a href="primitive/CharTypes_StringLiteralCat.html">Automatic String Literal Concatenation</a></li><li class="chapter-item expanded "><a href="primitive/CharTypes_LibrarySuppor.html">Library Support</a></li></ol></li></ol></li><li class="chapter-item expanded "><a href="namespace/index.html">Namespace</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="namespace/InlineNamespace.html">Inline Namespace</a></li><li class="chapter-item expanded "><a href="namespace/NewNestedNamespaceSyntax.html">New Nested Namespace Syntax</a></li><li class="chapter-item expanded "><a href="namespace/UnnamedNamespace.html">Unnamed Namespace</a></li><li class="chapter-item expanded "><a href="namespace/MergedNamespace.html">Merged Namespace</a></li><li class="chapter-item expanded "><a href="namespace/GlobalNamespace.html">Global Namespace</a></li></ol></li><li class="chapter-item expanded "><li class="part-title">Meta-template Programming</li><li class="chapter-item expanded affix "><li class="part-title">Algorithms</li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -787,8 +787,254 @@ int main() {
 }
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="namespace"><a class="header" href="#namespace">Namespace</a></h1>
+<p>C++ namespaces provide a way to group related declarations and definitions, such as classes, functions, and variables, under a common name. This helps to avoid naming conflicts between different parts of a program or different libraries that may be used together.</p>
+<p>Namespaces were introduced into the C++ standard with the release of C++98. The syntax for declaring and defining namespaces is similar to that used for classes. Here's an example:</p>
+<pre><code class="language-cpp">// Declaration of a namespace
+namespace MyNamespace {
+    int x;
+    void foo();
+}
+
+// Definition of the namespace's contents
+namespace MyNamespace {
+    int x = 42;
+    void foo() {
+        // Implementation of the function
+    }
+}
+</code></pre>
+<p>In this example, <code>MyNamespace</code> is declared and defined to contain an integer variable <code>x</code> and a function <code>foo()</code>. The namespace's contents can be accessed using the scope resolution operator <code>::</code>, like this:</p>
+<pre><code class="language-cpp">int main() {
+    MyNamespace::x = 10;
+    MyNamespace::foo();
+    return 0;
+}
+</code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="inline-namespace"><a class="header" href="#inline-namespace">Inline Namespace</a></h1>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="nested-namespace"><a class="header" href="#nested-namespace">Nested Namespace</a></h1>
+<h2 id="what-is-inline-namespace"><a class="header" href="#what-is-inline-namespace">What is <code>inline namespace</code></a></h2>
+<p>When a namespace is declared as <code>inline</code>, it means that its members are automatically injected into the enclosing parent namespace, as if they were defined directly in the parent namespace. This allows clients of the namespace to refer to its members without needing to qualify them with the namespace name.</p>
+<p>For example, consider the following code:</p>
+<pre><code class="language-cpp">namespace outer {
+    inline namespace inner {
+        void foo() {}
+    }
+}
+</code></pre>
+<p>Here, <code>inner</code> is an inline namespace that is declared within the <code>outer</code> namespace. This means that <code>foo()</code> can be accessed either as <code>outer::inner::foo()</code> or simply as <code>outer::foo()</code>.</p>
+<h2 id="use-case"><a class="header" href="#use-case">Use case</a></h2>
+<p>C++ <code>inline</code> namespaces were introduced in the C++11 standard to provide a mechanism for versioning and incremental updates of libraries, without breaking backward compatibility. </p>
+<p>An <code>inline</code> namespace can be used to provide an updated version of a library's interface, while still allowing old code to use the previous version. By using an <code>inline</code> namespace, the new version of the library can be introduced without breaking the existing code that depends on the old version.</p>
+<p>Here is an example of how an inline namespace can be used:</p>
+<pre><code class="language-cpp">#include &lt;iostream&gt;
+
+/*
+// Initial version of the library
+namespace MyLib {
+    void foo() {
+        std::cout &lt;&lt; &quot;Hello, world!&quot; &lt;&lt; std::endl;
+    }
+}
+*/
+
+// Updated version of the library, in an inline namespace
+namespace MyLib {
+    inline namespace v1 {
+        void foo() {
+            std::cout &lt;&lt; &quot;Hello, World!&quot; &lt;&lt; std::endl;
+        }
+    }
+    
+    namespace v2 {
+        void foo() {
+            std::cout &lt;&lt; &quot;Hello, C++11!&quot; &lt;&lt; std::endl;
+        }
+    }
+}
+
+// Usage of the library
+int main() {
+    MyLib::foo();     // calls the initial version of foo
+    MyLib::v2::foo(); // calls the updated version of foo
+    return 0;
+}
+</code></pre>
+<p>This code demonstrates how backward compatibility is maintained in a library called <code>MyLib</code>, which defines two versions of a function named <code>foo()</code>. The output of the program will be:</p>
+<pre><code>Hello, World!
+Hello, C++11!
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="new-nested-namespace-syntax"><a class="header" href="#new-nested-namespace-syntax">New Nested Namespace Syntax</a></h1>
+<p>Prior to C++17, nested namespaces are defined like this:</p>
+<pre><code class="language-cpp">namespace A {
+    namespace B {
+        namespace C {
+            int foo() { return 5; }
+        }
+    }
+}
+</code></pre>
+<p>With C++17, the same nested namespaces can be defined using the inline syntax concisely:</p>
+<pre><code class="language-cpp">namespace A::B::C {
+    int foo() { return 5; }
+}
+</code></pre>
+<p>Both of these code snippets achieve the same result: defining a function <code>foo()</code> in the namespace <code>A::B::C</code>. The inline namespace definition syntax introduced in C++17 allows for a more compact and readable way to define nested namespaces.</p>
+<h2 id="nested-inline-namespace"><a class="header" href="#nested-inline-namespace">Nested inline namespace</a></h2>
+<p>The combination of the nested namespace definition syntax (introduced in C++17) and the <code>inline</code> namespace declaration is allowed in C++20.</p>
+<p>The following is valid in C++20:</p>
+<pre><code class="language-cpp">namespace A::B::inline C {
+    int foo() { return 5; }
+}
+</code></pre>
+<p>In this code, the <code>inline</code> keyword is applied to the <code>C</code> namespace within the nested namespace definition <code>A::B</code>. This declares <code>C</code> as an inline namespace within the enclosing namespace <code>B</code>.</p>
+<p>Note <code>inline</code> keyword can appear before any namespace name except namespace <code>A</code>.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="unnamed-namespace"><a class="header" href="#unnamed-namespace">Unnamed Namespace</a></h1>
+<p>The <code>unnamed namespace</code> (or anonymous namespace) is a feature in C++ that was introduced in the C++98 standard. It provides a way to declare identifiers (e.g., functions, variables, or types) with internal linkage, meaning they are only visible within the scope of their parent namespace, or translation unit (i.e., the source file) in which they are defined.</p>
+<p><code>Unnamed namespaces</code> can be declared using the <code>namespace</code> keyword, followed by a pair of braces, like this:</p>
+<pre><code class="language-cpp">namespace {
+    // Your code here
+}
+</code></pre>
+<p>For example, a helper function or a constant that is only needed within a single source file, can be put in an unnamed namespace to prevent it from being accessible in other parts of the program:</p>
+<pre><code class="language-cpp">// File: my_file.cpp
+#include &quot;my_file.h&quot;
+
+namespace {
+    const int someConstant = 42;
+
+    void helperFunction() {
+        // Implementation here
+    }
+}
+
+void myPublicFunction() {
+    helperFunction();
+    // Other implementation details
+}
+</code></pre>
+<p>In this example, <code>someConstant</code> and <code>helperFunction</code> are only visible within <code>my_file.cpp</code> and won't conflict with any other code using the same names.</p>
+<p>Another example:</p>
+<pre><code class="language-cpp">namespace my_namespace {
+    namespace {
+        void helperFunction() {
+            // Implementation here
+        }
+    }
+
+    void publicFunction() {
+        helperFunction(); // This is allowed since helperFunction() is in the same parent namespace
+    }
+}
+</code></pre>
+<p>In this example, <code>helperFunction()</code> is declared within an unnamed namespace inside <code>my_namespace</code>. Although <code>helperFunction()</code> has internal linkage and is not visible outside of the translation unit, it can still be accessed by other functions within the same parent namespace (<code>my_namespace</code>), such as <code>publicFunction()</code>.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="merged-namespace"><a class="header" href="#merged-namespace">Merged Namespace</a></h1>
+<p>If a namespace is defined multiple times, its contents are merged together. For example:</p>
+<pre><code class="language-cpp">// First definition of namespace MyNamespace
+namespace MyNamespace {
+    int x = 1;
+    void foo() {
+        // Implementation of the function
+    }
+}
+
+// Second definition of namespace MyNamespace, with different contents
+namespace MyNamespace {
+    int y = 2;
+    void bar() {
+        // Implementation of the function
+    }
+}
+
+// Usage of the namespace contents
+int main() {
+    MyNamespace::foo();
+    MyNamespace::bar();
+    std::cout &lt;&lt; MyNamespace::x + MyNamespace::y &lt;&lt; std::endl;
+    return 0;
+}
+</code></pre>
+<p>Howerver, if the same variable is defined multiple times, a redefinition error will occur:</p>
+<pre><code class="language-cpp">
+#include &lt;iostream&gt;
+
+namespace Namespace1 {
+    int x = 1;
+}
+
+namespace Namespace1 {
+    int x = 2;
+}
+
+int main() {
+    std::cout &lt;&lt; Namespace1::x &lt;&lt; std::endl;
+    std::cout &lt;&lt; Namespace2::x &lt;&lt; std::endl;
+    return 0;
+}
+
+
+</code></pre>
+<p>We'll see the following compiler error:</p>
+<pre><code>&lt;source&gt;:8:9: error: redefinition of 'int Namespace1::x'
+    8 |     int x = 2;
+      |         ^
+&lt;source&gt;:4:9: note: 'int Namespace1::x' previously defined here
+    4 |     int x = 1;
+      |         ^
+&lt;source&gt;: In function 'int main()':
+&lt;source&gt;:13:18: error: 'Namespace2' has not been declared
+   13 |     std::cout &lt;&lt; Namespace2::x &lt;&lt; std::endl;
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="global-namespace"><a class="header" href="#global-namespace">Global Namespace</a></h1>
+<p>In C++, the global namespace is the outermost namespace that encompasses all the code in a program. When you define a variable, function, or type without explicitly placing it in a named or unnamed namespace, it becomes part of the global namespace. The global namespace is accessible from anywhere in the program, making its members visible across different translation units.</p>
+<p>Although using the global namespace can make it easier to access identifiers without needing to specify a particular namespace, it is generally not recommended to place many identifiers in the global namespace, as it can lead to name clashes and reduced code maintainability. In large projects, putting too many identifiers in the global namespace can make it difficult to determine the purpose or origin of a particular identifier.</p>
+<p>Instead, it's usually better to use named namespaces to organize and encapsulate your code, which helps prevent name collisions and improve code readability.</p>
+<p>Here's an example that demonstrates the difference between global and named namespaces:</p>
+<pre><code class="language-cpp">// Global namespace
+int globalVariable = 10;
+
+void globalFunction() {
+    // Implementation here
+}
+
+// Named namespace
+namespace my_namespace {
+    int myVariable = 20;
+
+    void myFunction() {
+        // Implementation here
+    }
+}
+
+int main() {
+    globalFunction(); // Accessing a function in the global namespace
+    my_namespace::myFunction(); // Accessing a function in a named namespace
+
+    return 0;
+}
+</code></pre>
+<p>In this example, <code>globalVariable</code> and <code>globalFunction()</code> are defined in the global namespace, while <code>myVariable</code> and <code>myFunction()</code> are defined within the named namespace <code>my_namespace</code>. To access members of a named namespace, use the namespace qualifier <code>::</code>.</p>
+<h2 id="scope-resolution-operator-"><a class="header" href="#scope-resolution-operator-">Scope resolution operator <code>::</code></a></h2>
+<p>The global namespace can be accessed explicitly by using the scope resolution operator <code>::</code>. This can be helpful when an identifier in the global namespace shares the same name as an identifier in a different namespace, or it is desirable to explicitly refer to the global namespace version of an identifier.</p>
+<p>Here's an example demonstrating the use of <code>::</code> to access the global namespace:</p>
+<pre><code class="language-cpp">#include &lt;iostream&gt;
+
+// Global namespace
+int myVariable = 10;
+
+namespace my_namespace {
+    int myVariable = 20;
+
+    void printVariables() {
+        std::cout &lt;&lt; &quot;Global namespace myVariable: &quot; &lt;&lt; ::myVariable &lt;&lt; std::endl;
+        std::cout &lt;&lt; &quot;my_namespace myVariable: &quot; &lt;&lt; myVariable &lt;&lt; std::endl;
+    }
+}
+
+int main() {
+    my_namespace::printVariables();
+    return 0;
+}
+</code></pre>
+<p>In this example, there are two variables with the same name <code>myVariable</code>, one in the global namespace and another in the named namespace <code>my_namespace</code>. Inside the <code>printVariables()</code> function, resolution operator <code>::</code> is specified to access the <code>myVariable</code> from the global namespace, while the unqualified <code>myVariable</code> refers to the one in the <code>my_namespace</code>.</p>
 
                     </main>
 
