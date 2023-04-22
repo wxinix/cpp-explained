@@ -15,7 +15,10 @@
 
 - [Namespace](namespace/README.md)
   - [Inline Namespace](namespace/InlineNamespace.md)
-  - [Nested Namespace](namespace/NestedNamespace.md)
+  - [New Nested Namespace Syntax](namespace/NewNestedNamespaceSyntax.md)
+  - [Unnamed Namespace](namespace/UnnamedNamespace.md)
+  - [Merged Namespace](namespace/MergedNamespace.md)
+  - [Global Namespace](namespace/GlobalNamespace.md)
 
 # Meta-template Programming
 
