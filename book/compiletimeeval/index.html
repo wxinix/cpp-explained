@@ -181,7 +181,7 @@
 <blockquote>
 <p>A Malfunction Management Unit (MMU) is a device utilized in the traffic signal control industry to detect conflicts that may arise when conflicting traffic flows are given right of way simultaneously. This is achieved through the use of a soldering board at the hardware level, which defines the compatibility of each pair of different channels. Essentially, each channel is physically connected to the signal head in the field through load switches, and the compatibility between the channels is relayed to the MMU through this hardware board.</p>
 </blockquote>
-<p>The following illustrates an application of C++ compile time evaluation approach. It is part of the open source C++ <a href="https://github.com/Caliper-Corporation/TsmAPIsExamples/tree/main/HILS/vtc">Virtual Traffic Cabinet Framework (VTC)</a>. VTC framework is developed using modern C++ 20.</p>
+<p>The following illustrates an application of C++ compile time evaluation approach. It is part of the open source C++ <a href="https://github.com/wxinix/vtc">Virtual Traffic Cabinet Framework (VTC)</a>. VTC framework is developed using modern C++ 20.</p>
 <p>The code provides O(1) complexity for returning the start position of a given channel. Note the template functions have zero runtime overhead, while all searching are done at compile time. Apart from the performance benefits, the implementation is concise and generic for any sizable current or future evoluation of MMU compatibility cards.</p>
 <pre><code class="language-cpp">/*!
  * The size of channel compatibility set. For example, for Channel 1 of MMU16,
