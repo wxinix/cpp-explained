@@ -20,6 +20,18 @@
   - [Merged Namespace](namespace/MergedNamespace.md)
   - [Global Namespace](namespace/GlobalNamespace.md)
 
+- [`Compile Time Evaluation`](compiletimeeval/README.md)
+  - [Variables and Functions](compiletimeeval/VarAndFuncs.md)
+  - [Constructors](compiletimeeval/Constructors.md)
+  - [Lambdas](compiletimeeval/Lambdas.md)
+  - [Function Inlining ](compiletimeeval/FunctionInlining.md)
+  - [Conditional Compilation ](compiletimeeval/ConditionalCompilation.md)
+  - [Virtual Functions](compiletimeeval/VirtualFunctions.md)
+  - [`try-catch` ](compiletimeeval/TryCatch.md)
+  - [Default Initialization ](compiletimeeval/DefaultInit.md)
+  - [`consteval` and `constinit`](compiletimeeval/ConstEvalAndConstInit.md)
+  - [`std::is_constant_evaluated`](compiletimeeval/StdIsConstant.md)
+  
 # Meta-template Programming
 
 # Algorithms
