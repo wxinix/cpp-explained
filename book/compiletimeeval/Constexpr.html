@@ -179,7 +179,7 @@ static_assert(c == 'B', &quot;c should be equal to 'B'&quot;);
 <h2 id="constexpr-function"><a class="header" href="#constexpr-function"><code>constexpr</code> function</a></h2>
 <p>To make a function <code>constexpr</code>, it must meet the following conditions:</p>
 <ol>
-<li><strong>Must have a Non-void return type:</strong></li>
+<li><strong>Must have a Non-void return type.</strong></li>
 </ol>
 <pre><code class="language-cpp">// Must return a non-void type, like int here
 constexpr int square(int x) { 
@@ -188,7 +188,7 @@ constexpr int square(int x) {
 </code></pre>
 <p>A <code>constexpr</code> function cannot have a return type of <code>void</code>, as it must produce a constant expression.</p>
 <ol start="2">
-<li><strong>Must be Defined with <code>constexpr</code> keyword:</strong></li>
+<li><strong>Must be defined with <code>constexpr</code> keyword.</strong></li>
 </ol>
 <pre><code class="language-cpp">// Use the 'constexpr' keyword before the function definition
 constexpr int factorial(int n) { 
@@ -196,9 +196,9 @@ constexpr int factorial(int n) {
 }
 </code></pre>
 <ol start="3">
-<li><strong>Must not contain any definitions of variables with non-const-qualified types:</strong>, unless they are initialized with a constant expression:</li>
+<li><strong>Must not contain any definitions of variables with non-const-qualified types</strong>, unless they are initialized with a constant expression:</li>
 </ol>
-<pre><code class="language-cpp">// Must use const-qualified type
+<pre><code class="language-cpp">// Must use const-qualified type.
 constexpr int sum(int a, int b) {
     const int result = a + b; 
     return result;
@@ -206,6 +206,8 @@ constexpr int sum(int a, int b) {
 
 // Non-const variables are allowed as long as they are 
 // initialized with a const expression.
+// This is only valid when (a + b) produces a constant
+// expression.
 constexpr int add(int a, int b) {
     // 'sum' is initialized with a constant expression (a + b)
     int sum = a + b; 
@@ -213,7 +215,7 @@ constexpr int add(int a, int b) {
 }
 </code></pre>
 <ol start="4">
-<li><strong>Can include control structures and constructs,</strong> such as <code>if</code>, <code>switch</code>, <code>for</code>, <code>while</code>, and <code>do-while</code> loops, provided they don't violate other constexpr constraints. <code>static_assert</code>, <code>typedef</code>, <code>using</code>, <code>if constexpr</code>, and <code>return</code>are also allowed:</li>
+<li><strong>May include control structures and constructs,</strong> such as <code>if</code>, <code>switch</code>, <code>for</code>, <code>while</code>, and <code>do-while</code> loops, provided they don't violate other <code>constexpr</code> constraints. <code>static_assert</code>, <code>typedef</code>, <code>using</code>, <code>if constexpr</code>, and <code>return</code>are also allowed.</li>
 </ol>
 <pre><code class="language-cpp">#include &lt;iostream&gt;
 
@@ -241,7 +243,7 @@ int main() {
         ret
 </code></pre>
 <ol start="5">
-<li><strong>Only call other <code>constexpr</code> functions:</strong></li>
+<li><strong>Can only call other <code>constexpr</code> functions.</strong></li>
 </ol>
 <pre><code class="language-cpp">constexpr int square(int x) {
     return x * x;
@@ -253,7 +255,7 @@ constexpr int square_sum(int a, int b) {
 }
 </code></pre>
 <ol start="6">
-<li><strong>Must produce constant expressions when called with constant expressions:</strong></li>
+<li><strong>Must produce constant expressions when called with constant expressions.</strong></li>
 </ol>
 <pre><code class="language-cpp">#include &lt;iostream&gt;
 
