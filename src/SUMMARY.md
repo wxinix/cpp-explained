@@ -21,8 +21,7 @@
   - [Global Namespace](namespace/GlobalNamespace.md)
 
 - [`Compile Time Evaluation`](compiletimeeval/README.md)
-  - [Variables and Functions](compiletimeeval/VarAndFuncs.md)
-  - [Constructors](compiletimeeval/Constructors.md)
+  - [`constexpr`](compiletimeeval/Constexpr.md)
   - [Lambdas](compiletimeeval/Lambdas.md)
   - [Function Inlining ](compiletimeeval/FunctionInlining.md)
   - [Conditional Compilation ](compiletimeeval/ConditionalCompilation.md)
