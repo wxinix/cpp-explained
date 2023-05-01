@@ -151,7 +151,7 @@
                     <main>
                         <h1 id="constexpr"><a class="header" href="#constexpr"><code>constexpr</code></a></h1>
 <p><code>constexpr</code> is a C++ keyword that was introduced in C++11 to allow the evaluation of expressions at compile time. It specifies that the value of a <code>variable</code> or <code>function</code> can be computed at compile time, and therefore can be used in places where a constant expression is required.</p>
-<h2 id="constexpr-vs-const"><a class="header" href="#constexpr-vs-const"><code>constexpr</code> vs <code>const</code></a></h2>
+<h2 id="constexpr-vs-const"><a class="header" href="#constexpr-vs-const"><code>constexpr</code> vs. <code>const</code></a></h2>
 <p><code>const</code> only guarantees that the value of a variable cannot be changed after it is initialized, whereas <code>constexpr</code> <em>guarantees</em> that the value of a variable can be computed at <em>compile time</em>. Therefore, <code>constexpr</code> is more powerful than <code>const</code> because it enables the use of constant expressions in more contexts.</p>
 <p>Here are some examples of how <code>constexpr</code> can be used:</p>
 <pre><code class="language-cpp">constexpr int square(int x) {
@@ -272,6 +272,7 @@ int main() {
     return 0;
 }
 </code></pre>
+<p>The following assembly code confirms that no run time computation is performed when calculating <code>power(2, 5)</code>.</p>
 <pre><code class="language-asm">main:
         push    rbp
         mov     rbp, rsp
@@ -280,6 +281,16 @@ int main() {
         xor     eax, eax
         pop     rbp
         ret
+</code></pre>
+<ol start="7">
+<li><strong>Can modify <code>constexpr</code> object that has a lifetime extends longer than the <code>constexpr</code> function</strong>.</li>
+</ol>
+<pre><code class="language-cpp">constexpr int next(int x)
+{
+    return ++x;
+}
+
+char buffer[next(5)] = { 0 };
 </code></pre>
 <h2 id="constructor"><a class="header" href="#constructor">Constructor</a></h2>
 <p><code>constexpr</code> constructors in C++ are used to create constant expressions of user-defined types during compile-time. They are useful because they allow for more efficient code by performing computations at compile-time and enabling the usage of user-defined types in other <code>constexpr</code> contexts.</p>
@@ -371,6 +382,105 @@ private:
 
 int main() {
     constexpr Point p(1, 2);
+}
+</code></pre>
+<h2 id="constexpr-function-returning-void"><a class="header" href="#constexpr-function-returning-void"><code>constexpr</code> function returning <code>void</code></a></h2>
+<p>A member function of a class can be declared <code>constexpr</code> and have a return type of <code>void</code>, for performing a sequence of actions at compile time. For example:</p>
+<pre><code class="language-cpp">class MyClass {
+public:
+    constexpr void doSomething() {
+        myData = 42; // Set a constexpr data member
+    }
+
+    constexpr int getMyData() const {
+        return myData; // Return the value of the constexpr data member
+    }
+
+private:
+    int myData = 0; // Define a constexpr data member
+};
+
+int main() {
+    constexpr MyClass obj;
+    obj.doSomething(); // This call is evaluated at compile time
+    static_assert(obj.getMyData() == 42, &quot;Unexpected value of myData&quot;);
+}
+</code></pre>
+<p>Note that <code>constexpr void doSomething()</code> does not have to be qualified with <code>const</code>.</p>
+<h2 id="precision-of-floating-point-constexpr"><a class="header" href="#precision-of-floating-point-constexpr">Precision of floating-point <code>constexpr</code></a></h2>
+<p>In C++11 and later, <code>constexpr</code> functions can compute floating-point expressions and return floating-point values as constant expressions.</p>
+<blockquote>
+<p>One limitation of <code>constexpr</code> floating-point computations is that they must terminate in a finite number of steps known at compile time, which means that they cannot compute certain mathematical functions or operations that require an infinite number of steps or iterations. Because of this, the use of functions like <code>std::sin</code> and <code>std::sqrt</code> within <code>constexpr</code> functions is not allowed inside <code>constexpr</code> function.</p>
+<p>Additionally, the standard imposes specific requirements on the rounding behavior of constexpr floating point operations. For example, if a constexpr floating point operation results in a value that cannot be represented exactly, the result must be rounded in a manner consistent with the floating point rounding mode specified by the implementation.</p>
+</blockquote>
+<p>The C++ standard requires that <code>constexpr</code> functions produce the same results as their non-<code>constexpr</code> counterparts when called with the same arguments.</p>
+<p>This means that if a non-<code>constexpr</code> function performs a floating point computation with a certain precision, a <code>constexpr</code> function that performs the same computation must produce a result that is at least as precise. The standard does not specify a minimum level of precision, but it requires that the result of a <code>constexpr</code> floating point computation be consistent and reproducible, so that the same result is obtained every time the computation is performed.</p>
+<p>In practice, the precision of <code>constexpr</code> floating point computations will depend on the compiler and the platform being used. In general, compilers will try to produce <code>constexpr</code> results that are as precise as possible, but there may be cases where the precision is lower than the runtime counterpart due to limitations of the compiler or platform.</p>
+<h2 id="stdnumeric_limits-and-constexpr"><a class="header" href="#stdnumeric_limits-and-constexpr"><code>std::numeric_limits</code> and <code>constexpr</code></a></h2>
+<p><code>std::numeric_limits</code> is a class template defined in the C++ standard library that provides information about the properties of arithmetic types, such as minimum and maximum representable values, number of significant digits, and whether the type is signed or unsigned.</p>
+<p>The <code>std::numeric_limits</code> class template has the following general syntax:</p>
+<pre><code class="language-cpp">template&lt;typename T&gt;
+class numeric_limits {
+public:
+    static constexpr bool is_specialized;
+    static constexpr T min() noexcept;
+    static constexpr T max() noexcept;
+    static constexpr T lowest() noexcept;
+    static constexpr int digits;
+    static constexpr int digits10;
+    static constexpr int max_digits10;
+    static constexpr bool is_signed;
+    static constexpr bool is_integer;
+    static constexpr bool is_exact;
+    static constexpr int radix;
+    static constexpr T epsilon() noexcept;
+    static constexpr T round_error() noexcept;
+    static constexpr int min_exponent;
+    static constexpr int min_exponent10;
+    static constexpr int max_exponent;
+    static constexpr int max_exponent10;
+    static constexpr bool has_infinity;
+    static constexpr bool has_quiet_NaN;
+    static constexpr bool has_signaling_NaN;
+    static constexpr float_denorm_style has_denorm;
+    static constexpr bool has_denorm_loss;
+    static constexpr T infinity() noexcept;
+    static constexpr T quiet_NaN() noexcept;
+    static constexpr T signaling_NaN() noexcept;
+    static constexpr T denorm_min() noexcept;
+};
+</code></pre>
+<p>The <code>std::numeric_limits</code> class template provides a set of static member functions and constants that can be used to query the properties of the template parameter type <code>T</code>. These functions and constants are all <code>constexpr</code>, which means that they can be evaluated at compile-time and used in constant expressions.</p>
+<p>The <code>constexpr</code> specifier is useful for several reasons in the context of <code>std::numeric_limits</code>. For one, it allows the properties of a type to be determined at compile-time, which can be useful for optimization purposes. Additionally, it enables the use of these properties in other <code>constexpr</code> contexts, such as defining other <code>constexpr</code> functions or variables. This can help improve the efficiency and readability of code. For example:</p>
+<pre><code class="language-cpp">#include &lt;iostream&gt;
+#include &lt;limits&gt;
+
+template&lt;typename T&gt;
+constexpr bool is_power_of_two(T value) {
+    return value != 0 &amp;&amp; (value &amp; (value - 1)) == 0;
+}
+
+template&lt;typename T&gt;
+constexpr T next_power_of_two(T value) {
+    static_assert(std::numeric_limits&lt;T&gt;::is_integer, &quot;Type must be an integer&quot;);
+    static_assert(std::numeric_limits&lt;T&gt;::is_signed == false, &quot;Type must be unsigned&quot;);
+
+    if (is_power_of_two(value)) {
+        return value;
+    } else {
+        T result = 1;
+        while (result &lt; value) {
+            result &lt;&lt;= 1;
+        }
+        return result;
+    }
+}
+
+int main() {
+    constexpr unsigned int x = 31;
+    constexpr auto y = next_power_of_two(x);
+    std::cout &lt;&lt; &quot;The next power of two after &quot; &lt;&lt; x &lt;&lt; &quot; is &quot; &lt;&lt; y &lt;&lt; '\n';
+    return 0;
 }
 </code></pre>
 
