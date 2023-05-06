@@ -22,6 +22,8 @@
 
 - [`Compile Time Evaluation`](compiletimeeval/README.md)
   - [`constexpr`](compiletimeeval/Constexpr.md)
+  - [`std::numeric_limits`](compiletimeeval/numericlimit.md)
+  - [Math functions](compiletimeeval/mathfunctions.md)
   - [Lambdas](compiletimeeval/Lambdas.md)
   - [Function Inlining ](compiletimeeval/FunctionInlining.md)
   - [Conditional Compilation ](compiletimeeval/ConditionalCompilation.md)
