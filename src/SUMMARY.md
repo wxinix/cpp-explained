@@ -25,7 +25,7 @@
   - [`std::numeric_limits`](compiletimeeval/numericlimit.md)
   - [Math functions](compiletimeeval/mathfunctions.md)
   - [Lambdas](compiletimeeval/Lambdas.md)
-  - [Function Inlining ](compiletimeeval/FunctionInlining.md)
+  - [Inlining `constexpr`](compiletimeeval/InliningConstexpr.md)
   - [Conditional Compilation ](compiletimeeval/ConditionalCompilation.md)
   - [Virtual Functions](compiletimeeval/VirtualFunctions.md)
   - [`try-catch` ](compiletimeeval/TryCatch.md)
