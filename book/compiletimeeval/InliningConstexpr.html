@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Default Initialization  - Modern C++ Explained</title>
+        <title>Inlining constexpr - Modern C++ Explained</title>
 
 
         <!-- Custom HTML head -->
@@ -85,7 +85,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../index.html">Preface</a></li><li class="chapter-item expanded affix "><li class="part-title">Modern C++ Elements</li><li class="chapter-item expanded "><a href="../primitive/index.html">Fundamental Data Types</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../primitive/IntTypes.html">Integer Types</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../primitive/IntTypes_longlong.html">Integer Type long long</a></li></ol></li><li class="chapter-item expanded "><a href="../primitive/CharTypes.html">Character Types</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../primitive/CharTypes_CharSetsEncodings.html">Character Sets and Encodings</a></li><li class="chapter-item expanded "><a href="../primitive/CharTypes_NewCharTypes.html">New Character Types</a></li><li class="chapter-item expanded "><a href="../primitive/CharTypes_StringLiteralCat.html">Automatic String Literal Concatenation</a></li><li class="chapter-item expanded "><a href="../primitive/CharTypes_LibrarySuppor.html">Library Support</a></li></ol></li></ol></li><li class="chapter-item expanded "><a href="../namespace/index.html">Namespace</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../namespace/InlineNamespace.html">Inline Namespace</a></li><li class="chapter-item expanded "><a href="../namespace/NewNestedNamespaceSyntax.html">New Nested Namespace Syntax</a></li><li class="chapter-item expanded "><a href="../namespace/UnnamedNamespace.html">Unnamed Namespace</a></li><li class="chapter-item expanded "><a href="../namespace/MergedNamespace.html">Merged Namespace</a></li><li class="chapter-item expanded "><a href="../namespace/GlobalNamespace.html">Global Namespace</a></li></ol></li><li class="chapter-item expanded "><a href="../compiletimeeval/index.html">Compile Time Evaluation</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../compiletimeeval/Constexpr.html">constexpr</a></li><li class="chapter-item expanded "><a href="../compiletimeeval/numericlimit.html">std::numeric_limits</a></li><li class="chapter-item expanded "><a href="../compiletimeeval/mathfunctions.html">Math functions</a></li><li class="chapter-item expanded "><a href="../compiletimeeval/Lambdas.html">Lambdas</a></li><li class="chapter-item expanded "><a href="../compiletimeeval/InliningConstexpr.html">Inlining constexpr</a></li><li class="chapter-item expanded "><a href="../compiletimeeval/ConditionalCompilation.html">Conditional Compilation </a></li><li class="chapter-item expanded "><a href="../compiletimeeval/VirtualFunctions.html">Virtual Functions</a></li><li class="chapter-item expanded "><a href="../compiletimeeval/TryCatch.html">try-catch </a></li><li class="chapter-item expanded "><a href="../compiletimeeval/DefaultInit.html" class="active">Default Initialization </a></li><li class="chapter-item expanded "><a href="../compiletimeeval/ConstEvalAndConstInit.html">consteval and constinit</a></li><li class="chapter-item expanded "><a href="../compiletimeeval/StdIsConstant.html">std::is_constant_evaluated</a></li></ol></li><li class="chapter-item expanded "><li class="part-title">Meta-template Programming</li><li class="chapter-item expanded affix "><li class="part-title">Algorithms</li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../index.html">Preface</a></li><li class="chapter-item expanded affix "><li class="part-title">Modern C++ Elements</li><li class="chapter-item expanded "><a href="../primitive/index.html">Fundamental Data Types</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../primitive/IntTypes.html">Integer Types</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../primitive/IntTypes_longlong.html">Integer Type long long</a></li></ol></li><li class="chapter-item expanded "><a href="../primitive/CharTypes.html">Character Types</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../primitive/CharTypes_CharSetsEncodings.html">Character Sets and Encodings</a></li><li class="chapter-item expanded "><a href="../primitive/CharTypes_NewCharTypes.html">New Character Types</a></li><li class="chapter-item expanded "><a href="../primitive/CharTypes_StringLiteralCat.html">Automatic String Literal Concatenation</a></li><li class="chapter-item expanded "><a href="../primitive/CharTypes_LibrarySuppor.html">Library Support</a></li></ol></li></ol></li><li class="chapter-item expanded "><a href="../namespace/index.html">Namespace</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../namespace/InlineNamespace.html">Inline Namespace</a></li><li class="chapter-item expanded "><a href="../namespace/NewNestedNamespaceSyntax.html">New Nested Namespace Syntax</a></li><li class="chapter-item expanded "><a href="../namespace/UnnamedNamespace.html">Unnamed Namespace</a></li><li class="chapter-item expanded "><a href="../namespace/MergedNamespace.html">Merged Namespace</a></li><li class="chapter-item expanded "><a href="../namespace/GlobalNamespace.html">Global Namespace</a></li></ol></li><li class="chapter-item expanded "><a href="../compiletimeeval/index.html">Compile Time Evaluation</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../compiletimeeval/Constexpr.html">constexpr</a></li><li class="chapter-item expanded "><a href="../compiletimeeval/numericlimit.html">std::numeric_limits</a></li><li class="chapter-item expanded "><a href="../compiletimeeval/mathfunctions.html">Math functions</a></li><li class="chapter-item expanded "><a href="../compiletimeeval/Lambdas.html">Lambdas</a></li><li class="chapter-item expanded "><a href="../compiletimeeval/InliningConstexpr.html" class="active">Inlining constexpr</a></li><li class="chapter-item expanded "><a href="../compiletimeeval/ConditionalCompilation.html">Conditional Compilation </a></li><li class="chapter-item expanded "><a href="../compiletimeeval/VirtualFunctions.html">Virtual Functions</a></li><li class="chapter-item expanded "><a href="../compiletimeeval/TryCatch.html">try-catch </a></li><li class="chapter-item expanded "><a href="../compiletimeeval/DefaultInit.html">Default Initialization </a></li><li class="chapter-item expanded "><a href="../compiletimeeval/ConstEvalAndConstInit.html">consteval and constinit</a></li><li class="chapter-item expanded "><a href="../compiletimeeval/StdIsConstant.html">std::is_constant_evaluated</a></li></ol></li><li class="chapter-item expanded "><li class="part-title">Meta-template Programming</li><li class="chapter-item expanded affix "><li class="part-title">Algorithms</li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -149,17 +149,73 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="default-initialization"><a class="header" href="#default-initialization">Default Initialization</a></h1>
+                        <h1 id="inlining-constexpr"><a class="header" href="#inlining-constexpr">Inlining constexpr</a></h1>
+<p>In C++17, a <code>constexpr</code> static data member is implicitly <code>inline</code>. This means that the static data member has the same address in every translation unit that uses it, and there is no need to provide a separate definition for the data member in a source file. </p>
+<p>The following example would produce a linker error pre-C++ 17:</p>
+<pre><code class="language-cpp">// MyClass.h
+class MyClass {
+public:
+    static constexpr int myConstExpr = 42;
+};
+
+// main.cpp
+#include &quot;MyClass.h&quot;
+#include &lt;iostream&gt;
+
+void printAddress(const int *ptr);
+
+int main() {
+    // Taking the address of myConstExpr, this requires a definition.
+    printAddress(&amp;MyClass::myConstExpr); 
+    return 0;
+}
+
+void printAddress(const int *ptr) {
+    std::cout &lt;&lt; &quot;Address of myConstExpr: &quot; &lt;&lt; ptr &lt;&lt; std::endl;
+}
+</code></pre>
+<p>In this case, the address of <code>MyClass::myConstExpr</code> is required, so a separate definition is needed in a source file for pre-C++17:</p>
+<pre><code class="language-cpp">// MyClass.cpp (pre-C++17)
+#include &quot;MyClass.h&quot;
+
+// Definition in source file required to avoid linker errors
+const int MyClass::myConstExpr; 
+</code></pre>
+<p>However, in C++17, the separate definition is not necessary, as the <code>constexpr</code> static data member is implicitly inlined:</p>
+<pre><code class="language-cpp">// MyClass.h (C++17)
+class MyClass {
+public:
+    // Automatically inlined, no separate definition required
+    static constexpr int myConstExpr = 42; 
+};
+</code></pre>
+<p>The following code will not produce a linker error for pre-C++17. This is because the compilier just does a compile time replacement for the line <code>std::cout &lt;&lt; &quot;Value of myConstExpr: &quot; &lt;&lt; MyClass::myConstExpr &lt;&lt; std::endl;</code>, directly replacing <code> MyClass::myConstExpr</code> with <code>42</code>. There is no addressing involved, hence no linker error.</p>
+<pre><code class="language-cpp">// MyClass.h
+class MyClass {
+public:
+    static constexpr int myConstExpr = 42;
+};
+
+// main.cpp
+#include &quot;MyClass.h&quot;
+#include &lt;iostream&gt;
+
+int main() {
+    std::cout &lt;&lt; &quot;Value of myConstExpr: &quot; &lt;&lt; MyClass::myConstExpr &lt;&lt; std::endl;
+    return 0;
+}
+
+</code></pre>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="../compiletimeeval/TryCatch.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../compiletimeeval/Lambdas.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next" href="../compiletimeeval/ConstEvalAndConstInit.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next" href="../compiletimeeval/ConditionalCompilation.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -169,11 +225,11 @@
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="../compiletimeeval/TryCatch.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../compiletimeeval/Lambdas.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next" href="../compiletimeeval/ConstEvalAndConstInit.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next" href="../compiletimeeval/ConditionalCompilation.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>
