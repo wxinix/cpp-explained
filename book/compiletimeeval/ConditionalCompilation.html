@@ -150,6 +150,80 @@
                 <div id="content" class="content">
                     <main>
                         <h1 id="conditional-compilation"><a class="header" href="#conditional-compilation">Conditional Compilation</a></h1>
+<h2 id="if-constexpr-and-if"><a class="header" href="#if-constexpr-and-if"><code>if constexpr</code> and <code>#if</code></a></h2>
+<p>C++'s <code>if constexpr</code> is not directly intended to replace conditional defines (e.g., <code>#ifdef</code> or <code>#if</code>). While they serve somewhat similar purposes, they have different use cases and operate at different stages of the compilation process.</p>
+<p><code>#ifdef</code> and <code>#if</code> are preprocessor directives in C++ that allow conditional compilation. They operate at the preprocessing stage, which occurs before the actual compilation. Conditional defines are typically used to conditionally include or exclude sections of code based on compile-time conditions or macros.</p>
+<p>On the other hand, <code>if constexpr</code> is a feature introduced in C++17 that allows compile-time evaluation of conditions within the context of template metaprogramming or constexpr functions. It is part of the regular C++ code and is evaluated during the compilation process, not the preprocessing stage. <code>if constexpr</code> allows you to conditionally choose between different branches of code based on compile-time constant expressions.</p>
+<p>Here's an example to illustrate the difference:</p>
+<pre><code class="language-cpp">#include &lt;iostream&gt;
+
+#define USE_FEATURE
+
+void doSomething() {
+#ifdef USE_FEATURE
+    std::cout &lt;&lt; &quot;Feature is enabled.&quot; &lt;&lt; std::endl;
+#else
+    std::cout &lt;&lt; &quot;Feature is disabled.&quot; &lt;&lt; std::endl;
+#endif
+}
+
+template &lt;bool UseFeature&gt;
+void doSomethingTemplate() {
+    if constexpr (UseFeature) {
+        std::cout &lt;&lt; &quot;Feature is enabled.&quot; &lt;&lt; std::endl;
+    } else {
+        std::cout &lt;&lt; &quot;Feature is disabled.&quot; &lt;&lt; std::endl;
+    }
+}
+
+int main() {
+    doSomething();  // Output depends on the USE_FEATURE macro.
+
+    doSomethingTemplate&lt;true&gt;();  // Output depends on the template argument.
+    doSomethingTemplate&lt;false&gt;();
+
+    return 0;
+}
+</code></pre>
+<p>In this example, <code>doSomething()</code> uses a conditional define to determine which section of code to compile based on the <code>USE_FEATURE</code> macro. On the other hand, <code>doSomethingTemplate()</code> is a function template that utilizes <code>if constexpr</code> to conditionally choose between different code branches at compile time based on the template argument.</p>
+<p>While <code>if constexpr</code> can sometimes be used to achieve similar conditional behavior as conditional defines, their usage and capabilities are different. Conditional defines are more flexible and can be controlled externally via macros or command-line options, while <code>if constexpr</code> operates within the confines of the C++ code and allows compile-time decision making based on template arguments or constexpr conditions.</p>
+<h2 id="short-circuit-behavior"><a class="header" href="#short-circuit-behavior">Short-circuit behavior</a></h2>
+<p>Unlike regular <code>if</code> statements, where the short-circuit behavior applies to the evaluation of the condition, <code>if constexpr</code> evaluates the condition at compile-time, and all branches are checked for syntactic correctness regardless of the condition's value.</p>
+<p>In this example:</p>
+<pre><code class="language-cpp">template &lt;typename T&gt;
+void foo(T value) {
+    if constexpr (std::is_integral_v&lt;T&gt; &amp;&amp; (value &gt; 0)) {
+        // Code specific to integral types and positive values
+        // ...
+    } else {
+        // Code for other cases
+        // ...
+    }
+}
+</code></pre>
+<p>Both <code>std::is_integral_v&lt;T&gt;</code> and <code>(value &gt; 0)</code> will be evaluated during compilation, regardless of the outcome of the condition. This means that any type-dependent or invalid code inside the discarded branch may still lead to compilation errors.</p>
+<h2 id="branch-elimination"><a class="header" href="#branch-elimination">Branch elimination</a></h2>
+<p>In an <code>if constexpr</code> statement, the condition is evaluated at compile-time. If the condition is determined to be <code>false</code> during compilation, the code inside the branch that is not taken (either <code>if</code> or <code>else</code>) is discarded by the compiler. The discarded branch is not checked for syntactic correctness or compiled.</p>
+<p>This compile-time evaluation and branch elimination make <code>if constexpr</code> useful for conditional compilation and optimizing code based on compile-time conditions.</p>
+<p>By discarding the unused branch, the compiler avoids checking its syntax and does not generate any corresponding object code. This can help improve the compile time and reduce the size of the resulting binary executable.</p>
+<h2 id="always-provide-else-branch"><a class="header" href="#always-provide-else-branch">Always provide <code>else</code> branch</a></h2>
+<p>It is generally a good practice to provide an <code>else</code> branch or alternative handling for all possible cases in an <code>if constexpr</code> statement to avoid potential runtime issues and ensure that all scenarios are properly handled.</p>
+<pre><code class="language-cpp">template&lt;class T&gt;
+auto subtract(T a, T b) {
+    if constexpr (std::is_same&lt;T, double&gt;::value) {
+        if (std::abs(a - b) &lt; 0.0001) {
+            return 0.0;
+        } else {
+            return a - b;
+        }
+    } else if constexpr (std::is_integral&lt;T&gt;::value) {
+        return a - b;
+    } else {
+        static_assert(always_false&lt;T&gt;::value, &quot;Non-handled type for subtract function&quot;);
+    }
+}
+</code></pre>
+<p>In this code, both double and integral types are explicitly handled. If a type is used that is neither double nor an integral type, the static_assert will trigger a compile-time error with a clear message, which is generally preferable to a more obscure error about invalid operations. This is a more defensive programming strategy that makes sure all potential types are handled.</p>
 
                     </main>
 
