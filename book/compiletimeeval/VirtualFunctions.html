@@ -149,7 +149,31 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="virtual-functions"><a class="header" href="#virtual-functions">Virtual Functions</a></h1>
+                        <h1 id="constexpr-virtual-method"><a class="header" href="#constexpr-virtual-method"><code>constexpr</code> virtual method</a></h1>
+<p>In C++20, virtual methods can be declared as <code>constexpr</code>, enabling their evaluation during compile time. This allows for potential optimizations where the virtual method can be resolved and reduced to a simple assignment without the overhead of a function call. </p>
+<blockquote>
+<p>Note - such optimizations occur when the static type of the object is known at compile time.</p>
+</blockquote>
+<p>Consider an example where the base class has a non-<code>constexpr</code> virtual method, but the derived class overrides it as <code>constexpr</code>:</p>
+<pre><code class="language-cpp">class Base {
+public:
+    virtual int getValue() { return 42; }
+};
+
+class Derived : public Base {
+public:
+    constexpr int getValue() override { return 10; }
+};
+</code></pre>
+<p>Suppose an object of the derived class with the static type known at compile time:</p>
+<pre><code class="language-cpp">Derived der = Derived();
+int value = der.getValue();
+</code></pre>
+<p>With proper compiler optimizations, the <code>constexpr</code> virtual method <code>getValue</code> can be evaluated at compile time and reduced to a direct assignment without a function call overhead. The resulting assembly code might resemble the following:</p>
+<pre><code class="language-assembly">mov DWORD PTR [ebp-4], 10
+</code></pre>
+<p>This assembly code demonstrates a direct assignment of the constant value <code>10</code> to the variable <code>value</code> without any function call involved. The compiler can determine the value of <code>getValue</code> at compile time, considering the known static type of the object.</p>
+<p>It's important to note that the specific optimization and resulting assembly code may vary depending on the compiler, compiler flags, and optimizations enabled. However, with appropriate optimizations, a <code>constexpr</code> virtual method can indeed be optimized to a simple assignment during compile time, avoiding the function call overhead.</p>
 
                     </main>
 
