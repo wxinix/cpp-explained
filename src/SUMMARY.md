@@ -29,7 +29,7 @@
   - [Conditional Compilation ](compiletimeeval/ConditionalCompilation.md)
   - [Virtual Functions](compiletimeeval/VirtualFunctions.md)
   - [`try-catch` ](compiletimeeval/TryCatch.md)
-  - [Default Initialization ](compiletimeeval/DefaultInit.md)
+  - [Default Initialization of `constexpr` Object](compiletimeeval/DefaultInit.md)
   - [`consteval` and `constinit`](compiletimeeval/ConstEvalAndConstInit.md)
   - [`std::is_constant_evaluated`](compiletimeeval/StdIsConstant.md)
   
