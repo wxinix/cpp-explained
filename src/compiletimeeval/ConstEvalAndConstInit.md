@@ -40,7 +40,49 @@ In the code above, the `add` function is declared as `constexpr`, allowing it to
 
 ## `constinit`
 
-The "static initialization order fiasco" in C++ refers to potential issues that can arise when static objects defined in different translation units rely on each other's initialization. When such dependencies exist, the order in which the static objects are initialized is not guaranteed, leading to undefined behavior.
+The `constinit` specifier is introduced in C++20 to qualify a variable with static storage duration. A variable marked with `constinit` specifier must be initialized with compile-time constant expressions and it guarantees that the initialization will be done during the static initialization phase. It prevents the variables with static storage duration to be initialized at runtime.
 
-The `constinit` specifier ensures that an object is initialized at compile-time or at dynamic initialization phase, with the guarantee that all `constinit`-qualified objects within a translation unit are initialized before any non-`constinit`-qualified objects.
+- `constinit` cannot be used together with `constexpr` or `consteval` as `constinit` is used for static initialization of variables, which happens before the program starts the execution, whereas constexpr and consteval are used to evaluate the expression at compile time.
 
+- `constinit` forces constant initialization of static or thread-local variables. It can help to limit static order initialization fiasco by using precompiled values and well-defined order rather than dynamic initialization and linking order
+
+- `constinit` does not mean that the object is immutable. `constinit` variable cannot be used in constant expressions
+
+```cpp
+#include <array>
+
+// init at compile time
+constexpr int compute(int v) { return v*v*v; }
+constinit int global = compute(10);
+
+// won't work:
+// constinit int another = global;
+
+int main() {
+    // but allow to change later...
+    global = 100;
+
+    // global is not constant!
+    // std::array<int, global> arr;
+}
+```
+
+```assembly
+main:
+ push   rbp
+ mov    rbp,rsp
+ mov    DWORD PTR [rip+0x2efc],0x64        # 404010 <global>
+ mov    eax,0x0
+ pop    rbp
+ ret
+ nop    DWORD PTR [rax+rax*1+0x0]
+ ```
+
+The following table summaries all `const` specifiers ([credit: Bartłomiej Filipek](https://www.cppstories.com/2022/const-options-cpp20/))
+
+| Keyword    | On Auto Variables | On Static/Thread_Local Variables | On Functions          | On Constant Expressions |
+|------------|------------------|----------------------------------|-----------------------|-------------------------|
+| `const`      | Yes              | Yes                              | As const member functions | Sometimes                |
+| `constexpr`  | Yes or Implicit (in constexpr functions) | Yes          | To indicate constexpr functions | Yes                 |
+| `consteval`  | No               | No                               | To indicate consteval functions | Yes (as a result of a function call) |
+| `constinit`  | No               | To force constant initialization | No                    | No, a `constinit` variable is not a constexpr variable |
