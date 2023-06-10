@@ -1869,9 +1869,52 @@ int main() {
 </code></pre>
 <p>In the code above, the <code>add</code> function is declared as <code>constexpr</code>, allowing it to be evaluated at both compile-time and runtime. The <code>multiply</code> function is declared as <code>consteval</code>, ensuring that it is evaluated strictly at compile-time within constant expressions.</p>
 <h2 id="constinit"><a class="header" href="#constinit"><code>constinit</code></a></h2>
-<p>The &quot;static initialization order fiasco&quot; in C++ refers to potential issues that can arise when static objects defined in different translation units rely on each other's initialization. When such dependencies exist, the order in which the static objects are initialized is not guaranteed, leading to undefined behavior.</p>
-<p>The <code>constinit</code> specifier ensures that an object is initialized at compile-time or at dynamic initialization phase, with the guarantee that all <code>constinit</code>-qualified objects within a translation unit are initialized before any non-<code>constinit</code>-qualified objects.</p>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="stdis_constant_evaluated"><a class="header" href="#stdis_constant_evaluated">std::is_constant_evaluated</a></h1>
+<p>The <code>constinit</code> specifier is introduced in C++20 to qualify a variable with static storage duration. A variable marked with <code>constinit</code> specifier must be initialized with compile-time constant expressions and it guarantees that the initialization will be done during the static initialization phase. It prevents the variables with static storage duration to be initialized at runtime.</p>
+<ul>
+<li>
+<p><code>constinit</code> cannot be used together with <code>constexpr</code> or <code>consteval</code> as <code>constinit</code> is used for static initialization of variables, which happens before the program starts the execution, whereas constexpr and consteval are used to evaluate the expression at compile time.</p>
+</li>
+<li>
+<p><code>constinit</code> forces constant initialization of static or thread-local variables. It can help to limit static order initialization fiasco by using precompiled values and well-defined order rather than dynamic initialization and linking order</p>
+</li>
+<li>
+<p><code>constinit</code> does not mean that the object is immutable. <code>constinit</code> variable cannot be used in constant expressions</p>
+</li>
+</ul>
+<pre><code class="language-cpp">#include &lt;array&gt;
+
+// init at compile time
+constexpr int compute(int v) { return v*v*v; }
+constinit int global = compute(10);
+
+// won't work:
+// constinit int another = global;
+
+int main() {
+    // but allow to change later...
+    global = 100;
+
+    // global is not constant!
+    // std::array&lt;int, global&gt; arr;
+}
+</code></pre>
+<pre><code class="language-assembly">main:
+ push   rbp
+ mov    rbp,rsp
+ mov    DWORD PTR [rip+0x2efc],0x64        # 404010 &lt;global&gt;
+ mov    eax,0x0
+ pop    rbp
+ ret
+ nop    DWORD PTR [rax+rax*1+0x0]
+</code></pre>
+<p>The following table summaries all <code>const</code> specifiers (<a href="https://www.cppstories.com/2022/const-options-cpp20/">credit: Bartłomiej Filipek</a>)</p>
+<div class="table-wrapper"><table><thead><tr><th>Keyword</th><th>On Auto Variables</th><th>On Static/Thread_Local Variables</th><th>On Functions</th><th>On Constant Expressions</th></tr></thead><tbody>
+<tr><td><code>const</code></td><td>Yes</td><td>Yes</td><td>As const member functions</td><td>Sometimes</td></tr>
+<tr><td><code>constexpr</code></td><td>Yes or Implicit (in constexpr functions)</td><td>Yes</td><td>To indicate constexpr functions</td><td>Yes</td></tr>
+<tr><td><code>consteval</code></td><td>No</td><td>No</td><td>To indicate consteval functions</td><td>Yes (as a result of a function call)</td></tr>
+<tr><td><code>constinit</code></td><td>No</td><td>To force constant initialization</td><td>No</td><td>No, a <code>constinit</code> variable is not a constexpr variable</td></tr>
+</tbody></table>
+</div><div style="break-before: page; page-break-before: always;"></div><h1 id="stdis_constant_evaluated"><a class="header" href="#stdis_constant_evaluated">std::is_constant_evaluated</a></h1>
 <p><code>std::is_constant_evaluated</code> function was introduced in C++20 as a standard library feature. It provides a way to check whether a function is being evaluated in a constant expression context or a non-constant expression context. This feature enables developers to write code that behaves differently during compile-time evaluation compared to runtime execution. </p>
 <blockquote>
 <p>The motivation behind introducing <code>std::is_constant_evaluated</code> is to allow for explicit compile-time evaluation, which provides more control and flexibility in code execution. It allows developers to optimize certain operations or choose alternate code paths specifically for constant expressions.</p>
