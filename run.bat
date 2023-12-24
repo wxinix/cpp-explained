@@ -1,3 +1,3 @@
 @echo off
-cd "X:\cpp-explained"
-mdbook serve
+cd "C:\GitBooks\cpp-explained"
+mdbook serve --dest-dir "C:\GitBooks\cpp-explained-book\book"
