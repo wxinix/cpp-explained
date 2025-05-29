@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Initialization of constexpr Object - Modern C++ Explained</title>
+        <title>When to Use auto - Modern C++ Explained</title>
 
 
         <!-- Custom HTML head -->
@@ -85,7 +85,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../index.html">Preface</a></li><li class="chapter-item expanded affix "><li class="part-title">Modern C++ Elements</li><li class="chapter-item expanded "><a href="../primitive/index.html">Fundamental Data Types</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../primitive/IntTypes.html">Integer Types</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../primitive/IntTypes_longlong.html">Integer Type long long</a></li></ol></li><li class="chapter-item expanded "><a href="../primitive/CharTypes.html">Character Types</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../primitive/CharTypes_CharSetsEncodings.html">Character Sets and Encodings</a></li><li class="chapter-item expanded "><a href="../primitive/CharTypes_NewCharTypes.html">New Character Types</a></li><li class="chapter-item expanded "><a href="../primitive/CharTypes_StringLiteralCat.html">Automatic String Literal Concatenation</a></li><li class="chapter-item expanded "><a href="../primitive/CharTypes_LibrarySuppor.html">Library Support</a></li></ol></li></ol></li><li class="chapter-item expanded "><a href="../namespace/index.html">Namespace</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../namespace/InlineNamespace.html">Inline Namespace</a></li><li class="chapter-item expanded "><a href="../namespace/NewNestedNamespaceSyntax.html">New Nested Namespace Syntax</a></li><li class="chapter-item expanded "><a href="../namespace/UnnamedNamespace.html">Unnamed Namespace</a></li><li class="chapter-item expanded "><a href="../namespace/MergedNamespace.html">Merged Namespace</a></li><li class="chapter-item expanded "><a href="../namespace/GlobalNamespace.html">Global Namespace</a></li></ol></li><li class="chapter-item expanded "><a href="../compileval/index.html">Compile Time Evaluation</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../compileval/Constexpr.html">constexpr</a></li><li class="chapter-item expanded "><a href="../compileval/NumericLimit.html">std::numeric_limits</a></li><li class="chapter-item expanded "><a href="../compileval/MathFunctions.html">Math functions</a></li><li class="chapter-item expanded "><a href="../compileval/Lambdas.html">Lambdas</a></li><li class="chapter-item expanded "><a href="../compileval/InliningConstExpr.html">Inlining constexpr</a></li><li class="chapter-item expanded "><a href="../compileval/ConditionalCompilation.html">Conditional Compilation </a></li><li class="chapter-item expanded "><a href="../compileval/VirtualFunctions.html">Virtual Functions</a></li><li class="chapter-item expanded "><a href="../compileval/TryCatch.html">try-catch </a></li><li class="chapter-item expanded "><a href="../compileval/DefaultInit.html" class="active">Initialization of constexpr Object</a></li><li class="chapter-item expanded "><a href="../compileval/ConstEvalAndConstInit.html">consteval and constinit</a></li><li class="chapter-item expanded "><a href="../compileval/StdIsConstant.html">std::is_constant_evaluated</a></li><li class="chapter-item expanded "><a href="../compileval/OtherEnhancements.html">Other Enhancements</a></li></ol></li><li class="chapter-item expanded "><a href="../typededuction/index.html">Type Deduction Mechanism</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../typededuction/VariousTypeDeductions.html">Various Type Deductions</a></li><li class="chapter-item expanded "><a href="../typededuction/RulesOfAuto.html">Rules of auto</a></li><li class="chapter-item expanded "><a href="../typededuction/BenefitsOfAuto.html">Benefits of auto</a></li><li class="chapter-item expanded "><a href="../typededuction/WhenToUseAuto.html">When to Use auto</a></li></ol></li><li class="chapter-item expanded "><li class="part-title">Meta-template Programming</li><li class="chapter-item expanded affix "><li class="part-title">Algorithms</li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../index.html">Preface</a></li><li class="chapter-item expanded affix "><li class="part-title">Modern C++ Elements</li><li class="chapter-item expanded "><a href="../primitive/index.html">Fundamental Data Types</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../primitive/IntTypes.html">Integer Types</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../primitive/IntTypes_longlong.html">Integer Type long long</a></li></ol></li><li class="chapter-item expanded "><a href="../primitive/CharTypes.html">Character Types</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../primitive/CharTypes_CharSetsEncodings.html">Character Sets and Encodings</a></li><li class="chapter-item expanded "><a href="../primitive/CharTypes_NewCharTypes.html">New Character Types</a></li><li class="chapter-item expanded "><a href="../primitive/CharTypes_StringLiteralCat.html">Automatic String Literal Concatenation</a></li><li class="chapter-item expanded "><a href="../primitive/CharTypes_LibrarySuppor.html">Library Support</a></li></ol></li></ol></li><li class="chapter-item expanded "><a href="../namespace/index.html">Namespace</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../namespace/InlineNamespace.html">Inline Namespace</a></li><li class="chapter-item expanded "><a href="../namespace/NewNestedNamespaceSyntax.html">New Nested Namespace Syntax</a></li><li class="chapter-item expanded "><a href="../namespace/UnnamedNamespace.html">Unnamed Namespace</a></li><li class="chapter-item expanded "><a href="../namespace/MergedNamespace.html">Merged Namespace</a></li><li class="chapter-item expanded "><a href="../namespace/GlobalNamespace.html">Global Namespace</a></li></ol></li><li class="chapter-item expanded "><a href="../compileval/index.html">Compile Time Evaluation</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../compileval/Constexpr.html">constexpr</a></li><li class="chapter-item expanded "><a href="../compileval/NumericLimit.html">std::numeric_limits</a></li><li class="chapter-item expanded "><a href="../compileval/MathFunctions.html">Math functions</a></li><li class="chapter-item expanded "><a href="../compileval/Lambdas.html">Lambdas</a></li><li class="chapter-item expanded "><a href="../compileval/InliningConstExpr.html">Inlining constexpr</a></li><li class="chapter-item expanded "><a href="../compileval/ConditionalCompilation.html">Conditional Compilation </a></li><li class="chapter-item expanded "><a href="../compileval/VirtualFunctions.html">Virtual Functions</a></li><li class="chapter-item expanded "><a href="../compileval/TryCatch.html">try-catch </a></li><li class="chapter-item expanded "><a href="../compileval/DefaultInit.html">Initialization of constexpr Object</a></li><li class="chapter-item expanded "><a href="../compileval/ConstEvalAndConstInit.html">consteval and constinit</a></li><li class="chapter-item expanded "><a href="../compileval/StdIsConstant.html">std::is_constant_evaluated</a></li><li class="chapter-item expanded "><a href="../compileval/OtherEnhancements.html">Other Enhancements</a></li></ol></li><li class="chapter-item expanded "><a href="../typededuction/index.html">Type Deduction Mechanism</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../typededuction/VariousTypeDeductions.html">Various Type Deductions</a></li><li class="chapter-item expanded "><a href="../typededuction/RulesOfAuto.html">Rules of auto</a></li><li class="chapter-item expanded "><a href="../typededuction/BenefitsOfAuto.html">Benefits of auto</a></li><li class="chapter-item expanded "><a href="../typededuction/WhenToUseAuto.html" class="active">When to Use auto</a></li></ol></li><li class="chapter-item expanded "><li class="part-title">Meta-template Programming</li><li class="chapter-item expanded affix "><li class="part-title">Algorithms</li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -149,58 +149,71 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="default-initialization-of-constexpr-objects"><a class="header" href="#default-initialization-of-constexpr-objects">Default Initialization of <code>constexpr</code> Objects</a></h1>
-<p>In C++20, the language standard introduced the ability to use trivial default construction for constexpr objects. Trivial default construction means that a constexpr object can be default-initialized without explicitly providing a constructor or initializer.</p>
-<p>Here is an example that demonstrates the usage of trivial default construction in a constexpr function:</p>
-<pre><code class="language-cpp">struct X {
-    bool val;
-};
-
-constexpr void f() {
-    X x;
+                        <h1 id="when-to-use-auto"><a class="header" href="#when-to-use-auto">When to Use <code>auto</code></a></h1>
+<p>Using <code>auto</code> can greatly improve code clarity and reduce verbosity — but it should be used <strong>judiciously</strong>. Here are guidelines for when <code>auto</code> is beneficial:</p>
+<h2 id="-when-the-type-is-obvious-from-the-initializer"><a class="header" href="#-when-the-type-is-obvious-from-the-initializer">✅ When the Type Is <strong>Obvious</strong> from the Initializer</a></h2>
+<p>Use <code>auto</code> when the type is clear and unambiguous:</p>
+<pre><code class="language-cpp">auto i = 10;                      // Clearly an int
+auto name = std::string(&quot;John&quot;); // Obvious string construction
+</code></pre>
+<p>Also ideal for range-based loops and iterator declarations:</p>
+<pre><code class="language-cpp">for (auto it = container.begin(); it != container.end(); ++it) {
+    // Avoids long iterator type
 }
 </code></pre>
-<p>The above code only works with C++20. C++ 17 requires that explicit initialization for constexpr objects must be provided to ensure their proper initialization. Here's an example of explicit initializing a constexpr object in C++17:</p>
-<pre><code class="language-cpp">struct X {
-    bool val;
-};
+<hr />
+<h2 id="when-the-type-is-long-or-tedious-to-write"><a class="header" href="#when-the-type-is-long-or-tedious-to-write">When the Type Is <strong>Long or Tedious to Write</strong></a></h2>
+<p><code>auto</code> helps avoid unnecessarily verbose or complex type declarations:</p>
+<pre><code class="language-cpp">auto pair = std::make_pair(42, &quot;answer&quot;);
+auto mapIter = std::unordered_map&lt;int, std::vector&lt;std::string&gt;&gt;::iterator{};
+</code></pre>
+<hr />
+<h2 id="-when-dealing-with-lambdas-or-callable-objects"><a class="header" href="#-when-dealing-with-lambdas-or-callable-objects">✅ When Dealing with <strong>Lambdas or Callable Objects</strong></a></h2>
+<pre><code class="language-cpp">auto lambda = [](int x, int y) { return x + y; };
 
-constexpr void f() {
-    X x{true}; // Explicit initialization required in C++17
+auto boundFunc = std::bind(sum, 5, std::placeholders::_1);
+</code></pre>
+<hr />
+<h2 id="-when-working-with-templates-stl-iterators-or-ranges"><a class="header" href="#-when-working-with-templates-stl-iterators-or-ranges">✅ When Working with <strong>Templates, STL Iterators, or Ranges</strong></a></h2>
+<p>Using <code>auto</code> prevents clutter from deeply nested or templated types:</p>
+<pre><code class="language-cpp">auto result = someTemplateFunction&lt;T, U&gt;(arg1, arg2);
+
+for (auto&amp; [key, value] : myMap) {
+    // Structured bindings with auto make this much cleaner
 }
 </code></pre>
-<p>The following example demonstrates the usage of trivial default construction in a more practical scenario:</p>
-<pre><code class="language-cpp">#include &lt;array&gt;
-
-constexpr std::array&lt;int, 5&gt; createArray() {
-    std::array&lt;int, 5&gt; arr;
-    for (int i = 0; i &lt; arr.size(); ++i) {
-        arr[i] = i * i;
-    }
-    return arr;
-}
-
-int main() {
-    constexpr std::array&lt;int, 5&gt; result = createArray();
-    // Use the constexpr array at compile time
-    static_assert(result[2] == 4, &quot;Unexpected value at compile time!&quot;);
-    return 0;
-}
+<hr />
+<h2 id="-when-to-avoid-auto"><a class="header" href="#-when-to-avoid-auto">⚠️ When to <strong>Avoid</strong> <code>auto</code></a></h2>
+<ul>
+<li>
+<p>❌ If it makes the code <strong>ambiguous or unclear</strong>:</p>
+<pre><code class="language-cpp">auto x = getValue();  // What type is x? Unclear without looking up getValue()
 </code></pre>
-<p>In this example, the constexpr function <code>createArray</code> creates an array of integers and assigns values to its elements using a loop. The array <code>arr</code> is default-initialized without explicitly providing an initializer because <code>std::array</code> is a trivial type. The function returns the resulting array, which can then be used at compile time.</p>
-<p>By allowing trivial default construction for constexpr objects, C++20 simplifies the initialization process for certain types and enables more concise and efficient constexpr code. It can be particularly beneficial when working with trivial types or when initializing objects that don't require explicit initialization before use.</p>
+</li>
+<li>
+<p>❌ If explicit typing is critical for <strong>readability or correctness</strong>:</p>
+<pre><code class="language-cpp">int count = 0;  // More readable than auto when you want to emphasize the type
+</code></pre>
+</li>
+</ul>
+<hr />
+<h2 id="-tip-use-auto-with-initializers-that-make-type-obvious"><a class="header" href="#-tip-use-auto-with-initializers-that-make-type-obvious">🧠 Tip: Use <code>auto</code> with Initializers That Make Type Obvious</a></h2>
+<p><strong>Good:</strong></p>
+<pre><code class="language-cpp">auto flag = true;
+auto total = 1.5f * 2;
+</code></pre>
+<p><strong>Less ideal:</strong></p>
+<pre><code class="language-cpp">auto result = compute();  // What does compute() return?
+</code></pre>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="../compileval/TryCatch.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../typededuction/BenefitsOfAuto.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next" href="../compileval/ConstEvalAndConstInit.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
-                                <i class="fa fa-angle-right"></i>
-                            </a>
 
                         <div style="clear: both"></div>
                     </nav>
@@ -208,13 +221,10 @@ int main() {
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="../compileval/TryCatch.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../typededuction/BenefitsOfAuto.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next" href="../compileval/ConstEvalAndConstInit.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
-                        <i class="fa fa-angle-right"></i>
-                    </a>
             </nav>
 
         </div>
