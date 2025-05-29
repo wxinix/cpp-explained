@@ -33,6 +33,13 @@
   - [`consteval` and `constinit`](compileval/ConstEvalAndConstInit.md)
   - [`std::is_constant_evaluated`](compileval/StdIsConstant.md)
   - [Other Enhancements](compileval/OtherEnhancements.md)
+
+- [`Type Deduction Mechanism`](typededuction/README.md)
+  - [`Various Type Deductions`](typededuction/VariousTypeDeductions.md)
+  - [`Rules of auto`](typededuction/RulesOfAuto.md)
+  - [`Benefits of auto`](typededuction/BenefitsOfAuto.md)
+  - [`When to Use auto`](typededuction/WhenToUseAuto.md)
+  
   
 # Meta-template Programming
 
