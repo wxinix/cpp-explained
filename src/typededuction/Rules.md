@@ -1,8 +1,10 @@
-# `auto` Type Deduction Rules in C++
+# Type Deduction Rules in C++
 
-In C++, the `auto` keyword instructs the compiler to deduce the type of a variable based on its initializer. However, deduction follows a set of specific rules, especially regarding references, `const` qualifiers, value categories, and initializer forms. The following summarizes the key rules with examples and explanations.
+The `auto` keyword instructs the compiler to deduce the type of a variable based on its initializer.
 
----
+However, deduction follows a set of specific rules, especially regarding references, `const` qualifiers, value categories, and initializer forms. 
+
+The following summarizes the key rules with examples and explanations.
 
 ## Rule 1: **Top-Level CV Qualifiers Are Discarded During Value Initialization**
 
@@ -21,7 +23,6 @@ const auto n = j;  // deduced as const int
 - When `auto` is used with reference (`&`) or pointer (`*`), the `const` qualifier is preserved in the deduced type.
 - `const auto` applies a new `const` to the deduced type of `auto`.
 
----
 
 ## Rule 2: **Reference Qualifiers in Initializers Are Ignored in Value Declarations**
 
@@ -36,7 +37,6 @@ auto m = ref;  // deduced as int, not int&
 **Explanation:**  
 The type of `m` is `int` because the reference in `ref` is discarded during value deduction.
 
----
 
 ## Rule 3: **Universal References Deduce Lvalue/Rvalue Appropriately**
 
@@ -51,7 +51,6 @@ auto&& y = 10; // deduced as int&&, because 10 is an rvalue
 **Explanation:**  
 This behavior uses the reference collapsing rules. Lvalues result in `T&`, and rvalues result in `T&&`.
 
----
 
 ## Rule 4: **Array and Function Types Decay into Pointers**
 
@@ -67,8 +66,6 @@ auto b = sum;  // deduced as int (*)(int, int)
 
 **Explanation:**  
 Array names decay to pointers to the first element, and function names decay to function pointers.
-
----
 
 ## Rule 5: **Deduction with List Initialization**
 
@@ -95,9 +92,8 @@ auto y3 = {1, 2.0};  // error: conflicting types, cannot deduce common T
 - If multiple elements of the same type are used, the type is deduced as `std::initializer_list<T>`.
 - If the types differ, deduction fails due to type mismatch.
 
----
 
-## Example: Object Slicing with `auto`
+## Pitfall: Object Slicing with `auto`
 
 ```cpp
 class Base {
@@ -126,8 +122,6 @@ To preserve polymorphism:
 auto& b = *d;  // deduced as Base&
 b.f();         // correctly calls Derived::f()
 ```
-
----
 
 ## Summary Table
 

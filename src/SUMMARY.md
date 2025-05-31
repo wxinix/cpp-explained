@@ -34,11 +34,11 @@
   - [`std::is_constant_evaluated`](compileval/StdIsConstant.md)
   - [Other Enhancements](compileval/OtherEnhancements.md)
 
-- [`Type Deduction Mechanism`](typededuction/README.md)
-  - [`Various Type Deductions`](typededuction/VariousTypeDeductions.md)
-  - [`Rules of auto`](typededuction/RulesOfAuto.md)
-  - [`Benefits of auto`](typededuction/BenefitsOfAuto.md)
-  - [`When to Use auto`](typededuction/WhenToUseAuto.md)
+- [`Type Deduction`](typededuction/README.md)
+  - [`Introduction`](typededuction/Introduction.md)
+  - [`Mechanisms`](typededuction/Mechnisms.md)
+  - [`Rules`](typededuction/Rules.md)
+  - [`Best Practices`](typededuction/BestPractices.md)
   
   
 # Meta-template Programming

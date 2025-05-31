@@ -1,6 +1,6 @@
-# Various Type Deduction Mechanisms
+# Type Deduction Mechanisms
 
-Modern C++ includes multiple mechanisms for type deduction, enabling more concise and expressive code. The table below summarizes these features and their respective introductions into the language standard:
+The table below summarizes C++ type deduction features and their respective introductions into the language standard:
 
 
 | Mechanism                          | Keyword(s)                   | Description                                              | Introduced |
@@ -17,8 +17,6 @@ Modern C++ includes multiple mechanisms for type deduction, enabling more concis
 | **Constrained deduction**          | Concepts + `auto`            | Adds semantic constraints to type deduction              | C++20      |
 | **Aggregate member with auto**     | `auto` in struct/class field | Supports `auto` members with initializer in aggregates   | C++20      |
 | **Compile-time enforcement**       | `consteval`, `constinit`     | Restricts deduction to compile-time context              | C++20      |
-
----
 
 ## Examples
 
@@ -167,21 +165,53 @@ Concepts restrict template parameters to types satisfying specified requirements
 
 ```cpp
 struct Data {
-    auto x = 0;  // allowed in C++20 with brace initialization
+    auto x = 0;   
 };
 ```
-The use of auto in aggregate member declarations is permitted when accompanied by a default initializer.
+Since C++20, the use of `auto` in aggregate member declarations is permitted when accompanied by a default initializer. 
 
-### `consteval` / `constinit` Impact
+> ⚠️ In short: A simple struct with public fields and no fancy behavior is usually an aggregate. Prior to C++20, an aggregate does not permit member declaration using `auto`. But this restriction is relaxed with C++20, as long as a default initializer is provided.
+
+### `consteval` and `constinit` Impact
 
 ```cpp
 consteval int square(int x) { return x * x; }
 ```
-The consteval specifier enforces that the function is evaluated at compile time. This feature is used to guarantee constexpr behavior.
+The `consteval` specifier enforces that the function is evaluated at compile time. This feature is used to guarantee constexpr behavior.
 
----
+`consteval` does not itself cause type deduction, but it may participate in deduction contexts. For example, if the return value of a consteval function is used to initialize a variable declared with auto, then type deduction will occur based on the result:
 
-### Example Pitfall: Object Slicing
+```cpp
+auto y = square(4);  // y deduced as int, square(4) evaluated at compile time
+```
+
+So here, deduction still happens, just as with any function returning a known type. The twist is: the result must be known at compile time.
+
+On the other hand, `constinit` ensures that a variable with static storage duration (like globals, static members, etc.) is initialized at compile time. It does not mean the variable is constant (unlike const). It ensures that no dynamic initialization will occur — useful for avoiding the static initialization order fiasco.
+
+Similar to `consteval`, `constinit` does not perform type deduction itself. But it can interact with deduction:
+```cpp
+constinit auto z = square(5);  // auto deduces int
+```
+Again, `auto` deduces the type from the value returned by a `consteval` function, which satisfies `constinit`'s compile-time requirement.
+
+| Feature     | Purpose                              | Role in Type Deduction                            |
+| ----------- | ------------------------------------ | ------------------------------------------------- |
+| `consteval` | Requires function to be CT evaluated | May **influence** deduction (via result value)    |
+| `constinit` | Ensures static init is CT            | Works **alongside** deduction, doesn't perform it |
+| `auto`      | Deduce type from initializer         | Can use values from `consteval` or `constinit`    |
+
+The following example illustrates `consteval` and `constinit` putting together:
+
+```cpp
+consteval int factorial(int n) {
+    return (n <= 1) ? 1 : (n * factorial(n - 1));
+}
+
+constinit auto fact5 = factorial(5);  // fact5 is int, initialized at compile time
+```
+
+## Pitfall: Object Slicing
 
 ```cpp
 Base* d = new Derived();
