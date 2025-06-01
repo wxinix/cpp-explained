@@ -40,6 +40,12 @@
   - [`Rules`](typededuction/Rules.md)
   - [`Best Practices`](typededuction/BestPractices.md)
   
+- [`Type Query`](typequery/README.md)
+  - [`Introduction`](typequery/Introduction.md)
+  - [`Mechanisms`](typequery/Mechnisms.md)
+  - [`Rules`](typequery/Rules.md)
+  - [`Best Practices`](typequery/BestPractices.md)
+  
   
 # Meta-template Programming
 
