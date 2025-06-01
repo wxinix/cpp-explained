@@ -149,7 +149,28 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="best-practices"><a class="header" href="#best-practices">Best Practices</a></h1>
+                        <h1 id="best-practices-for-using-decltype"><a class="header" href="#best-practices-for-using-decltype">Best Practices for Using <code>decltype</code></a></h1>
+<p>In typical application development, <code>decltype</code> may not be used extensively. However, it becomes highly valuable in the context of <strong>library development</strong> and <strong>generic programming</strong>. It significantly enhances C++'s ability to support advanced meta programming patterns.</p>
+<h3 id="when-to-use-decltype"><a class="header" href="#when-to-use-decltype">When to Use <code>decltype</code></a></h3>
+<ul>
+<li>When writing <strong>template functions</strong> that need to deduce return types precisely.</li>
+<li>When combined with <strong><code>std::declval</code></strong> to form expressions for SFINAE or concepts.</li>
+<li>When building <strong>generic utilities</strong> where preserving exact types (e.g., reference or const-ness) matters.</li>
+</ul>
+<h3 id="practical-guidelines"><a class="header" href="#practical-guidelines">Practical Guidelines</a></h3>
+<ul>
+<li>Prefer <code>auto</code> for readability when exact type preservation is not critical.</li>
+<li>Use <code>decltype</code> when querying the result of complex expressions, especially in templates.</li>
+<li><em><strong>Wrap expressions in parentheses</strong></em> when necessary to ensure correct cv/ref deduction.</li>
+<li>Avoid using <code>decltype</code> in evaluated contexts—combine it with unevaluated tools like <code>std::declval</code>.</li>
+</ul>
+<h3 id="advanced-use-cases"><a class="header" href="#advanced-use-cases">Advanced Use Cases</a></h3>
+<ul>
+<li>Combine <code>decltype</code> with SFINAE (Substitution Failure Is Not An Error) to enable or disable overloads based on expression validity.</li>
+<li>In C++14 and later, prefer <code>decltype(auto)</code> to preserve exact return types without trailing-return syntax.</li>
+<li>In C++17, <code>decltype(auto)</code> can also serve as a non-type template parameter, enhancing flexibility in meta programming.</li>
+</ul>
+<p>Overall, <code>decltype</code> is a precise and powerful tool that plays a critical role in modern C++ library design. Developers who need maximum control over type behavior—especially in templates—will find it indispensable.</p>
 
                     </main>
 

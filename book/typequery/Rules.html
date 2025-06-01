@@ -149,7 +149,145 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="rules"><a class="header" href="#rules">Rules</a></h1>
+                        <h1 id="type-query-rules-in-c"><a class="header" href="#type-query-rules-in-c">Type Query Rules in C++</a></h1>
+<p>This section outlines the official deduction rules for <code>decltype</code>, along with examples, clarifications about cv-qualifiers, and the role of <code>decltype(auto)</code>.</p>
+<h2 id="decltypee-deduction-rules"><a class="header" href="#decltypee-deduction-rules"><code>decltype(e)</code> Deduction Rules</a></h2>
+<p>When <code>e</code> is an expression and <code>T</code> is its type, the type deduced by <code>decltype(e)</code> follows five core rules:</p>
+<ol>
+<li>
+<p><strong>Identifier or Class Member Access (without parentheses)</strong>
+If <code>e</code> is an unparenthesized identifier or class member access, <code>decltype(e)</code> is simply <code>T</code>. This excludes overloaded function names and structured bindings.</p>
+</li>
+<li>
+<p><strong>Function or Functor Call</strong>
+If <code>e</code> is a function call or functor invocation, <code>decltype(e)</code> is the function's return type.</p>
+</li>
+<li>
+<p><strong>Lvalue</strong>
+If <code>e</code> is an lvalue of type <code>T</code>, <code>decltype(e)</code> is <code>T&amp;</code>.</p>
+</li>
+<li>
+<p><strong>Xvalue (expiring value)</strong>
+If <code>e</code> is an xvalue of type <code>T</code>, <code>decltype(e)</code> is <code>T&amp;&amp;</code>.</p>
+</li>
+<li>
+<p><strong>Prvalue (pure rvalue)</strong>
+In all other cases, <code>decltype(e)</code> is simply <code>T</code>.</p>
+</li>
+</ol>
+<h3 id="standard-examples"><a class="header" href="#standard-examples">Standard Examples</a></h3>
+<pre><code class="language-cpp">const int&amp;&amp; foo();
+int i;
+struct A { double x; };
+const A* a = new A();
+
+decltype(foo());    // const int&amp;&amp; (rules 2 and 4)
+decltype(i);        // int         (rule 1)
+decltype(a-&gt;x);     // double      (rule 1)
+decltype((a-&gt;x));   // const double&amp; (rule 3 — parenthesized, so it's an lvalue)
+</code></pre>
+<h2 id="additional-deduction-examples"><a class="header" href="#additional-deduction-examples">Additional Deduction Examples</a></h2>
+<pre><code class="language-cpp">int i;
+int *j;
+int n[10];
+const int&amp;&amp; foo();
+
+decltype(static_cast&lt;short&gt;(i)); // short (prvalue)
+decltype(j);                     // int*
+decltype(n);                     // int[10]
+decltype(foo);                   // const int&amp;&amp;() (function type)
+
+struct A {
+    int operator() () { return 0; }
+};
+A a;
+decltype(a()); // int (functor call)
+</code></pre>
+<h3 id="more-complex-cases"><a class="header" href="#more-complex-cases">More Complex Cases</a></h3>
+<pre><code class="language-cpp">int i;
+int *j;
+int n[10];
+
+decltype(i = 0);                 // int&amp; (assignment returns lvalue)
+decltype(0, i);                  // int&amp; (comma operator, result is i — an lvalue)
+decltype(i, 0);                  // int  (comma operator, result is 0 — a pure rvalue)
+decltype(n[5]);                  // int&amp; (array element is an lvalue)
+decltype(*j);                    // int&amp; (dereference of pointer is lvalue)
+decltype(static_cast&lt;int&amp;&amp;&gt;(i)); // int&amp;&amp; (xvalue)
+decltype(i++);                   // int  (post-increment yields prvalue)
+decltype(++i);                   // int&amp; (pre-increment yields lvalue)
+decltype(&quot;hello world&quot;);         // const char(&amp;)[12] (string literal is lvalue array)
+</code></pre>
+<h2 id="cv-qualifier-deduction-behavior"><a class="header" href="#cv-qualifier-deduction-behavior">cv-Qualifier Deduction Behavior</a></h2>
+<p>In general, <code>decltype(e)</code> preserves the <code>const</code> and <code>volatile</code> (cv) qualifiers of <code>e</code>. For example:</p>
+<pre><code class="language-cpp">const int i = 0;
+decltype(i); // const int
+</code></pre>
+<p>However, <strong>there are exceptions</strong>, particularly for class member access. If <code>e</code> is an unparenthesized member access expression, the cv-qualifiers of the object are <strong>not</strong> propagated:</p>
+<pre><code class="language-cpp">struct A { double x; };
+const A* a = new A();
+decltype(a-&gt;x);   // double (cv-qualifier on `a` ignored)
+decltype((a-&gt;x)); // const double&amp; (parenthesized — now cv is considered)
+</code></pre>
+<p>In summary:</p>
+<ul>
+<li>Unparenthesized member access: cv-qualifiers <strong>not</strong> preserved.</li>
+<li>Parenthesized expression: cv-qualifiers <strong>are</strong> preserved.</li>
+</ul>
+<h2 id="decltypeauto"><a class="header" href="#decltypeauto"><code>decltype(auto)</code></a></h2>
+<p>Introduced in <strong>C++14</strong>, <code>decltype(auto)</code> merges the behavior of <code>decltype</code> and <code>auto</code>. It tells the compiler to deduce the type using <strong><code>decltype</code> rules</strong>, not <code>auto</code> rules.</p>
+<blockquote>
+<p><strong>Note:</strong> <code>decltype(auto)</code> must be used alone in a declaration. It cannot be combined with pointer/reference/cv-qualifiers.</p>
+</blockquote>
+<h3 id="comparison-examples"><a class="header" href="#comparison-examples">Comparison Examples:</a></h3>
+<pre><code class="language-cpp">int i;
+int&amp;&amp; f();
+
+auto x1 = i;                // int
+decltype(auto) x2 = i;      // int
+
+auto x3 = (i);              // int
+decltype(auto) x4 = (i);    // int&amp;
+
+auto x5 = f();              // int
+decltype(auto) x6 = f();    // int&amp;&amp;
+
+auto x7 = {1, 2};           // std::initializer_list&lt;int&gt;
+decltype(auto) x8 = {1, 2}; // ❌ Error: not a single expression
+
+auto* p1 = &amp;i;              // int*
+decltype(auto)* p2 = &amp;i;    // ❌ Error: decltype(auto) must appear alone
+</code></pre>
+<h3 id="return-type-use-case"><a class="header" href="#return-type-use-case">Return Type Use Case</a></h3>
+<p>Before C++14, returning references required a trailing return type:</p>
+<pre><code class="language-cpp">template&lt;class T&gt;
+auto return_ref(T&amp; t) -&gt; T&amp; { return t; }
+</code></pre>
+<p>With <code>decltype(auto)</code>, this becomes:</p>
+<pre><code class="language-cpp">template&lt;class T&gt;
+decltype(auto) return_ref(T&amp; t) {
+    return t; // preserves reference type
+}
+</code></pre>
+<h3 id="c17-decltypeauto-as-a-non-type-template-parameter"><a class="header" href="#c17-decltypeauto-as-a-non-type-template-parameter">C++17: <code>decltype(auto)</code> as a Non-Type Template Parameter</a></h3>
+<p>In C++17, <code>decltype(auto)</code> can also be used as a <strong>non-type template parameter</strong>, with deduction rules matching <code>decltype</code>.</p>
+<pre><code class="language-cpp">#include &lt;iostream&gt;
+
+template&lt;decltype(auto) N&gt;
+void f() {
+    std::cout &lt;&lt; N &lt;&lt; std::endl;
+}
+
+static const int x = 11;
+static int y = 7;
+
+int main() {
+    f&lt;x&gt;();     // N deduced as const int
+    f&lt;(x)&gt;();   // N deduced as const int&amp;
+    f&lt;y&gt;();     // ❌ Error: y is not a constant expression
+    f&lt;(y)&gt;();   // N deduced as int&amp;
+}
+</code></pre>
 
                     </main>
 

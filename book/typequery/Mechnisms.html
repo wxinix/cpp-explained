@@ -149,8 +149,142 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="mechanisms"><a class="header" href="#mechanisms">Mechanisms</a></h1>
+                        <h1 id="type-query-mechanisms"><a class="header" href="#type-query-mechanisms">Type Query Mechanisms</a></h1>
+<p>C++ provides several mechanisms to query the type of expressions at compile time. The primary ones include <code>decltype</code>, <code>typeid</code>, <code>std::declval</code>, and type traits from <code>&lt;type_traits&gt;</code>.</p>
+<h2 id="1-type-specifier-decltype"><a class="header" href="#1-type-specifier-decltype">1. Type Specifier <code>decltype</code></a></h2>
+<p><code>decltype(expr)</code> yields the type of the expression <code>expr</code> without evaluating it. This makes it useful for examining the type of variables, function calls, or even complex expressions in a safe way during compilation.</p>
+<h3 id="example"><a class="header" href="#example">Example:</a></h3>
+<pre><code class="language-cpp">int a = 5;
+decltype(a) b = 10; // b is int
+</code></pre>
+<p>Used for data member:</p>
+<pre><code class="language-cpp">struct S1 {
+    int x1;
+    decltype(x1) x2;
+    double x3;
+    decltype(x2 + x3) x4;
+};
+</code></pre>
+<p>Used in function parameter list.</p>
+<pre><code class="language-cpp">int x1 = 0;
+decltype(x1) sum(decltype(x1) a1, decltype(a1) a2)
+{
+    return a1 + a2;
+}
+auto x2 = sum(5, 10);
+</code></pre>
+<h3 id="note-on-reference-and-const-preservation"><a class="header" href="#note-on-reference-and-const-preservation">Note on Reference and <code>const</code> Preservation:</a></h3>
+<pre><code class="language-cpp">const int&amp; r = a;
+decltype(r) x = a; // x is const int&amp;
+</code></pre>
+<p>The following code would fail:</p>
+<pre><code class="language-cpp">template&lt;class T&gt;
+auto return_ref(T&amp; t)
+{
+    return t;
+}
 
+int x1 = 0;
+
+static_assert(
+    std::is_reference_v&lt;decltype(return_ref(x1))&gt;
+);
+</code></pre>
+<p>The following would be OK:</p>
+<pre><code class="language-cpp">template&lt;class T&gt;
+auto return_ref(T&amp; t)-&gt;decltype(t)
+{
+    return t;
+}
+
+int x1 = 0;
+
+static_assert(
+    std::is_reference_v&lt;decltype(return_ref(x1))&gt;
+);
+</code></pre>
+<p><code>decltype</code> preserves the exact type of the expression, including reference and cv-qualifiers.</p>
+<h2 id="2-type-identification-operator-typeid-runtime"><a class="header" href="#2-type-identification-operator-typeid-runtime">2. Type Identification Operator <code>typeid</code> (Runtime)</a></h2>
+<p><code>typeid(expr)</code> yields a reference to a <code>std::type_info</code> object representing the type of the expression. It is evaluated at runtime and is primarily useful when working with polymorphic types.</p>
+<h3 id="example-1"><a class="header" href="#example-1">Example:</a></h3>
+<pre><code class="language-cpp">#include &lt;iostream&gt;
+#include &lt;typeinfo&gt;
+
+void printType(int x) {
+    std::cout &lt;&lt; &quot;Type: &quot; &lt;&lt; typeid(x).name() &lt;&lt; '\n';
+}
+</code></pre>
+<p><strong>Note:</strong> When used on polymorphic types through a base pointer or reference, <code>typeid</code> reveals the dynamic type. Otherwise, it yields the static type.</p>
+<h3 id="note"><a class="header" href="#note">Note</a></h3>
+<ol>
+<li>
+<p><strong>Return Value Lifetime</strong><br />
+The return value of <code>typeid</code> is a <strong>lvalue</strong> reference to a <code>const std::type_info</code> object.  Its <strong>lifetime is extended to the entire lifetime of the program</strong> — it is safe to store the reference or pointer.</p>
+</li>
+<li>
+<p><strong>No Copy Constructor</strong><br />
+<code>std::type_info</code> has a <strong>deleted copy constructor</strong>, so it cannot be copied. Attempting to assign it directly as a value will result in a compilation error.</p>
+<pre><code class="language-cpp">auto t1 = typeid(int);     // ❌ Error: copy constructor is deleted
+auto&amp; t2 = typeid(int);    // ✅ OK: t2 is a const std::type_info&amp;
+auto* t3 = &amp;typeid(int);   // ✅ OK: t3 is a const std::type_info*
+</code></pre>
+</li>
+<li>
+<p><strong>CV-Qualifiers Ignored</strong>
+<code>typeid</code> always ignores const and volatile qualifiers when comparing types:</p>
+<pre><code class="language-cpp">const int ci = 42;
+bool same = (typeid(int) == typeid(ci)); // true
+</code></pre>
+<p>This means, <code>typeid(T) == typeid(const T) == typeid(volatile T) == typeid(const volatile T)</code></p>
+</li>
+</ol>
+<h2 id="3-function-template-stddeclvalt"><a class="header" href="#3-function-template-stddeclvalt">3. Function Template <code>std::declval&lt;T&gt;()</code></a></h2>
+<p><code>std::declval&lt;T&gt;()</code> is a utility from <code>&lt;utility&gt;</code> that simulates an rvalue of type <code>T</code> in unevaluated contexts. It is primarily used in conjunction with <code>decltype</code> to query types that depend on operations without needing an actual object of type <code>T</code>.</p>
+<h3 id="example-2"><a class="header" href="#example-2">Example:</a></h3>
+<pre><code class="language-cpp">#include &lt;utility&gt;
+
+/*
+This works even if T has no default constructor, because the expression is unevaluated
+— std::declval&lt;T&gt;() just returns a value of type T&amp;&amp; without constructing anything.
+*/
+template &lt;typename T&gt;
+auto getReturnType() -&gt; decltype(std::declval&lt;T&gt;().foo());
+</code></pre>
+<pre><code class="language-cpp">/*
+This would be invalid because:
+    - T is a type, and T.foo() is not a valid syntax (you can't call .foo() on a type).
+    - There's no instance of T to call foo() on.
+    - Even if T had a static member function foo(), that would be accessed as T::foo().
+*/
+template &lt;typename T&gt;
+auto getReturnType() -&gt; decltype(T.foo()); // ❌ Error
+</code></pre>
+<p>This technique is common in SFINAE and type trait definitions.</p>
+<div class="table-wrapper"><table><thead><tr><th>Expression</th><th>Works?</th><th>Reason</th></tr></thead><tbody>
+<tr><td><code>decltype(std::declval&lt;T&gt;().foo())</code></td><td>✅</td><td>Simulates an rvalue of type <code>T</code> in unevaluated context</td></tr>
+<tr><td><code>decltype(T.foo())</code></td><td>❌</td><td>Invalid syntax: <code>T</code> is a type, not an object</td></tr>
+<tr><td><code>decltype(T::foo())</code></td><td>✅ (only if <code>foo()</code> is static)</td><td>Accesses static member function</td></tr>
+</tbody></table>
+</div>
+<h2 id="4-type-traits-type_traits"><a class="header" href="#4-type-traits-type_traits">4. Type Traits (<code>&lt;type_traits&gt;</code>)</a></h2>
+<p>The C++ standard library provides a wide range of type traits in the <code>&lt;type_traits&gt;</code> header for compile-time type inspection and transformation.</p>
+<h3 id="examples"><a class="header" href="#examples">Examples:</a></h3>
+<pre><code class="language-cpp">#include &lt;type_traits&gt;
+
+std::is_integral&lt;int&gt;::value          // true
+std::is_same&lt;int, long&gt;::value        // false
+std::remove_reference&lt;int&amp;&gt;::type     // int
+std::decay&lt;const int&amp;&gt;::type          // int
+</code></pre>
+<p>Type traits enable generic code to adapt behavior based on type properties or to transform types as needed.</p>
+<h3 id="summary"><a class="header" href="#summary">Summary</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>Mechanism</th><th>Compile-Time</th><th>Runtime</th><th>Key Use Cases</th></tr></thead><tbody>
+<tr><td><code>decltype(expr)</code></td><td>✅</td><td>❌</td><td>Exact type inference of expressions</td></tr>
+<tr><td><code>typeid(expr)</code></td><td>❌</td><td>✅</td><td>Runtime type information, polymorphism</td></tr>
+<tr><td><code>std::declval&lt;T&gt;()</code></td><td>✅</td><td>❌</td><td>Simulated expressions in decltype</td></tr>
+<tr><td>Type Traits</td><td>✅</td><td>❌</td><td>Type inspection, manipulation, SFINAE</td></tr>
+</tbody></table>
+</div>
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
