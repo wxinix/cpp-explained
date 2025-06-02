@@ -30,7 +30,7 @@
   - [Conditional Compilation ](CompileTimeEvaluation/ConditionalCompilation.md)
   - [Virtual Functions](CompileTimeEvaluation/VirtualFunctions.md)
   - [`try-catch` ](CompileTimeEvaluation/TryCatch.md)
-  - [Initialization of `constexpr` Object](CompileTimeEvaluation/DefaultInit.md)
+  - [`constexpr` Object](CompileTimeEvaluation/DefaultInit.md)
   - [`consteval` and `constinit`](CompileTimeEvaluation/ConstEvalAndConstInit.md)
   - [`std::is_constant_evaluated`](CompileTimeEvaluation/StdIsConstant.md)
   - [Other Enhancements](CompileTimeEvaluation/OtherEnhancements.md)
@@ -51,11 +51,11 @@
  
  
 - [Namespace](Namespace/README.md)
-  - [Inline Namespace](Namespace/InlineNamespace.md)
-  - [New Nested Namespace Syntax](Namespace/NewNestedNamespaceSyntax.md)
-  - [Unnamed Namespace](Namespace/UnnamedNamespace.md)
-  - [Merged Namespace](Namespace/MergedNamespace.md)
-  - [Global Namespace](Namespace/GlobalNamespace.md)
+  - [Inline](Namespace/InlineNamespace.md)
+  - [Nested](Namespace/NewNestedNamespaceSyntax.md)
+  - [Unnamed](Namespace/UnnamedNamespace.md)
+  - [Merged](Namespace/MergedNamespace.md)
+  - [Global](Namespace/GlobalNamespace.md)
 
 
 - [Program Structure](ProgramStructure/README.md)  
