@@ -1,0 +1,333 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Automatic Concatenation - Modern C++ Explained</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="highlight-css" href="../highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="../tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="../section-lines.css">
+        <link rel="stylesheet" href="../version-commit.css">
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "../";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../toc.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Modern C++ Explained</h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        <a href="https://github.com/wxinix/cpp-explained" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="automatic-string-literal-concatenation"><a class="header" href="#automatic-string-literal-concatenation">Automatic String Literal Concatenation</a></h1>
+<p>Automatic concatenation of adjacent string literals is a feature present in both C and C++ programming languages. It allows the compiler to automatically merge two or more string literals that are placed next to each other, without any explicit concatenation operator. This can be useful for breaking long strings into shorter, more manageable pieces, while still treating them as a single string constant.</p>
+<p>Here is an example:</p>
+<pre><code class="language-cpp">const char* my_string = "Hello,"
+                        "World!";
+</code></pre>
+<p>The compiler will automatically concatenate the two string literals, resulting in the following:</p>
+<pre><code class="language-cpp">const char* my_string = "Hello,World!";
+</code></pre>
+<blockquote>
+<p>This feature has its roots in the C programming language. It was inherited by C++ in the early 1980s.</p>
+</blockquote>
+<h2 id="notes-on-automatic-string-literal-concatenation"><a class="header" href="#notes-on-automatic-string-literal-concatenation">Notes on automatic string literal concatenation</a></h2>
+<p>Some nuances and caveats of using automatic concatenation of adjacent string literals:</p>
+<h3 id="whitespace-not-strictly-required"><a class="header" href="#whitespace-not-strictly-required"><em>Whitespace not strictly required</em></a></h3>
+<p>Adjacent string literals can be separated by whitespace, like a <code>space</code>, a <code>tab</code>, or a <code>newline</code>, for the concatenation to occur. However, white space between the literals is not strictly required, so the following is still valid in both C and C++:</p>
+<pre><code class="language-cpp">const char* my_string = "Hello,""World";
+</code></pre>
+<p>The compile will automatically concatenate the adjacent string literals, resulting in the following:</p>
+<pre><code class="language-cpp">const char* my_string = "Hello,World";
+
+</code></pre>
+<blockquote>
+<p>It's a good practice to include whitespace between adjacent string literals for better readability and maintainability.</p>
+</blockquote>
+<h3 id="compile-time-concatenation"><a class="header" href="#compile-time-concatenation"><em>Compile time concatenation</em></a></h3>
+<p>The concatenation happens at compile-time, not at runtime, which means it has no performance overhead.</p>
+<h3 id="variables-or-expressions-not-allowed"><a class="header" href="#variables-or-expressions-not-allowed"><em>Variables or expressions not allowed</em></a></h3>
+<p>Automatic concatenation can only be used with string literals, not with variables or other expressions.</p>
+<h3 id="mixed-encodings"><a class="header" href="#mixed-encodings"><em>Mixed encodings</em></a></h3>
+<p>Be aware that trying to concatenate string literals with different character encodings may lead to compilation errors or unexpected behavior. For example, the following code will result in compiler error <em>"concatenation of string literals with conflicting encoding prefixes"</em>.</p>
+<pre><code class="language-cpp">const char8_t* utf8Chars = u8"Hello," 
+                           L"World!";
+</code></pre>
+<p>If one of the string literals does not have prefix, it will be treated as having the same as others, hence the following is a valid operation:</p>
+<pre><code class="language-cpp">const char8_t* utf8Chars = u8"Hello," 
+                           "World!"; // Equivalent to u8"World!"
+</code></pre>
+<h2 id="the--operator"><a class="header" href="#the--operator">The <code>+</code> operator</a></h2>
+<p>Using the + operator for concatenation works differently than automatic concatenation of adjacent string literals. In C++, the <code>+</code> operator can be used to concatenate <code>std::string</code> objects or a <code>std::string</code> object and a string literal. However, the <code>+</code> operator cannot be used to concatenate two string literals directly.</p>
+<p>Here is an example:</p>
+<pre><code class="language-cpp">#include &lt;iostream&gt;
+#include &lt;string&gt;
+
+int main() {
+    std::string str1 = "Hello, ";
+    std::string str2 = "World!";
+    
+    std::string result = str1 + str2 + "Oh Yeah"; // Valid in C++
+    
+    std::cout &lt;&lt; result &lt;&lt; std::endl;
+    return 0;
+}
+</code></pre>
+<p>In the example above, the + operator is used to concatenate two std::string objects. However, trying to do this with string literals directly will lead to a compilation error:</p>
+<pre><code class="language-cpp">const char* result = "Hello, " + "World!" + "Oh Yeah; // NOT valid in C++ (or C)
+</code></pre>
+<p>C does not have the <code>std::string</code> class and the <code>+</code> operator for concatenation. Use functions like <code>strcat</code> or <code>strncat</code> from the <code>string.h</code> library to concatenate character arrays (null-terminated strings). Remember to allocate enough memory for the concatenated result and ensure that the destination string is null-terminated.</p>
+<p>Here's an example of using strcat and strncat functions in C:</p>
+<pre><code class="language-c">#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+
+int main() {
+    char str1[20] = "Hello, ";
+    char str2[] = "world!";
+    char str3[20] = "I am a string.";
+
+    // Using strcat
+    strcat(str1, str2);
+    printf("str1 after strcat: %s\n", str1);
+
+    // Using strncat
+    strncat(str3, str2, 4);
+    printf("str3 after strncat: %s\n", str3);
+
+    return 0;
+}
+
+</code></pre>
+<p>In the above code, we have used two different functions for concatenating strings.</p>
+<ul>
+<li>
+<p><code>strcat</code> function concatenates <code>str2</code> to the end of <code>str1</code> and modifies <code>str1</code>. After the <code>strcat</code> operation, <code>str1</code> will contain the concatenated string.</p>
+</li>
+<li>
+<p><code>strncat</code> function concatenates a specified number of characters (in this case, 4) from  <code>str2</code> to the end of <code>str3</code> and modifies <code>str3</code>. After the strncat operation, <code>str3</code> will contain the concatenated string.</p>
+</li>
+</ul>
+<p>The output of the above code will be:</p>
+<pre><code class="language-c">str1 after strcat: Hello, world!
+str3 after strncat: I am a string.worl
+</code></pre>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../FundamentalDataTypes/CharTypes_NewCharTypes.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../FundamentalDataTypes/CharTypes_LibrarySuppor.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../FundamentalDataTypes/CharTypes_NewCharTypes.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../FundamentalDataTypes/CharTypes_LibrarySuppor.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+        <!-- Livereload script (if served using the cli tool) -->
+        <script>
+            const wsProtocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
+            const wsAddress = wsProtocol + "//" + location.host + "/" + "__livereload";
+            const socket = new WebSocket(wsAddress);
+            socket.onmessage = function (event) {
+                if (event.data === "reload") {
+                    socket.close();
+                    location.reload();
+                }
+            };
+
+            window.onbeforeunload = function() {
+                socket.close();
+            }
+        </script>
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
+
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

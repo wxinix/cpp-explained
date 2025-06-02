@@ -1,17 +1,17 @@
 <!DOCTYPE HTML>
-<html lang="en" class="sidebar-visible no-js light">
+<html lang="en" class="light sidebar-visible" dir="ltr">
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
         <title>Modern C++ Explained</title>
-        <meta name="robots" content="noindex" />
+        <meta name="robots" content="noindex">
 
 
         <!-- Custom HTML head -->
-        
+
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="theme-color" content="#ffffff" />
+        <meta name="theme-color" content="#ffffff">
 
         <link rel="icon" href="favicon.svg">
         <link rel="shortcut icon" href="favicon.png">
@@ -25,28 +25,42 @@
         <link rel="stylesheet" href="fonts/fonts.css">
 
         <!-- Highlight.js Stylesheets -->
-        <link rel="stylesheet" href="highlight.css">
-        <link rel="stylesheet" href="tomorrow-night.css">
-        <link rel="stylesheet" href="ayu-highlight.css">
+        <link rel="stylesheet" id="highlight-css" href="highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
         <link rel="stylesheet" href="section-lines.css">
         <link rel="stylesheet" href="version-commit.css">
 
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
     </head>
     <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
     <div id="body-container">
-        <!-- Provide site root to javascript -->
-        <script>
-            var path_to_root = "";
-            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
-        </script>
-
         <!-- Work around some values being stored in localStorage wrapped in quotes -->
         <script>
             try {
-                var theme = localStorage.getItem('mdbook-theme');
-                var sidebar = localStorage.getItem('mdbook-sidebar');
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
 
                 if (theme.startsWith('"') && theme.endsWith('"')) {
                     localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
@@ -60,57 +74,65 @@
 
         <!-- Set the theme before any content is loaded, prevents flash -->
         <script>
-            var theme;
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
             try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
             if (theme === null || theme === undefined) { theme = default_theme; }
-            var html = document.querySelector('html');
-            html.classList.remove('no-js')
+            const html = document.documentElement;
             html.classList.remove('light')
             html.classList.add(theme);
-            html.classList.add('js');
+            html.classList.add("js");
         </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
 
         <!-- Hide / unhide sidebar before it is displayed -->
         <script>
-            var html = document.querySelector('html');
-            var sidebar = null;
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
             if (document.body.clientWidth >= 1080) {
                 try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
                 sidebar = sidebar || 'visible';
             } else {
                 sidebar = 'hidden';
             }
+            sidebar_toggle.checked = sidebar === 'visible';
             html.classList.remove('sidebar-visible');
             html.classList.add("sidebar-" + sidebar);
         </script>
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
-            <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="index.html">Preface</a></li><li class="chapter-item expanded affix "><li class="part-title">Modern C++ Elements</li><li class="chapter-item expanded "><a href="primitive/index.html">Fundamental Data Types</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="primitive/IntTypes.html">Integer Types</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="primitive/IntTypes_longlong.html">Integer Type long long</a></li></ol></li><li class="chapter-item expanded "><a href="primitive/CharTypes.html">Character Types</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="primitive/CharTypes_CharSetsEncodings.html">Character Sets and Encodings</a></li><li class="chapter-item expanded "><a href="primitive/CharTypes_NewCharTypes.html">New Character Types</a></li><li class="chapter-item expanded "><a href="primitive/CharTypes_StringLiteralCat.html">Automatic String Literal Concatenation</a></li><li class="chapter-item expanded "><a href="primitive/CharTypes_LibrarySuppor.html">Library Support</a></li></ol></li></ol></li><li class="chapter-item expanded "><a href="namespace/index.html">Namespace</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="namespace/InlineNamespace.html">Inline Namespace</a></li><li class="chapter-item expanded "><a href="namespace/NewNestedNamespaceSyntax.html">New Nested Namespace Syntax</a></li><li class="chapter-item expanded "><a href="namespace/UnnamedNamespace.html">Unnamed Namespace</a></li><li class="chapter-item expanded "><a href="namespace/MergedNamespace.html">Merged Namespace</a></li><li class="chapter-item expanded "><a href="namespace/GlobalNamespace.html">Global Namespace</a></li></ol></li><li class="chapter-item expanded "><a href="compileval/index.html">Compile Time Evaluation</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="compileval/Constexpr.html">constexpr</a></li><li class="chapter-item expanded "><a href="compileval/NumericLimit.html">std::numeric_limits</a></li><li class="chapter-item expanded "><a href="compileval/MathFunctions.html">Math functions</a></li><li class="chapter-item expanded "><a href="compileval/Lambdas.html">Lambdas</a></li><li class="chapter-item expanded "><a href="compileval/InliningConstExpr.html">Inlining constexpr</a></li><li class="chapter-item expanded "><a href="compileval/ConditionalCompilation.html">Conditional Compilation </a></li><li class="chapter-item expanded "><a href="compileval/VirtualFunctions.html">Virtual Functions</a></li><li class="chapter-item expanded "><a href="compileval/TryCatch.html">try-catch </a></li><li class="chapter-item expanded "><a href="compileval/DefaultInit.html">Initialization of constexpr Object</a></li><li class="chapter-item expanded "><a href="compileval/ConstEvalAndConstInit.html">consteval and constinit</a></li><li class="chapter-item expanded "><a href="compileval/StdIsConstant.html">std::is_constant_evaluated</a></li><li class="chapter-item expanded "><a href="compileval/OtherEnhancements.html">Other Enhancements</a></li></ol></li><li class="chapter-item expanded "><a href="typededuction/index.html">Type Deduction</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="typededuction/Introduction.html">Introduction</a></li><li class="chapter-item expanded "><a href="typededuction/Mechnisms.html">Mechanisms</a></li><li class="chapter-item expanded "><a href="typededuction/Rules.html">Rules</a></li><li class="chapter-item expanded "><a href="typededuction/BestPractices.html">Best Practices</a></li></ol></li><li class="chapter-item expanded "><a href="typequery/index.html">Type Query</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="typequery/Introduction.html">Introduction</a></li><li class="chapter-item expanded "><a href="typequery/Mechnisms.html">Mechanisms</a></li><li class="chapter-item expanded "><a href="typequery/Rules.html">Rules</a></li><li class="chapter-item expanded "><a href="typequery/BestPractices.html">Best Practices</a></li></ol></li><li class="chapter-item expanded "><li class="part-title">Meta-template Programming</li><li class="chapter-item expanded affix "><li class="part-title">Algorithms</li></ol>
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
             </div>
-            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
 
         <div id="page-wrapper" class="page-wrapper">
 
             <div class="page">
-                                <div id="menu-bar-hover-placeholder"></div>
-                <div id="menu-bar" class="menu-bar sticky bordered">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
                     <div class="left-buttons">
-                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
                             <i class="fa fa-bars"></i>
-                        </button>
+                        </label>
                         <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
                             <i class="fa fa-paint-brush"></i>
                         </button>
                         <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="default_theme">Auto</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
                         </ul>
-                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                        <button id="search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="searchbar">
                             <i class="fa fa-search"></i>
                         </button>
                     </div>
@@ -152,16 +174,16 @@
                     <main>
                         <h1 id="preface"><a class="header" href="#preface">Preface</a></h1>
 <h2 id="the-evolution-of-c-from-classical-to-modern"><a class="header" href="#the-evolution-of-c-from-classical-to-modern">The Evolution of C++: from classical to modern</a></h2>
-<p>Since its inception as &quot;C with classes&quot;, C++ has experienced numerous significant revisions and improvements. The language is now standardized by ISO JTC1/SC22/WG21, a working group composed of C++ experts from various countries. The first standardized version of C++ was <code>ISO/IEC 14882:1998</code>, commonly known as <code>C++98</code>. The next edition, <code>ISO/IEC 14882:2003</code>, was a minor revision that addressed issues found in <code>C++98</code>.</p>
+<p>Since its inception as "C with classes", C++ has experienced numerous significant revisions and improvements. The language is now standardized by ISO JTC1/SC22/WG21, a working group composed of C++ experts from various countries. The first standardized version of C++ was <code>ISO/IEC 14882:1998</code>, commonly known as <code>C++98</code>. The next edition, <code>ISO/IEC 14882:2003</code>, was a minor revision that addressed issues found in <code>C++98</code>.</p>
 <p>The true revolution of C++ arrived with <code>ISO/IEC 14882:2011</code>, also known as <code>C++11</code> or <code>C++0x</code>. Officially released in 2011, it had been delayed longer than originally planned, leading developers to joke about the delay by dubbing it <code>C++0B</code>, with the hexadecimal B representing the release year. <code>C++11</code> is considered a watershed moment in the language's evolution, marking the transition from classical to modern C++. It introduced many important additions to both the core language and the standard library, including rvalue references/move semantics, auto type deduction, uniform initialization syntax using {} lists, lambdas, variadic templates, SFINAE rules, and various smart pointer classes, among other valuable features for crafting robust C++ programs.</p>
 <p>A small extension to <code>C++11</code> was introduced in <code>ISO/IEC 14882:2014</code>. This was followed by another major revision <code>ISO/IEC 14882:2017</code>, which added notable features like <code>std::any</code>, <code>std::variant</code>, and <code>std::optional</code> classes to the standard library.</p>
-<p><code>C++20</code>, i.e., <code>ISO/IEC 14882:2020</code> was officially published on 15 December 2020, representing the latest major revision. The most welcomed core language features of <code>C++20</code> include <code>concepts</code> for generic type constraints, <code>modules</code> for improved expression of program physical modules, and <code>coroutines</code> for non-preemptive multitasking. Among the many new standard library features, the ranges library is particularly exciting, as it enables functional programming with &quot;pipeable&quot; functions similar to <code>F#</code>, my favorite .NET language.</p>
-<p>Given the impact and changes brought about by <code>C++11/14/17/20</code>, it's clear that pre-2011 C++ and post-2011 C++ are fundamentally different languages. This distinction is reflected in the terms &quot;Classical C++&quot; represented by <code>C++98</code> and &quot;Modern C++&quot; represented by <code>C++11</code> and later. Learning the reimagined modern C++ as a new language is necessary, whether it's approached with enthusiasm or apprehension.</p>
-<p>C++ was designed with backward compatibility to C, allowing developers to use C-style programming constructs such as raw pointers, arrays, and null-terminated strings. As C++ has evolved, the focus has shifted towards reducing the reliance on C-style idioms and sticking to the &quot;zero overhead&quot; principle. Modern C++ is simpler, safer, more elegant, and retains its speed.</p>
+<p><code>C++20</code>, i.e., <code>ISO/IEC 14882:2020</code> was officially published on 15 December 2020, representing the latest major revision. The most welcomed core language features of <code>C++20</code> include <code>concepts</code> for generic type constraints, <code>modules</code> for improved expression of program physical modules, and <code>coroutines</code> for non-preemptive multitasking. Among the many new standard library features, the ranges library is particularly exciting, as it enables functional programming with "pipeable" functions similar to <code>F#</code>, my favorite .NET language.</p>
+<p>Given the impact and changes brought about by <code>C++11/14/17/20</code>, it's clear that pre-2011 C++ and post-2011 C++ are fundamentally different languages. This distinction is reflected in the terms "Classical C++" represented by <code>C++98</code> and "Modern C++" represented by <code>C++11</code> and later. Learning the reimagined modern C++ as a new language is necessary, whether it's approached with enthusiasm or apprehension.</p>
+<p>C++ was designed with backward compatibility to C, allowing developers to use C-style programming constructs such as raw pointers, arrays, and null-terminated strings. As C++ has evolved, the focus has shifted towards reducing the reliance on C-style idioms and sticking to the "zero overhead" principle. Modern C++ is simpler, safer, more elegant, and retains its speed.</p>
 <h2 id="who-this-book-is-for"><a class="header" href="#who-this-book-is-for">Who this book is for</a></h2>
 <p>This book expects readers to have a basic knowledge of C++ and a genuine interest in evolving their skills in modern C++. Most chapters are beginner-friendly, while some need extra focus. Advanced meta-template programming topics may require multiple readings but can be skipped initially. Beginners should refer to other C++ books for fundamental guidance.</p>
 <h2 id="what-this-book-covers"><a class="header" href="#what-this-book-covers">What this book covers</a></h2>
-<p>This book focuses on helping readers understand the rationale behind new C++11 to C++20 features, discussing past C++ limitations, and examining how these features address and optimize those issues. Wherever necessary, it also explains how new features are implemented in compilers. Code samples are tested using GCC, Clang, and MSVC. </p>
+<p>This book focuses on helping readers understand the rationale behind new C++11 to C++20 features, discussing past C++ limitations, and examining how these features address and optimize those issues. Wherever necessary, it also explains how new features are implemented in compilers. Code samples are tested using GCC, Clang, and MSVC.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="fundamental-data-types"><a class="header" href="#fundamental-data-types">Fundamental Data Types</a></h1>
 <p>The fundamental types in C++ include integer types, character types, and floating-point types. These types are considered fundamental because they are built into the language itself and can be used to create more complex data structures and objects. Additionally, they are the building blocks for other C++ data types, such as arrays, structures, and classes.</p>
 <p>The following table lists the type specifiers of the fundamental data types in C++.</p>
@@ -275,7 +297,7 @@ sizeof(long long) *  CHAR_BIT &gt;= 64     // Rule 10
 </code></pre>
 <p><code>CHAR_BIT</code> represents the number of bits in a char type. Although most modern architectures use 8 bits per byte, this is not always the case as some older machines may have used 7-bit bytes. Under Rule 4, C/C++ allows <code>long</code> and <code>int</code> to have the same size, but it must be at least 32 bits according to Rule 9.</p>
 <h2 id="fixed-size-integer-types"><a class="header" href="#fixed-size-integer-types">Fixed size integer types</a></h2>
-<p>The C++11 standard introduced new integer types such as <code>int8_t</code>, <code>int16_t</code>, <code>int32_t</code>, and <code>int64_t</code> with fixed sizes, as well as their unsigned counterparts, <code>uint8_t</code>, <code>uint16_t</code>, <code>uint32_t</code>, and <code>uint64_t</code>. These types are guaranteed to have the specified size and range on any conforming implementation. </p>
+<p>The C++11 standard introduced new integer types such as <code>int8_t</code>, <code>int16_t</code>, <code>int32_t</code>, and <code>int64_t</code> with fixed sizes, as well as their unsigned counterparts, <code>uint8_t</code>, <code>uint16_t</code>, <code>uint32_t</code>, and <code>uint64_t</code>. These types are guaranteed to have the specified size and range on any conforming implementation.</p>
 <p>The following table summarizes fixed size integer types - note that the <code>intN_t</code> and <code>uintN_t</code> types are guaranteed to have exactly <code>N</code> bits, where <code>N</code> is 8, 16, 32, or 64.</p>
 <div class="table-wrapper"><table><thead><tr><th>Type</th><th>Size (in bytes)</th><th>Range</th></tr></thead><tbody>
 <tr><td><code>int8_t</code></td><td>1</td><td>[-128, 127]</td></tr>
@@ -315,9 +337,9 @@ sizeof(long long) *  CHAR_BIT &gt;= 64     // Rule 10
 </code></pre>
 <p>When working with large integer values in C++, it is important to use literal suffixes to ensure that the code runs as intended. For example:</p>
 <pre><code class="language-cpp">long long x = 65536 &lt;&lt; 16; // Value overflows to 0
-std::cout &lt;&lt; &quot;x = &quot; &lt;&lt; x &lt;&lt; std::endl;
+std::cout &lt;&lt; "x = " &lt;&lt; x &lt;&lt; std::endl;
 long long y = 65536LL &lt;&lt; 16;
-std::cout &lt;&lt; &quot;y = &quot; &lt;&lt; y &lt;&lt; std::endl;
+std::cout &lt;&lt; "y = " &lt;&lt; y &lt;&lt; std::endl;
 </code></pre>
 <p>The code <code>long long x = 65536 &lt;&lt; 16</code> performs a bitwise left shift operation on the decimal value 65536 by 16 bits, which can result in an overflow and unexpected behavior.</p>
 <p>To prevent overflowing, we should use the <code>LL</code> literal suffix to ensure that the value is treated as a <code>long long</code> data type, as in <code>long long y = 65536LL &lt;&lt; 16</code>. This will ensure that the code runs as intended and the value is not unexpectedly truncated or overflowed.</p>
@@ -335,32 +357,32 @@ std::cout &lt;&lt; &quot;y = &quot; &lt;&lt; y &lt;&lt; std::endl;
 int main(int argc, char *argv[])
 {
     // Avoid these!
-    std::cout &lt;&lt; &quot;LLONG_MAX = &quot;  
+    std::cout &lt;&lt; "LLONG_MAX = "  
             &lt;&lt; LLONG_MAX  
             &lt;&lt; std::endl;
 
-    std::cout &lt;&lt; &quot;LLONG_MIN = &quot;  
+    std::cout &lt;&lt; "LLONG_MIN = "  
             &lt;&lt; LLONG_MIN  
             &lt;&lt; std::endl;
 
-    std::cout &lt;&lt; &quot;ULLONG_MAX = &quot; 
+    std::cout &lt;&lt; "ULLONG_MAX = " 
             &lt;&lt; ULLONG_MAX 
             &lt;&lt; std::endl;
 
-    std::printf(&quot;LLONG_MAX  = %lld\n&quot;, LLONG_MAX);  // format specifier %lld
-    std::printf(&quot;LLONG_MIN  = %lld\n&quot;, LLONG_MIN);  // format specifier %lld
-    std::printf(&quot;ULLONG_MAX = %llu\n&quot;, ULLONG_MAX); // format specifier %llu
+    std::printf("LLONG_MAX  = %lld\n", LLONG_MAX);  // format specifier %lld
+    std::printf("LLONG_MIN  = %lld\n", LLONG_MIN);  // format specifier %lld
+    std::printf("ULLONG_MAX = %llu\n", ULLONG_MAX); // format specifier %llu
 
     // Use std::numeric_limits
-    std::cout &lt;&lt; &quot;std::numeric_limits&lt;long long&gt;::max() = &quot; 
+    std::cout &lt;&lt; "std::numeric_limits&lt;long long&gt;::max() = " 
             &lt;&lt; std::numeric_limits&lt;long long&gt;::max() 
             &lt;&lt; std::endl;
 
-    std::cout &lt;&lt; &quot;std::numeric_limits&lt;long long&gt;::min() = &quot;
+    std::cout &lt;&lt; "std::numeric_limits&lt;long long&gt;::min() = "
             &lt;&lt; std::numeric_limits&lt;long long&gt;::min()
             &lt;&lt; std::endl;
 
-    std::cout &lt;&lt; &quot;std::numeric_limits&lt;unsigned long long&gt;::max() = &quot;
+    std::cout &lt;&lt; "std::numeric_limits&lt;unsigned long long&gt;::max() = "
             &lt;&lt; std::numeric_limits&lt;unsigned long long&gt;::max() 
             &lt;&lt; std::endl;
 }
@@ -371,13 +393,13 @@ int main(int argc, char *argv[])
 <p>On most platforms, <code>char</code> is implemented as a signed type, and its range of representable values is the same as that of <code>signed char</code>. However, on some rare platforms, <code>char</code> may be implemented as an unsigned type, in which case it would have the same range of representable values as <code>unsigned char</code>.</p>
 <p>So, while <code>char</code> and <code>signed char</code> are often the same type in C++, it is not guaranteed by the standard. To ensure portability of code that relies on the signedness of <code>char</code>, it is recommended to use <code>signed char</code> explicitly.</p>
 <h2 id="issue-with-wchar_t"><a class="header" href="#issue-with-wchar_t">Issue with <code>wchar_t</code></a></h2>
-<p><code>wchar_t</code> is a character type in C++ that is used to represent wide characters. It was introduced into C++ with the C++98 standard. Many Windows API functions have a wide character version that takes <code>wchar_t</code> strings as arguments. The wide character version of these functions has a suffix of <code>W</code> added to the function name. For example, the function <code>CreateFile()</code> in the Windows API has a wide character version named <code>CreateFileW()</code>. </p>
-<p>The C++ standard specifies that a string literal with an <code>L</code> prefix creates a wide character string literal. </p>
+<p><code>wchar_t</code> is a character type in C++ that is used to represent wide characters. It was introduced into C++ with the C++98 standard. Many Windows API functions have a wide character version that takes <code>wchar_t</code> strings as arguments. The wide character version of these functions has a suffix of <code>W</code> added to the function name. For example, the function <code>CreateFile()</code> in the Windows API has a wide character version named <code>CreateFileW()</code>.</p>
+<p>The C++ standard specifies that a string literal with an <code>L</code> prefix creates a wide character string literal.</p>
 <pre><code class="language-cpp">#include &lt;windows.h&gt;
 
 int main()
 {
-    LPCWSTR fileName = L&quot;C:\\example\\test.txt&quot;;
+    LPCWSTR fileName = L"C:\\example\\test.txt";
     HANDLE hFile = CreateFileW(fileName, 
                                GENERIC_READ, 
                                FILE_SHARE_READ, 
@@ -406,13 +428,13 @@ int main()
 <p>Examples of character sets include ASCII, which includes characters commonly used in the English language, and Unicode, which is a universal character set that can represent all characters used in modern computing, including characters from many different writing systems.</p>
 <h3 id="code-point"><a class="header" href="#code-point"><em>Code point</em></a></h3>
 <p>A code point is a numerical value that represents a single character or symbol in a character set. Each character in a character set is assigned a unique code point, which is a specific number that identifies that character.</p>
-<p>Code points are typically expressed as hexadecimal numbers, which means that they use a base-16 numbering system. For example, the code point for the letter &quot;A&quot; in the ASCII character set is 0x41, while the code point for the Greek letter &quot;α&quot; in the Unicode character set is 0x03B1.</p>
+<p>Code points are typically expressed as hexadecimal numbers, which means that they use a base-16 numbering system. For example, the code point for the letter "A" in the ASCII character set is 0x41, while the code point for the Greek letter "α" in the Unicode character set is 0x03B1.</p>
 <p>Unicode comprises 1,114,112 code points in the range [0, 1,114,111]. The maximum value of Unicode code point is 1,114,111 (0x10FFFF).</p>
 <h2 id="encodings"><a class="header" href="#encodings">Encodings</a></h2>
 <p>Encoding involves mapping each code point to a specific sequence of bits or bytes that can be used to represent that character in digital form.</p>
 <p>The Unicode standard defines a character set that includes 1,114,111 characters, each with a unique code point, and provides several encoding schemes, including UTF-8, UTF-16, and UTF-32, that allow characters to be represented using variable-length sequences of bytes.</p>
 <h3 id="utf-8-encoding"><a class="header" href="#utf-8-encoding"><em>UTF-8 encoding</em></a></h3>
-<p>UTF-8 is a variable-length encoding scheme. It works by mapping each Unicode code point to a sequence of 1 to 4 bytes, depending on the code point value. </p>
+<p>UTF-8 is a variable-length encoding scheme. It works by mapping each Unicode code point to a sequence of 1 to 4 bytes, depending on the code point value.</p>
 <div class="table-wrapper"><table><thead><tr><th>Code Point Range</th><th>Number of Bytes</th><th>Binary Format</th></tr></thead><tbody>
 <tr><td>0 to 127</td><td>1 byte</td><td><code>0xxx'xxxx</code></td></tr>
 <tr><td>128 to 2047</td><td>2 bytes</td><td><code>110x'xxxx, 10xx'xxxx</code></td></tr>
@@ -436,7 +458,7 @@ int main()
 </li>
 </ul>
 <p>By using a variable-length encoding scheme, UTF-8 encoding can represent all Unicode code points using a sequence of 1 to 4 bytes. This allows UTF-8 to be a compact and efficient encoding scheme. UTF-8 is a superset of ASCII and fully compatible with it.</p>
-<p>UTF-8 has unique patterns with the first byte, and a fixed pattern with trailing bytes. This allows for easy validation of a correct UTF-8 sequence, quick &quot;scrolling&quot; to a random position and synchronizing quickly where a character will start.</p>
+<p>UTF-8 has unique patterns with the first byte, and a fixed pattern with trailing bytes. This allows for easy validation of a correct UTF-8 sequence, quick "scrolling" to a random position and synchronizing quickly where a character will start.</p>
 <h3 id="utf-16-encoding"><a class="header" href="#utf-16-encoding"><em>UTF-16 encoding</em></a></h3>
 <div class="table-wrapper"><table><thead><tr><th>Code Point Range</th><th>Number of Bytes</th><th>Binary Format</th></tr></thead><tbody>
 <tr><td>0 to 65535</td><td>1 code unit (2 bytes)</td><td><code>xxxxxxxx xxxxxxxx</code></td></tr>
@@ -444,7 +466,7 @@ int main()
 </tbody></table>
 </div>
 <ul>
-<li>For code points in the range of 0 to 65535, UTF-16 encoding represents each code point using a single 16-bit code unit. </li>
+<li>For code points in the range of 0 to 65535, UTF-16 encoding represents each code point using a single 16-bit code unit.</li>
 <li>For code points in the range of 65536 to 1114111, UTF-16 encoding represents each code point using a pair of 16-bit code units, known as a surrogate pair. The first 16-bit code unit (known as the high surrogate) has a value in the range of 0xD800 to 0xDBFF, while the second 16-bit code unit (known as the low surrogate) has a value in the range of 0xDC00 to 0xDFFF.</li>
 </ul>
 <h3 id="utf-32-encoding"><a class="header" href="#utf-32-encoding"><em>UTF-32 encoding</em></a></h3>
@@ -465,8 +487,8 @@ int main()
 </tbody></table>
 </div>
 <h2 id="code-page"><a class="header" href="#code-page">Code page</a></h2>
-<p>The legacy term &quot;code page&quot; originated from IBM's EBCDIC-based mainframe systems. Originally, the code page numbers referred to the page numbers in the IBM standard character set manual.</p>
-<p>Vendors that use a code page system allocate their own code page number to a character set and its encoding, even if it is better known by another name; for example, UTF-8 has been assigned page numbers 1208 at IBM, 65001 at Microsoft, and 4110 at SAP. </p>
+<p>The legacy term "code page" originated from IBM's EBCDIC-based mainframe systems. Originally, the code page numbers referred to the page numbers in the IBM standard character set manual.</p>
+<p>Vendors that use a code page system allocate their own code page number to a character set and its encoding, even if it is better known by another name; for example, UTF-8 has been assigned page numbers 1208 at IBM, 65001 at Microsoft, and 4110 at SAP.</p>
 <p>The following table lists Windows code pages used by Microsoft in its own Windows operating system.</p>
 <div class="table-wrapper"><table><thead><tr><th>Microsoft Code Page</th><th>Code Page Number</th><th>Description</th></tr></thead><tbody>
 <tr><td>Windows-1252</td><td>1252</td><td>Western European languages</td></tr>
@@ -489,36 +511,36 @@ int main()
 </tbody></table>
 </div><div style="break-before: page; page-break-before: always;"></div><h1 id="new-character-types"><a class="header" href="#new-character-types">New Character Types</a></h1>
 <h2 id="why-char-not-good-for-utf-8"><a class="header" href="#why-char-not-good-for-utf-8">Why <code>char</code> not good for UTF-8</a></h2>
-<p>In C++, <code>char</code> is a fundamental type that represents a byte-sized unit of data. Historically, it has been used to represent both ASCII characters and other narrow character sets, depending on the execution environment. </p>
+<p>In C++, <code>char</code> is a fundamental type that represents a byte-sized unit of data. Historically, it has been used to represent both ASCII characters and other narrow character sets, depending on the execution environment.</p>
 <p>Suppose we have the following C++ code (in C++11), with the source file saved as UTF-8 text:</p>
-<pre><code class="language-cpp">// &quot;你吃饭了吗?&quot; literal is treated as a plain array of bytes, interpreted by
+<pre><code class="language-cpp">// "你吃饭了吗?" literal is treated as a plain array of bytes, interpreted by
 // the compiler as Windows-1252 single byte encoding.
-const char* utf8_str = &quot;你吃饭了吗?&quot;; 
+const char* utf8_str = "你吃饭了吗?"; 
 </code></pre>
-<p>If the source file containing the Chinese characters &quot;你吃饭了吗?&quot; is saved as UTF-8 text, then the encoded representation of the text will also be in UTF-8 format. However, if the platform where the code is compiled is using a different encoding, such as Windows-1252, then the compiler may attempt to interpret the Chinese characters as single-byte characters in the Windows-1252 encoding, because the type of the variable <code>utf8_str</code> is declared as a plain <code>char</code> array, which relies on the execution environment to provide the encoding context. </p>
-<p>For example, the Chinese character &quot;你&quot; is represented by three bytes in UTF-8, which are <code>0xE4 0xBD 0xA0</code>. When interpreted as Windows-1252, the first byte <code>0xE4</code> is an invalid character, so the compiler replaces it with the ASCII replacement character <code>0x3F</code>. As a result, every byte of the UTF-8 encoded string &quot;你吃饭了吗?&quot; is replaced with the ASCII replacement character <code>0x3F</code> before being assigned to <code>utf8_str</code>. The mismatched data can cause unexpected results and errors in the program. </p>
+<p>If the source file containing the Chinese characters "你吃饭了吗?" is saved as UTF-8 text, then the encoded representation of the text will also be in UTF-8 format. However, if the platform where the code is compiled is using a different encoding, such as Windows-1252, then the compiler may attempt to interpret the Chinese characters as single-byte characters in the Windows-1252 encoding, because the type of the variable <code>utf8_str</code> is declared as a plain <code>char</code> array, which relies on the execution environment to provide the encoding context.</p>
+<p>For example, the Chinese character "你" is represented by three bytes in UTF-8, which are <code>0xE4 0xBD 0xA0</code>. When interpreted as Windows-1252, the first byte <code>0xE4</code> is an invalid character, so the compiler replaces it with the ASCII replacement character <code>0x3F</code>. As a result, every byte of the UTF-8 encoded string "你吃饭了吗?" is replaced with the ASCII replacement character <code>0x3F</code> before being assigned to <code>utf8_str</code>. The mismatched data can cause unexpected results and errors in the program.</p>
 <h3 id="execution-environment-explained"><a class="header" href="#execution-environment-explained"><em>Execution environment explained</em></a></h3>
-<p>The &quot;execution character set of the platform&quot; refers to the character encoding scheme used by the operating system and/or the compiler to represent text data internally in a computer program.</p>
+<p>The "execution character set of the platform" refers to the character encoding scheme used by the operating system and/or the compiler to represent text data internally in a computer program.</p>
 <p>In C and C++, the execution character set determines how characters are represented in the char data type. The specific character set used can vary depending on the platform, compiler, and locale settings.</p>
 <p>For example, on Windows systems, the default execution character set is typically based on the Windows-1252 code page, which is a superset of ASCII that includes characters for European languages. On Unix-based systems, the default execution character set is typically based on the ASCII encoding.</p>
 <h2 id="utf-related-character-types"><a class="header" href="#utf-related-character-types">UTF-related character types</a></h2>
-<p><code>char8_t</code> was introduced in C++20 to provide a distinct type that is guaranteed to represent an 8-bit code unit of UTF-8 encoded Unicode text. This allows for safer and more efficient handling of UTF-8 strings, as developers can use char8_t to represent individual code units of the UTF-8 encoding. This can help to avoid issues such as misinterpreting multi-byte sequences or incorrectly handling invalid code points. </p>
+<p><code>char8_t</code> was introduced in C++20 to provide a distinct type that is guaranteed to represent an 8-bit code unit of UTF-8 encoded Unicode text. This allows for safer and more efficient handling of UTF-8 strings, as developers can use char8_t to represent individual code units of the UTF-8 encoding. This can help to avoid issues such as misinterpreting multi-byte sequences or incorrectly handling invalid code points.</p>
 <p>In the following code, <code>utf8_str</code> will have the correct UTF-8 code point values, regardless of the execution character set of the platform.</p>
-<pre><code class="language-cpp">// char8_t is a new C++20 type. The &quot;u8&quot; prefix makes sure the string literal is 
+<pre><code class="language-cpp">// char8_t is a new C++20 type. The "u8" prefix makes sure the string literal is 
 // interpreted as UTF-8 encoded text while enforcing type safety with char8_t.
-// Without &quot;u8&quot; prefix, the string literal will be treated as &quot;const char*&quot; type,
+// Without "u8" prefix, the string literal will be treated as "const char*" type,
 // which is a type mismatch with char8_t, thus failing compiling.
-const char8_t* utf8_str = u8&quot;你吃饭了吗?&quot;; 
+const char8_t* utf8_str = u8"你吃饭了吗?"; 
 // std::cout &lt;&lt; utf8_str &lt;&lt; std::endl; // This won't compile
 </code></pre>
 <blockquote>
-<p>In C++20, there is no <code>char8_t</code>-aware I/O streams (the overloaded std::cout for <code>char8_t</code>, <code>char16_t</code> and <code>char32_t</code> are marked as &quot;delete&quot;. It is expected that the issue will be resolved in C++23 or C++26.</p>
+<p>In C++20, there is no <code>char8_t</code>-aware I/O streams (the overloaded std::cout for <code>char8_t</code>, <code>char16_t</code> and <code>char32_t</code> are marked as "delete". It is expected that the issue will be resolved in C++23 or C++26.</p>
 </blockquote>
-<p><code>char16_t</code> and <code>char32_t</code> were introduced in C++11 to provide support for Unicode text encoding. <code>char16_t</code> represents a 16-bit code unit of UTF-16 encoded Unicode text, while <code>char32_t</code> represents a 32-bit code unit of UTF-32 encoded Unicode text. </p>
+<p><code>char16_t</code> and <code>char32_t</code> were introduced in C++11 to provide support for Unicode text encoding. <code>char16_t</code> represents a 16-bit code unit of UTF-16 encoded Unicode text, while <code>char32_t</code> represents a 32-bit code unit of UTF-32 encoded Unicode text.</p>
 <div class="table-wrapper"><table><thead><tr><th>Type</th><th>Introduced in</th><th>Main Reason for Introduction</th><th>Literal Prefix</th><th>Sample Code</th></tr></thead><tbody>
-<tr><td><code>char8_t</code></td><td>C++20</td><td>UTF-8 encoding</td><td><code>u8</code></td><td><code>const char8_t* str = u8&quot;吃了吗&quot;;</code></td></tr>
-<tr><td><code>char16_t</code></td><td>C++11</td><td>UTF-16 encoding</td><td><code>u</code></td><td><code>const char16_t* str = u&quot;吃了吗&quot;;</code></td></tr>
-<tr><td><code>char32_t</code></td><td>C++11</td><td>UTF-32 encoding</td><td><code>U</code></td><td><code>const char32_t* str = U&quot;吃了吗&quot;;</code></td></tr>
+<tr><td><code>char8_t</code></td><td>C++20</td><td>UTF-8 encoding</td><td><code>u8</code></td><td><code>const char8_t* str = u8"吃了吗";</code></td></tr>
+<tr><td><code>char16_t</code></td><td>C++11</td><td>UTF-16 encoding</td><td><code>u</code></td><td><code>const char16_t* str = u"吃了吗";</code></td></tr>
+<tr><td><code>char32_t</code></td><td>C++11</td><td>UTF-32 encoding</td><td><code>U</code></td><td><code>const char32_t* str = U"吃了吗";</code></td></tr>
 </tbody></table>
 </div>
 <p>The string literal prefix <code>u8</code>, <code>u</code>, <code>U</code> were introduced in C++11. The following code won't pass compilation with C++11 because they cannot be applied to characters. It is since C++17 that these literal prefix are allowed to be used with a character.</p>
@@ -536,32 +558,32 @@ const char8_t* utf8_str = u8&quot;你吃饭了吗?&quot;;
 
 using namespace std;
 
-// Remember to run Windows commandline command &quot;chcp 65001&quot; first to set the active
+// Remember to run Windows commandline command "chcp 65001" first to set the active
 // code page to UTF-8.
 
 int main() {
   // Null terminator automatically appended.
-  char8_t utf8Chars[] = u8&quot;你好世界&quot;;
+  char8_t utf8Chars[] = u8"你好世界";
   // Will have two null terminators. 
-  char8_t utf8CharsWithNull[] = u8&quot;你好世界\0&quot;; 
+  char8_t utf8CharsWithNull[] = u8"你好世界\0"; 
 
   auto len_1 = std::char_traits&lt;char8_t&gt;::length(utf8Chars);
   auto len_2 = std::char_traits&lt;char8_t&gt;::length(utf8CharsWithNull);
 
-  cout &lt;&lt; &quot;length(utf8Chars) = &quot; 
+  cout &lt;&lt; "length(utf8Chars) = " 
        &lt;&lt; len_1 
        &lt;&lt; endl; // output 12
 
-  cout &lt;&lt; &quot;length(utf8CharsWithNull) = &quot; 
+  cout &lt;&lt; "length(utf8CharsWithNull) = " 
        &lt;&lt; len_2 
        &lt;&lt; endl; // output 12
 
-  cout &lt;&lt; &quot;sizeof(char8_t) = &quot; 
+  cout &lt;&lt; "sizeof(char8_t) = " 
        &lt;&lt; sizeof(char8_t) 
        &lt;&lt; endl; // output 1
   
   // std::cout &lt;&lt; utf8Words &lt;&lt; std::endl; // This would fail compiling.  
-  printf(&quot;%s&quot;, reinterpret_cast&lt;char*&gt;(&amp;utf8Chars[0]));
+  printf("%s", reinterpret_cast&lt;char*&gt;(&amp;utf8Chars[0]));
 
   /*
   for (std::size_t i = 0; i &lt; len; i++) {
@@ -582,11 +604,11 @@ int main() {
 
 using namespace std;
 
-// Remember to run Windows commandline command &quot;chcp 65001&quot; first to set the active
+// Remember to run Windows commandline command "chcp 65001" first to set the active
 // code page to UTF-8.
 
 int main() {
-    u8string my_string = u8&quot;こんにちは&quot;;
+    u8string my_string = u8"こんにちは";
 
     // my_string[0] is the byte value of the UTF-8 text at byte position 0.
     // The actual character could have multiple bytes.
@@ -611,7 +633,7 @@ int main() {
                         &amp;my_wstring[0], 
                         len); 
 
-    locale::global(locale(&quot;en_US.UTF-8&quot;));
+    locale::global(locale("en_US.UTF-8"));
 
     // Output the string
     wcout &lt;&lt; my_wstring &lt;&lt; endl; 
@@ -626,11 +648,11 @@ int main() {
 <div style="break-before: page; page-break-before: always;"></div><h1 id="automatic-string-literal-concatenation"><a class="header" href="#automatic-string-literal-concatenation">Automatic String Literal Concatenation</a></h1>
 <p>Automatic concatenation of adjacent string literals is a feature present in both C and C++ programming languages. It allows the compiler to automatically merge two or more string literals that are placed next to each other, without any explicit concatenation operator. This can be useful for breaking long strings into shorter, more manageable pieces, while still treating them as a single string constant.</p>
 <p>Here is an example:</p>
-<pre><code class="language-cpp">const char* my_string = &quot;Hello,&quot;
-                        &quot;World!&quot;;
+<pre><code class="language-cpp">const char* my_string = "Hello,"
+                        "World!";
 </code></pre>
 <p>The compiler will automatically concatenate the two string literals, resulting in the following:</p>
-<pre><code class="language-cpp">const char* my_string = &quot;Hello,World!&quot;;
+<pre><code class="language-cpp">const char* my_string = "Hello,World!";
 </code></pre>
 <blockquote>
 <p>This feature has its roots in the C programming language. It was inherited by C++ in the early 1980s.</p>
@@ -639,10 +661,10 @@ int main() {
 <p>Some nuances and caveats of using automatic concatenation of adjacent string literals:</p>
 <h3 id="whitespace-not-strictly-required"><a class="header" href="#whitespace-not-strictly-required"><em>Whitespace not strictly required</em></a></h3>
 <p>Adjacent string literals can be separated by whitespace, like a <code>space</code>, a <code>tab</code>, or a <code>newline</code>, for the concatenation to occur. However, white space between the literals is not strictly required, so the following is still valid in both C and C++:</p>
-<pre><code class="language-cpp">const char* my_string = &quot;Hello,&quot;&quot;World&quot;;
+<pre><code class="language-cpp">const char* my_string = "Hello,""World";
 </code></pre>
 <p>The compile will automatically concatenate the adjacent string literals, resulting in the following:</p>
-<pre><code class="language-cpp">const char* my_string = &quot;Hello,World&quot;;
+<pre><code class="language-cpp">const char* my_string = "Hello,World";
 
 </code></pre>
 <blockquote>
@@ -653,13 +675,13 @@ int main() {
 <h3 id="variables-or-expressions-not-allowed"><a class="header" href="#variables-or-expressions-not-allowed"><em>Variables or expressions not allowed</em></a></h3>
 <p>Automatic concatenation can only be used with string literals, not with variables or other expressions.</p>
 <h3 id="mixed-encodings"><a class="header" href="#mixed-encodings"><em>Mixed encodings</em></a></h3>
-<p>Be aware that trying to concatenate string literals with different character encodings may lead to compilation errors or unexpected behavior. For example, the following code will result in compiler error <em>&quot;concatenation of string literals with conflicting encoding prefixes&quot;</em>.</p>
-<pre><code class="language-cpp">const char8_t* utf8Chars = u8&quot;Hello,&quot; 
-                           L&quot;World!&quot;;
+<p>Be aware that trying to concatenate string literals with different character encodings may lead to compilation errors or unexpected behavior. For example, the following code will result in compiler error <em>"concatenation of string literals with conflicting encoding prefixes"</em>.</p>
+<pre><code class="language-cpp">const char8_t* utf8Chars = u8"Hello," 
+                           L"World!";
 </code></pre>
 <p>If one of the string literals does not have prefix, it will be treated as having the same as others, hence the following is a valid operation:</p>
-<pre><code class="language-cpp">const char8_t* utf8Chars = u8&quot;Hello,&quot; 
-                           &quot;World!&quot;; // Equivalent to u8&quot;World!&quot;
+<pre><code class="language-cpp">const char8_t* utf8Chars = u8"Hello," 
+                           "World!"; // Equivalent to u8"World!"
 </code></pre>
 <h2 id="the--operator"><a class="header" href="#the--operator">The <code>+</code> operator</a></h2>
 <p>Using the + operator for concatenation works differently than automatic concatenation of adjacent string literals. In C++, the <code>+</code> operator can be used to concatenate <code>std::string</code> objects or a <code>std::string</code> object and a string literal. However, the <code>+</code> operator cannot be used to concatenate two string literals directly.</p>
@@ -668,17 +690,17 @@ int main() {
 #include &lt;string&gt;
 
 int main() {
-    std::string str1 = &quot;Hello, &quot;;
-    std::string str2 = &quot;World!&quot;;
+    std::string str1 = "Hello, ";
+    std::string str2 = "World!";
     
-    std::string result = str1 + str2 + &quot;Oh Yeah&quot;; // Valid in C++
+    std::string result = str1 + str2 + "Oh Yeah"; // Valid in C++
     
     std::cout &lt;&lt; result &lt;&lt; std::endl;
     return 0;
 }
 </code></pre>
 <p>In the example above, the + operator is used to concatenate two std::string objects. However, trying to do this with string literals directly will lead to a compilation error:</p>
-<pre><code class="language-cpp">const char* result = &quot;Hello, &quot; + &quot;World!&quot; + &quot;Oh Yeah; // NOT valid in C++ (or C)
+<pre><code class="language-cpp">const char* result = "Hello, " + "World!" + "Oh Yeah; // NOT valid in C++ (or C)
 </code></pre>
 <p>C does not have the <code>std::string</code> class and the <code>+</code> operator for concatenation. Use functions like <code>strcat</code> or <code>strncat</code> from the <code>string.h</code> library to concatenate character arrays (null-terminated strings). Remember to allocate enough memory for the concatenated result and ensure that the destination string is null-terminated.</p>
 <p>Here's an example of using strcat and strncat functions in C:</p>
@@ -686,17 +708,17 @@ int main() {
 #include &lt;string.h&gt;
 
 int main() {
-    char str1[20] = &quot;Hello, &quot;;
-    char str2[] = &quot;world!&quot;;
-    char str3[20] = &quot;I am a string.&quot;;
+    char str1[20] = "Hello, ";
+    char str2[] = "world!";
+    char str3[20] = "I am a string.";
 
     // Using strcat
     strcat(str1, str2);
-    printf(&quot;str1 after strcat: %s\n&quot;, str1);
+    printf("str1 after strcat: %s\n", str1);
 
     // Using strncat
     strncat(str3, str2, 4);
-    printf(&quot;str3 after strncat: %s\n&quot;, str3);
+    printf("str3 after strncat: %s\n", str3);
 
     return 0;
 }
@@ -744,7 +766,7 @@ int main()
     std::pmr::monotonic_buffer_resource pool(1024);
 
     // create an std::pmr::u8string using the memory pool
-    std::pmr::u8string str(u8&quot;Hello, world!&quot;, &amp;pool);
+    std::pmr::u8string str(u8"Hello, world!", &amp;pool);
 
     // print the string to the console
     printf(reinterpret_cast&lt;char*&gt;(str.data()));
@@ -760,9 +782,9 @@ int main()
 <tr><td><code>c32rtomb</code></td><td>Converts a 32-bit wide character to a multibyte sequence</td></tr>
 </tbody></table>
 </div>
-<p>These are C11 functions. </p>
+<p>These are C11 functions.</p>
 <blockquote>
-<p>In the function name <code>mbrtoc16</code>, the &quot;rto&quot; stands for &quot;read to&quot;. This function reads a multibyte character sequence and converts it to a 16-bit wide character. The &quot;c16&quot; part of the function name indicates that the output is a 16-bit character, while the &quot;mb&quot; part indicates that the input is a multibyte character sequence.</p>
+<p>In the function name <code>mbrtoc16</code>, the "rto" stands for "read to". This function reads a multibyte character sequence and converts it to a 16-bit wide character. The "c16" part of the function name indicates that the output is a 16-bit character, while the "mb" part indicates that the input is a multibyte character sequence.</p>
 </blockquote>
 <p>Here's an example of using the <code>mbrtoc16</code> function to convert a multibyte sequence to a 16-bit wide character:</p>
 <pre><code class="language-cpp">#include &lt;stdio.h&gt;
@@ -771,270 +793,24 @@ int main()
 #include &lt;wchar.h&gt;
 
 int main() {
-    setlocale(LC_ALL, &quot;en_US.UTF-8&quot;);
+    setlocale(LC_ALL, "en_US.UTF-8");
 
-    char mbstr[] = &quot;Hello, world!&quot;; // Note char8_t is not part of C language yet.
+    char mbstr[] = "Hello, world!"; // Note char8_t is not part of C language yet.
     char16_t wc16;
     mbstate_t state = { 0 };
     size_t res = mbrtoc16(&amp;wc16, mbstr, sizeof(mbstr), &amp;state);
     if (res == (size_t)-1 || res == (size_t)-2) {
-        printf(&quot;Error: invalid multibyte sequence\n&quot;);
+        printf("Error: invalid multibyte sequence\n");
         return 1;
     }
-    printf(&quot;The first character is: %lc\n&quot;, (wint_t)wc16);
+    printf("The first character is: %lc\n", (wint_t)wc16);
 
     return 0;
 }
 </code></pre>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="namespace"><a class="header" href="#namespace">Namespace</a></h1>
-<p>C++ namespaces provide a way to group related declarations and definitions, such as classes, functions, and variables, under a common name. This helps to avoid naming conflicts between different parts of a program or different libraries that may be used together.</p>
-<p>Namespaces were introduced into the C++ standard with the release of C++98. The syntax for declaring and defining namespaces is similar to that used for classes. Here's an example:</p>
-<pre><code class="language-cpp">// Declaration of a namespace
-namespace MyNamespace {
-    int x;
-    void foo();
-}
-
-// Definition of the namespace's contents
-namespace MyNamespace {
-    int x = 42;
-    void foo() {
-        // Implementation of the function
-    }
-}
-</code></pre>
-<p>In this example, <code>MyNamespace</code> is declared and defined to contain an integer variable <code>x</code> and a function <code>foo()</code>. The namespace's contents can be accessed using the scope resolution operator <code>::</code>, like this:</p>
-<pre><code class="language-cpp">int main() {
-    MyNamespace::x = 10;
-    MyNamespace::foo();
-    return 0;
-}
-</code></pre>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="inline-namespace"><a class="header" href="#inline-namespace">Inline Namespace</a></h1>
-<h2 id="what-is-inline-namespace"><a class="header" href="#what-is-inline-namespace">What is <code>inline namespace</code></a></h2>
-<p>When a namespace is declared as <code>inline</code>, it means that its members are automatically injected into the enclosing parent namespace, as if they were defined directly in the parent namespace. This allows clients of the namespace to refer to its members without needing to qualify them with the namespace name.</p>
-<p>For example, consider the following code:</p>
-<pre><code class="language-cpp">namespace outer {
-    inline namespace inner {
-        void foo() {}
-    }
-}
-</code></pre>
-<p>Here, <code>inner</code> is an inline namespace that is declared within the <code>outer</code> namespace. This means that <code>foo()</code> can be accessed either as <code>outer::inner::foo()</code> or simply as <code>outer::foo()</code>.</p>
-<h2 id="use-case"><a class="header" href="#use-case">Use case</a></h2>
-<p>C++ <code>inline</code> namespaces were introduced in the C++11 standard to provide a mechanism for versioning and incremental updates of libraries, without breaking backward compatibility. </p>
-<p>An <code>inline</code> namespace can be used to provide an updated version of a library's interface, while still allowing old code to use the previous version. By using an <code>inline</code> namespace, the new version of the library can be introduced without breaking the existing code that depends on the old version.</p>
-<p>Here is an example of how an inline namespace can be used:</p>
-<pre><code class="language-cpp">#include &lt;iostream&gt;
-
-/*
-// Initial version of the library
-namespace MyLib {
-    void foo() {
-        std::cout &lt;&lt; &quot;Hello, world!&quot; &lt;&lt; std::endl;
-    }
-}
-*/
-
-// Updated version of the library, in an inline namespace
-namespace MyLib {
-    inline namespace v1 {
-        void foo() {
-            std::cout &lt;&lt; &quot;Hello, World!&quot; &lt;&lt; std::endl;
-        }
-    }
-    
-    namespace v2 {
-        void foo() {
-            std::cout &lt;&lt; &quot;Hello, C++11!&quot; &lt;&lt; std::endl;
-        }
-    }
-}
-
-// Usage of the library
-int main() {
-    MyLib::foo();     // calls the initial version of foo
-    MyLib::v2::foo(); // calls the updated version of foo
-    return 0;
-}
-</code></pre>
-<p>This code demonstrates how backward compatibility is maintained in a library called <code>MyLib</code>, which defines two versions of a function named <code>foo()</code>. The output of the program will be:</p>
-<pre><code>Hello, World!
-Hello, C++11!
-</code></pre>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="new-nested-namespace-syntax"><a class="header" href="#new-nested-namespace-syntax">New Nested Namespace Syntax</a></h1>
-<p>Prior to C++17, nested namespaces are defined like this:</p>
-<pre><code class="language-cpp">namespace A {
-    namespace B {
-        namespace C {
-            int foo() { return 5; }
-        }
-    }
-}
-</code></pre>
-<p>With C++17, the same nested namespaces can be defined using the inline syntax concisely:</p>
-<pre><code class="language-cpp">namespace A::B::C {
-    int foo() { return 5; }
-}
-</code></pre>
-<p>Both of these code snippets achieve the same result: defining a function <code>foo()</code> in the namespace <code>A::B::C</code>. The inline namespace definition syntax introduced in C++17 allows for a more compact and readable way to define nested namespaces.</p>
-<h2 id="nested-inline-namespace"><a class="header" href="#nested-inline-namespace">Nested inline namespace</a></h2>
-<p>The combination of the nested namespace definition syntax (introduced in C++17) and the <code>inline</code> namespace declaration is allowed in C++20.</p>
-<p>The following is valid in C++20:</p>
-<pre><code class="language-cpp">namespace A::B::inline C {
-    int foo() { return 5; }
-}
-</code></pre>
-<p>In this code, the <code>inline</code> keyword is applied to the <code>C</code> namespace within the nested namespace definition <code>A::B</code>. This declares <code>C</code> as an inline namespace within the enclosing namespace <code>B</code>.</p>
-<p>Note <code>inline</code> keyword can appear before any namespace name except namespace <code>A</code>.</p>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="unnamed-namespace"><a class="header" href="#unnamed-namespace">Unnamed Namespace</a></h1>
-<p>The <code>unnamed namespace</code> (or anonymous namespace) is a feature in C++ that was introduced in the C++98 standard. It provides a way to declare identifiers (e.g., functions, variables, or types) with internal linkage, meaning they are only visible within the scope of their parent namespace, or translation unit (i.e., the source file) in which they are defined.</p>
-<p><code>Unnamed namespaces</code> can be declared using the <code>namespace</code> keyword, followed by a pair of braces, like this:</p>
-<pre><code class="language-cpp">namespace {
-    // Your code here
-}
-</code></pre>
-<p>For example, a helper function or a constant that is only needed within a single source file, can be put in an unnamed namespace to prevent it from being accessible in other parts of the program:</p>
-<pre><code class="language-cpp">// File: my_file.cpp
-#include &quot;my_file.h&quot;
-
-namespace {
-    const int someConstant = 42;
-
-    void helperFunction() {
-        // Implementation here
-    }
-}
-
-void myPublicFunction() {
-    helperFunction();
-    // Other implementation details
-}
-</code></pre>
-<p>In this example, <code>someConstant</code> and <code>helperFunction</code> are only visible within <code>my_file.cpp</code> and won't conflict with any other code using the same names.</p>
-<p>Another example:</p>
-<pre><code class="language-cpp">namespace my_namespace {
-    namespace {
-        void helperFunction() {
-            // Implementation here
-        }
-    }
-
-    void publicFunction() {
-        helperFunction(); // This is allowed since helperFunction() is in the same parent namespace
-    }
-}
-</code></pre>
-<p>In this example, <code>helperFunction()</code> is declared within an unnamed namespace inside <code>my_namespace</code>. Although <code>helperFunction()</code> has internal linkage and is not visible outside of the translation unit, it can still be accessed by other functions within the same parent namespace (<code>my_namespace</code>), such as <code>publicFunction()</code>.</p>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="merged-namespace"><a class="header" href="#merged-namespace">Merged Namespace</a></h1>
-<p>If a namespace is defined multiple times, its contents are merged together. For example:</p>
-<pre><code class="language-cpp">// First definition of namespace MyNamespace
-namespace MyNamespace {
-    int x = 1;
-    void foo() {
-        // Implementation of the function
-    }
-}
-
-// Second definition of namespace MyNamespace, with different contents
-namespace MyNamespace {
-    int y = 2;
-    void bar() {
-        // Implementation of the function
-    }
-}
-
-// Usage of the namespace contents
-int main() {
-    MyNamespace::foo();
-    MyNamespace::bar();
-    std::cout &lt;&lt; MyNamespace::x + MyNamespace::y &lt;&lt; std::endl;
-    return 0;
-}
-</code></pre>
-<p>Howerver, if the same variable is defined multiple times, a redefinition error will occur:</p>
-<pre><code class="language-cpp">
-#include &lt;iostream&gt;
-
-namespace Namespace1 {
-    int x = 1;
-}
-
-namespace Namespace1 {
-    int x = 2;
-}
-
-int main() {
-    std::cout &lt;&lt; Namespace1::x &lt;&lt; std::endl;
-    std::cout &lt;&lt; Namespace2::x &lt;&lt; std::endl;
-    return 0;
-}
-
-
-</code></pre>
-<p>We'll see the following compiler error:</p>
-<pre><code>&lt;source&gt;:8:9: error: redefinition of 'int Namespace1::x'
-    8 |     int x = 2;
-      |         ^
-&lt;source&gt;:4:9: note: 'int Namespace1::x' previously defined here
-    4 |     int x = 1;
-      |         ^
-&lt;source&gt;: In function 'int main()':
-&lt;source&gt;:13:18: error: 'Namespace2' has not been declared
-   13 |     std::cout &lt;&lt; Namespace2::x &lt;&lt; std::endl;
-</code></pre>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="global-namespace"><a class="header" href="#global-namespace">Global Namespace</a></h1>
-<p>In C++, the global namespace is the outermost namespace that encompasses all the code in a program. When you define a variable, function, or type without explicitly placing it in a named or unnamed namespace, it becomes part of the global namespace. The global namespace is accessible from anywhere in the program, making its members visible across different translation units.</p>
-<p>Although using the global namespace can make it easier to access identifiers without needing to specify a particular namespace, it is generally not recommended to place many identifiers in the global namespace, as it can lead to name clashes and reduced code maintainability. In large projects, putting too many identifiers in the global namespace can make it difficult to determine the purpose or origin of a particular identifier.</p>
-<p>Instead, it's usually better to use named namespaces to organize and encapsulate your code, which helps prevent name collisions and improve code readability.</p>
-<p>Here's an example that demonstrates the difference between global and named namespaces:</p>
-<pre><code class="language-cpp">// Global namespace
-int globalVariable = 10;
-
-void globalFunction() {
-    // Implementation here
-}
-
-// Named namespace
-namespace my_namespace {
-    int myVariable = 20;
-
-    void myFunction() {
-        // Implementation here
-    }
-}
-
-int main() {
-    globalFunction(); // Accessing a function in the global namespace
-    my_namespace::myFunction(); // Accessing a function in a named namespace
-
-    return 0;
-}
-</code></pre>
-<p>In this example, <code>globalVariable</code> and <code>globalFunction()</code> are defined in the global namespace, while <code>myVariable</code> and <code>myFunction()</code> are defined within the named namespace <code>my_namespace</code>. To access members of a named namespace, use the namespace qualifier <code>::</code>.</p>
-<h2 id="scope-resolution-operator-"><a class="header" href="#scope-resolution-operator-">Scope resolution operator <code>::</code></a></h2>
-<p>The global namespace can be accessed explicitly by using the scope resolution operator <code>::</code>. This can be helpful when an identifier in the global namespace shares the same name as an identifier in a different namespace, or it is desirable to explicitly refer to the global namespace version of an identifier.</p>
-<p>Here's an example demonstrating the use of <code>::</code> to access the global namespace:</p>
-<pre><code class="language-cpp">#include &lt;iostream&gt;
-
-// Global namespace
-int myVariable = 10;
-
-namespace my_namespace {
-    int myVariable = 20;
-
-    void printVariables() {
-        std::cout &lt;&lt; &quot;Global namespace myVariable: &quot; &lt;&lt; ::myVariable &lt;&lt; std::endl;
-        std::cout &lt;&lt; &quot;my_namespace myVariable: &quot; &lt;&lt; myVariable &lt;&lt; std::endl;
-    }
-}
-
-int main() {
-    my_namespace::printVariables();
-    return 0;
-}
-</code></pre>
-<p>In this example, there are two variables with the same name <code>myVariable</code>, one in the global namespace and another in the named namespace <code>my_namespace</code>. Inside the <code>printVariables()</code> function, resolution operator <code>::</code> is specified to access the <code>myVariable</code> from the global namespace, while the unqualified <code>myVariable</code> refers to the one in the <code>my_namespace</code>.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="memory-alignment"><a class="header" href="#memory-alignment">Memory Alignment</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="literals"><a class="header" href="#literals">Literals</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="initialization"><a class="header" href="#initialization">Initialization</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="compile-time-evaluation"><a class="header" href="#compile-time-evaluation">Compile Time Evaluation</a></h1>
 <p>In C++, compile-time evaluation refers to the ability to evaluate expressions and perform computations at compile-time, rather than at runtime. This can be achieved using keywords such as <code>constexpr</code>, <code>consteval</code>, and <code>constinit</code>.</p>
 <div class="table-wrapper"><table><thead><tr><th>Keyword</th><th>Introduced in</th><th>Usage</th></tr></thead><tbody>
@@ -1063,7 +839,7 @@ int main() {
 </ol>
 <h2 id="a-real-life-sample"><a class="header" href="#a-real-life-sample">A real-life sample</a></h2>
 <p>The following shows a picture of NEMA-TS2 16-channel Malfunction Management Unit (MMU). Credit: <a href="https://www.flickr.com/photos/robklug/5617557645/">Rob Klug</a></p>
-<p><img src="compileval/mmucard.jpg" alt="Image" /></p>
+<p><img src="CompileTimeEvaluation/mmucard.jpg" alt="Image" /></p>
 <blockquote>
 <p>A Malfunction Management Unit (MMU) is a device utilized in the traffic signal control industry to detect conflicts that may arise when conflicting traffic flows are given right of way simultaneously. This is achieved through the use of a soldering board at the hardware level, which defines the compatibility of each pair of different channels. Essentially, each channel is physically connected to the signal head in the field through load switches, and the compatibility between the channels is relayed to the MMU through this hardware board.</p>
 </blockquote>
@@ -1128,7 +904,7 @@ int arr[arr_size];
 constexpr char c = 'A' + 1;
 
 // static_assert is a compile-time assertion
-static_assert(c == 'B', &quot;c should be equal to 'B'&quot;); 
+static_assert(c == 'B', "c should be equal to 'B'"); 
 </code></pre>
 <h2 id="constexpr-function"><a class="header" href="#constexpr-function"><code>constexpr</code> function</a></h2>
 <p>To make a function <code>constexpr</code>, it must meet the following conditions:</p>
@@ -1308,7 +1084,7 @@ int main() {
 }
 </code></pre>
 <h2 id="destructor"><a class="header" href="#destructor">Destructor</a></h2>
-<p>If a class has a <code>constexpr</code> constructor and is meant to be used in a <code>constexpr</code> context, then the destructor should be trivial. A trivial destructor does not perform any custom actions, allowing the object to be safely used in a <code>constexpr</code> context. </p>
+<p>If a class has a <code>constexpr</code> constructor and is meant to be used in a <code>constexpr</code> context, then the destructor should be trivial. A trivial destructor does not perform any custom actions, allowing the object to be safely used in a <code>constexpr</code> context.</p>
 <blockquote>
 <p>A destructor is considered trivial if:</p>
 <ol>
@@ -1357,7 +1133,7 @@ private:
 int main() {
     constexpr MyClass obj;
     obj.doSomething(); // This call is evaluated at compile time
-    static_assert(obj.getMyData() == 42, &quot;Unexpected value of myData&quot;);
+    static_assert(obj.getMyData() == 42, "Unexpected value of myData");
 }
 </code></pre>
 <p>Note that <code>constexpr void doSomething()</code> does not have to be qualified with <code>const</code>.</p>
@@ -1416,8 +1192,8 @@ constexpr bool is_power_of_two(T value) {
 
 template&lt;typename T&gt;
 constexpr T next_power_of_two(T value) {
-    static_assert(std::numeric_limits&lt;T&gt;::is_integer, &quot;Type must be an integer&quot;);
-    static_assert(std::numeric_limits&lt;T&gt;::is_signed == false, &quot;Type must be unsigned&quot;);
+    static_assert(std::numeric_limits&lt;T&gt;::is_integer, "Type must be an integer");
+    static_assert(std::numeric_limits&lt;T&gt;::is_signed == false, "Type must be unsigned");
 
     if (is_power_of_two(value)) {
         return value;
@@ -1433,7 +1209,7 @@ constexpr T next_power_of_two(T value) {
 int main() {
     constexpr unsigned int x = 31;
     constexpr auto y = next_power_of_two(x);
-    std::cout &lt;&lt; &quot;The next power of two after &quot; &lt;&lt; x &lt;&lt; &quot; is &quot; &lt;&lt; y &lt;&lt; '\n';
+    std::cout &lt;&lt; "The next power of two after " &lt;&lt; x &lt;&lt; " is " &lt;&lt; y &lt;&lt; '\n';
     return 0;
 }
 </code></pre>
@@ -1544,9 +1320,9 @@ int main() {
     };
 
     constexpr int result = square(5);
-    static_assert(result == 25, &quot;Square of 5 should be 25&quot;);
+    static_assert(result == 25, "Square of 5 should be 25");
 
-    std::cout &lt;&lt; &quot;Square of 5: &quot; &lt;&lt; result &lt;&lt; std::endl;
+    std::cout &lt;&lt; "Square of 5: " &lt;&lt; result &lt;&lt; std::endl;
     return 0;
 }
 </code></pre>
@@ -1592,7 +1368,7 @@ constexpr auto sqrt_lambda = [](double x) {
 
 int main() {
     double result = sqrt_lambda(25.0); // This will be evaluated at runtime
-    std::cout &lt;&lt; &quot;Square root of 25: &quot; &lt;&lt; result &lt;&lt; std::endl;
+    std::cout &lt;&lt; "Square root of 25: " &lt;&lt; result &lt;&lt; std::endl;
     return 0;
 }
 </code></pre>
@@ -1605,18 +1381,18 @@ int main() {
 
 int main() {
     int input = 0;
-    std::cout &lt;&lt; &quot;Enter an integer: &quot;;
+    std::cout &lt;&lt; "Enter an integer: ";
     std::cin &gt;&gt; input;
 
     int result = square(input); // This will be evaluated at runtime
-    std::cout &lt;&lt; &quot;Square of &quot; &lt;&lt; input &lt;&lt; &quot;: &quot; &lt;&lt; result &lt;&lt; std::endl;
+    std::cout &lt;&lt; "Square of " &lt;&lt; input &lt;&lt; ": " &lt;&lt; result &lt;&lt; std::endl;
     return 0;
 }
 </code></pre>
 <p>In this example, although the <code>square</code> lambda is <code>constexpr</code>, it is used with a runtime input value, so it's evaluated at runtime.</p>
 <p>When a <code>constexpr</code> lambda degrades into a runtime lambda, it doesn't cause any errors or warnings. It simply means that the lambda is evaluated at runtime, and the performance advantages and safety guarantees of a <code>constexpr</code> lambda are not achieved.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="inlining-constexpr"><a class="header" href="#inlining-constexpr">Inlining constexpr</a></h1>
-<p>In C++17, a <code>constexpr</code> static data member is implicitly <code>inline</code>. This means that the static data member has the same address in every translation unit that uses it, and there is no need to provide a separate definition for the data member in a source file. </p>
+<p>In C++17, a <code>constexpr</code> static data member is implicitly <code>inline</code>. This means that the static data member has the same address in every translation unit that uses it, and there is no need to provide a separate definition for the data member in a source file.</p>
 <p>The following example would produce a linker error pre-C++ 17:</p>
 <pre><code class="language-cpp">// MyClass.h
 class MyClass {
@@ -1625,7 +1401,7 @@ public:
 };
 
 // main.cpp
-#include &quot;MyClass.h&quot;
+#include "MyClass.h"
 #include &lt;iostream&gt;
 
 void printAddress(const int *ptr);
@@ -1637,12 +1413,12 @@ int main() {
 }
 
 void printAddress(const int *ptr) {
-    std::cout &lt;&lt; &quot;Address of myConstExpr: &quot; &lt;&lt; ptr &lt;&lt; std::endl;
+    std::cout &lt;&lt; "Address of myConstExpr: " &lt;&lt; ptr &lt;&lt; std::endl;
 }
 </code></pre>
 <p>In this case, the address of <code>MyClass::myConstExpr</code> is required, so a separate definition is needed in a source file for pre-C++17:</p>
 <pre><code class="language-cpp">// MyClass.cpp (pre-C++17)
-#include &quot;MyClass.h&quot;
+#include "MyClass.h"
 
 // Definition in source file required to avoid linker errors
 const int MyClass::myConstExpr; 
@@ -1655,7 +1431,7 @@ public:
     static constexpr int myConstExpr = 42; 
 };
 </code></pre>
-<p>The following code will not produce a linker error for pre-C++17. This is because the compilier just does a compile time replacement for the line <code>std::cout &lt;&lt; &quot;Value of myConstExpr: &quot; &lt;&lt; MyClass::myConstExpr &lt;&lt; std::endl;</code>, directly replacing <code> MyClass::myConstExpr</code> with <code>42</code>. There is no addressing involved, hence no linker error.</p>
+<p>The following code will not produce a linker error for pre-C++17. This is because the compilier just does a compile time replacement for the line <code>std::cout &lt;&lt; "Value of myConstExpr: " &lt;&lt; MyClass::myConstExpr &lt;&lt; std::endl;</code>, directly replacing <code> MyClass::myConstExpr</code> with <code>42</code>. There is no addressing involved, hence no linker error.</p>
 <pre><code class="language-cpp">// MyClass.h
 class MyClass {
 public:
@@ -1663,11 +1439,11 @@ public:
 };
 
 // main.cpp
-#include &quot;MyClass.h&quot;
+#include "MyClass.h"
 #include &lt;iostream&gt;
 
 int main() {
-    std::cout &lt;&lt; &quot;Value of myConstExpr: &quot; &lt;&lt; MyClass::myConstExpr &lt;&lt; std::endl;
+    std::cout &lt;&lt; "Value of myConstExpr: " &lt;&lt; MyClass::myConstExpr &lt;&lt; std::endl;
     return 0;
 }
 
@@ -1684,18 +1460,18 @@ int main() {
 
 void doSomething() {
 #ifdef USE_FEATURE
-    std::cout &lt;&lt; &quot;Feature is enabled.&quot; &lt;&lt; std::endl;
+    std::cout &lt;&lt; "Feature is enabled." &lt;&lt; std::endl;
 #else
-    std::cout &lt;&lt; &quot;Feature is disabled.&quot; &lt;&lt; std::endl;
+    std::cout &lt;&lt; "Feature is disabled." &lt;&lt; std::endl;
 #endif
 }
 
 template &lt;bool UseFeature&gt;
 void doSomethingTemplate() {
     if constexpr (UseFeature) {
-        std::cout &lt;&lt; &quot;Feature is enabled.&quot; &lt;&lt; std::endl;
+        std::cout &lt;&lt; "Feature is enabled." &lt;&lt; std::endl;
     } else {
-        std::cout &lt;&lt; &quot;Feature is disabled.&quot; &lt;&lt; std::endl;
+        std::cout &lt;&lt; "Feature is disabled." &lt;&lt; std::endl;
     }
 }
 
@@ -1742,13 +1518,13 @@ auto subtract(T a, T b) {
     } else if constexpr (std::is_integral&lt;T&gt;::value) {
         return a - b;
     } else {
-        static_assert(always_false&lt;T&gt;::value, &quot;Non-handled type for subtract function&quot;);
+        static_assert(always_false&lt;T&gt;::value, "Non-handled type for subtract function");
     }
 }
 </code></pre>
 <p>In this code, both double and integral types are explicitly handled. If a type is used that is neither double nor an integral type, the static_assert will trigger a compile-time error with a clear message, which is generally preferable to a more obscure error about invalid operations. This is a more defensive programming strategy that makes sure all potential types are handled.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="constexpr-virtual-method"><a class="header" href="#constexpr-virtual-method"><code>constexpr</code> virtual method</a></h1>
-<p>In C++20, virtual methods can be declared as <code>constexpr</code>, enabling their evaluation during compile time. This allows for potential optimizations where the virtual method can be resolved and reduced to a simple assignment without the overhead of a function call. </p>
+<p>In C++20, virtual methods can be declared as <code>constexpr</code>, enabling their evaluation during compile time. This allows for potential optimizations where the virtual method can be resolved and reduced to a simple assignment without the overhead of a function call.</p>
 <blockquote>
 <p>Note - such optimizations occur when the static type of the object is known at compile time.</p>
 </blockquote>
@@ -1773,7 +1549,7 @@ int value = der.getValue();
 <p>This assembly code demonstrates a direct assignment of the constant value <code>10</code> to the variable <code>value</code> without any function call involved. The compiler can determine the value of <code>getValue</code> at compile time, considering the known static type of the object.</p>
 <p>It's important to note that the specific optimization and resulting assembly code may vary depending on the compiler, compiler flags, and optimizations enabled. However, with appropriate optimizations, a <code>constexpr</code> virtual method can indeed be optimized to a simple assignment during compile time, avoiding the function call overhead.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="try-catch"><a class="header" href="#try-catch">try-catch</a></h1>
-<p>In C++20, the language standard introduced the ability to use try-catch blocks inside constexpr functions. Prior to C++20, constexpr functions were limited to containing only a subset of operations that were considered &quot;constexpr-friendly.&quot; This limitation prevented the use of exceptions, dynamic memory allocation, and other runtime-only features.</p>
+<p>In C++20, the language standard introduced the ability to use try-catch blocks inside constexpr functions. Prior to C++20, constexpr functions were limited to containing only a subset of operations that were considered "constexpr-friendly." This limitation prevented the use of exceptions, dynamic memory allocation, and other runtime-only features.</p>
 <p>With C++20, the restrictions on constexpr functions have been relaxed, and try-catch blocks are now allowed inside constexpr functions. This change allows for more expressive and flexible constexpr functions, enabling them to handle exceptions and perform more complex operations at compile time.</p>
 <p>The primary motivation behind allowing try-catch blocks in constexpr functions is to enable error handling and better handling of unexpected situations during compile-time evaluation. It allows constexpr functions to handle exceptions and provide a fallback mechanism in case of errors. This can be useful in scenarios where you want to perform complex computations at compile time, but need to handle potential errors gracefully.</p>
 <p>Here's an example that demonstrates the usage of try-catch blocks inside a constexpr function:</p>
@@ -1787,7 +1563,7 @@ int value = der.getValue();
 
 int main() {
     constexpr int result = divide(10, 2);
-    static_assert(result == 5, &quot;Division failed at compile time!&quot;);
+    static_assert(result == 5, "Division failed at compile time!");
     return 0;
 }
 </code></pre>
@@ -1833,7 +1609,7 @@ constexpr std::array&lt;int, 5&gt; createArray() {
 int main() {
     constexpr std::array&lt;int, 5&gt; result = createArray();
     // Use the constexpr array at compile time
-    static_assert(result[2] == 4, &quot;Unexpected value at compile time!&quot;);
+    static_assert(result[2] == 4, "Unexpected value at compile time!");
     return 0;
 }
 </code></pre>
@@ -1841,7 +1617,7 @@ int main() {
 <p>By allowing trivial default construction for constexpr objects, C++20 simplifies the initialization process for certain types and enables more concise and efficient constexpr code. It can be particularly beneficial when working with trivial types or when initializing objects that don't require explicit initialization before use.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="consteval-and-constinit"><a class="header" href="#consteval-and-constinit"><code>consteval</code> and <code>constinit</code></a></h1>
 <h2 id="consteval"><a class="header" href="#consteval"><code>consteval</code></a></h2>
-<p><code>consteval</code> keyword was introduced in C++20 as a new kind of function declaration known as a &quot;consteval function.&quot; A consteval function is designed to be evaluated (and must be evaluable) at compile-time within constant expressions.</p>
+<p><code>consteval</code> keyword was introduced in C++20 as a new kind of function declaration known as a "consteval function." A consteval function is designed to be evaluated (and must be evaluable) at compile-time within constant expressions.</p>
 <p>To be valid, a consteval function must have a literal type, meaning that its type can be used within a constant expression. Additionally, the body of a consteval function must be fully evaluated at compile-time, without any runtime execution. <strong>If these requirements are not met, the compiler will generate an error</strong>.</p>
 <p>Here's an example of a consteval function:</p>
 <pre><code class="language-cpp">consteval int square(int x) {
@@ -1915,7 +1691,7 @@ int main() {
 <tr><td><code>constinit</code></td><td>No</td><td>To force constant initialization</td><td>No</td><td>No, a <code>constinit</code> variable is not a constexpr variable</td></tr>
 </tbody></table>
 </div><div style="break-before: page; page-break-before: always;"></div><h1 id="stdis_constant_evaluated"><a class="header" href="#stdis_constant_evaluated">std::is_constant_evaluated</a></h1>
-<p><code>std::is_constant_evaluated</code> function was introduced in C++20 as a standard library feature. It provides a way to check whether a function is being evaluated in a constant expression context or a non-constant expression context. This feature enables developers to write code that behaves differently during compile-time evaluation compared to runtime execution. </p>
+<p><code>std::is_constant_evaluated</code> function was introduced in C++20 as a standard library feature. It provides a way to check whether a function is being evaluated in a constant expression context or a non-constant expression context. This feature enables developers to write code that behaves differently during compile-time evaluation compared to runtime execution.</p>
 <blockquote>
 <p>The motivation behind introducing <code>std::is_constant_evaluated</code> is to allow for explicit compile-time evaluation, which provides more control and flexibility in code execution. It allows developers to optimize certain operations or choose alternate code paths specifically for constant expressions.</p>
 </blockquote>
@@ -1924,9 +1700,9 @@ int main() {
 
 void printEvaluationContext() {
     if (std::is_constant_evaluated()) {
-        std::cout &lt;&lt; &quot;Constant expression evaluation&quot; &lt;&lt; std::endl;
+        std::cout &lt;&lt; "Constant expression evaluation" &lt;&lt; std::endl;
     } else {
-        std::cout &lt;&lt; &quot;Runtime execution&quot; &lt;&lt; std::endl;
+        std::cout &lt;&lt; "Runtime execution" &lt;&lt; std::endl;
     }
 }
 
@@ -1934,7 +1710,7 @@ constexpr int doubleValue(int value) {
     if (std::is_constant_evaluated()) {
         return value * 2;  // Constant expression evaluation
     } else {
-        std::cout &lt;&lt; &quot;Runtime evaluation&quot; &lt;&lt; std::endl;
+        std::cout &lt;&lt; "Runtime evaluation" &lt;&lt; std::endl;
         return value;      // Runtime execution
     }
 }
@@ -1943,11 +1719,11 @@ int main() {
     printEvaluationContext();
 
     constexpr int result1 = doubleValue(10);
-    std::cout &lt;&lt; &quot;Result 1: &quot; &lt;&lt; result1 &lt;&lt; std::endl;
+    std::cout &lt;&lt; "Result 1: " &lt;&lt; result1 &lt;&lt; std::endl;
 
     int value = 20;
     int result2 = doubleValue(value);
-    std::cout &lt;&lt; &quot;Result 2: &quot; &lt;&lt; result2 &lt;&lt; std::endl;
+    std::cout &lt;&lt; "Result 2: " &lt;&lt; result2 &lt;&lt; std::endl;
 
     return 0;
 }
@@ -1971,7 +1747,7 @@ constexpr int modifyUnionMember(int value) {
 
 int main() {
     constexpr int modifiedValue = modifyUnionMember(42);
-    std::cout &lt;&lt; &quot;Modified value: &quot; &lt;&lt; modifiedValue &lt;&lt; std::endl;
+    std::cout &lt;&lt; "Modified value: " &lt;&lt; modifiedValue &lt;&lt; std::endl;
     return 0;
 }
 </code></pre>
@@ -1999,8 +1775,8 @@ int main() {
     constexpr bool isDerived = isDerivedFromBase(basePtr);
     constexpr const std::type_info&amp; typeInfo = getTypeInfo(basePtr);
 
-    std::cout &lt;&lt; &quot;Is Derived from Base? &quot; &lt;&lt; isDerived &lt;&lt; std::endl;
-    std::cout &lt;&lt; &quot;Type info: &quot; &lt;&lt; typeInfo.name() &lt;&lt; std::endl;
+    std::cout &lt;&lt; "Is Derived from Base? " &lt;&lt; isDerived &lt;&lt; std::endl;
+    std::cout &lt;&lt; "Type info: " &lt;&lt; typeInfo.name() &lt;&lt; std::endl;
 
     delete basePtr;
     return 0;
@@ -2012,21 +1788,21 @@ int main() {
 
 constexpr int addNumbersInlineAssembly(int a, int b) {
     int result;
-    asm(&quot;add %[a], %[b];&quot;
-        : [result] &quot;=r&quot; (result)
-        : [a] &quot;r&quot; (a), [b] &quot;r&quot; (b)
+    asm("add %[a], %[b];"
+        : [result] "=r" (result)
+        : [a] "r" (a), [b] "r" (b)
     );
     return result;
 }
 
 int main() {
     constexpr int sum = addNumbersInlineAssembly(10, 20);
-    std::cout &lt;&lt; &quot;Sum: &quot; &lt;&lt; sum &lt;&lt; std::
+    std::cout &lt;&lt; "Sum: " &lt;&lt; sum &lt;&lt; std::
 
 
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="modern-c-type-deduction-mechanisms"><a class="header" href="#modern-c-type-deduction-mechanisms">Modern C++ Type Deduction Mechanisms</a></h1>
-<p>Type deduction allows the compiler to infer types automatically, making code more concise, expressive, and easier to maintain. </p>
+<p>Type deduction allows the compiler to infer types automatically, making code more concise, expressive, and easier to maintain.</p>
 <p>From C++11 through C++20, the language has introduced a variety of type deduction capabilities.</p>
 <p>This chapter provides a comprehensive overview of modern C++ type deduction. It also highlights best practices and rules to help developers use <code>auto</code>, <code>decltype</code>, and related features effectively.</p>
 <p>Mastering type deduction is essential for writing clean, robust, and modern C++ code.</p>
@@ -2202,7 +1978,7 @@ int main() {
 template&lt;Color C&gt;
 struct Widget {
     void print() {
-        std::cout &lt;&lt; C.r &lt;&lt; &quot;, &quot; &lt;&lt; C.g &lt;&lt; &quot;, &quot; &lt;&lt; C.b &lt;&lt; &quot;\n&quot;;
+        std::cout &lt;&lt; C.r &lt;&lt; ", " &lt;&lt; C.g &lt;&lt; ", " &lt;&lt; C.b &lt;&lt; "\n";
     }
 };
 
@@ -2242,7 +2018,7 @@ void log(Printable auto x) {
     auto x = 0;   
 };
 </code></pre>
-<p>Since C++20, the use of <code>auto</code> in aggregate member declarations is permitted when accompanied by a default initializer. </p>
+<p>Since C++20, the use of <code>auto</code> in aggregate member declarations is permitted when accompanied by a default initializer.</p>
 <blockquote>
 <p>⚠️ In short: A simple struct with public fields and no fancy behavior is usually an aggregate. Prior to C++20, an aggregate does not permit member declaration using <code>auto</code>. But this restriction is relaxed with C++20, as long as a default initializer is provided.</p>
 </blockquote>
@@ -2284,7 +2060,7 @@ b.f();        // Calls Derived::f()
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="type-deduction-rules-in-c"><a class="header" href="#type-deduction-rules-in-c">Type Deduction Rules in C++</a></h1>
 <p>The <code>auto</code> keyword instructs the compiler to deduce the type of a variable based on its initializer.</p>
-<p>However, deduction follows a set of specific rules, especially regarding references, <code>const</code> qualifiers, value categories, and initializer forms. </p>
+<p>However, deduction follows a set of specific rules, especially regarding references, <code>const</code> qualifiers, value categories, and initializer forms.</p>
 <p>The following summarizes the key rules with examples and explanations.</p>
 <h2 id="rule-1-top-level-cv-qualifiers-are-discarded-during-value-initialization"><a class="header" href="#rule-1-top-level-cv-qualifiers-are-discarded-during-value-initialization">Rule 1: <strong>Top-Level CV Qualifiers Are Discarded During Value Initialization</strong></a></h2>
 <p>When <code>auto</code> is used to declare a variable and the initializer is a value (i.e. not a reference or pointer), any top-level <code>const</code> or <code>volatile</code> qualifiers in the initializer's type are ignored.</p>
@@ -2348,12 +2124,12 @@ auto y3 = {1, 2.0};  // error: conflicting types, cannot deduce common T
 <h2 id="pitfall-object-slicing-with-auto"><a class="header" href="#pitfall-object-slicing-with-auto">Pitfall: Object Slicing with <code>auto</code></a></h2>
 <pre><code class="language-cpp">class Base {
 public:
-    virtual void f() { std::cout &lt;&lt; &quot;Base::f()&quot; &lt;&lt; std::endl; }
+    virtual void f() { std::cout &lt;&lt; "Base::f()" &lt;&lt; std::endl; }
 };
 
 class Derived : public Base {
 public:
-    void f() override { std::cout &lt;&lt; &quot;Derived::f()&quot; &lt;&lt; std::endl; }
+    void f() override { std::cout &lt;&lt; "Derived::f()" &lt;&lt; std::endl; }
 };
 
 Base* d = new Derived();
@@ -2389,7 +2165,7 @@ b.f();         // correctly calls Derived::f()
 <h3 id="when-the-type-is-obvious-from-the-initializer"><a class="header" href="#when-the-type-is-obvious-from-the-initializer">When the Type Is <strong>Obvious</strong> from the Initializer</a></h3>
 <p>Use <code>auto</code> when the type is clear and unambiguous:</p>
 <pre><code class="language-cpp">auto i = 10;                      // Clearly an int
-auto name = std::string(&quot;John&quot;); // Obvious string construction
+auto name = std::string("John"); // Obvious string construction
 </code></pre>
 <p>Also ideal for range-based loops and iterator declarations:</p>
 <pre><code class="language-cpp">for (auto it = container.begin(); it != container.end(); ++it) {
@@ -2398,7 +2174,7 @@ auto name = std::string(&quot;John&quot;); // Obvious string construction
 </code></pre>
 <h3 id="when-the-type-is-long-or-tedious-to-write"><a class="header" href="#when-the-type-is-long-or-tedious-to-write">When the Type Is <strong>Long or Tedious to Write</strong></a></h3>
 <p><code>auto</code> helps avoid unnecessarily verbose or complex type declarations:</p>
-<pre><code class="language-cpp">auto pair = std::make_pair(42, &quot;answer&quot;);
+<pre><code class="language-cpp">auto pair = std::make_pair(42, "answer");
 auto mapIter = std::unordered_map&lt;int, std::vector&lt;std::string&gt;&gt;::iterator{};
 </code></pre>
 <h3 id="when-dealing-with-lambdas-or-callable-objects"><a class="header" href="#when-dealing-with-lambdas-or-callable-objects">When Dealing with <strong>Lambdas or Callable Objects</strong></a></h3>
@@ -2422,13 +2198,13 @@ for (auto&amp; [key, value] : myMap) {
 <pre><code class="language-cpp">int count = 0;  // More readable than auto when you want to emphasize the type
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="type-query"><a class="header" href="#type-query">Type Query</a></h1>
-<p>This chapter presents a focused exploration of type query mechanisms in modern C++, emphasizing <code>decltype</code> and its interaction with value categories and type deduction. </p>
+<p>This chapter presents a focused exploration of type query mechanisms in modern C++, emphasizing <code>decltype</code> and its interaction with value categories and type deduction.</p>
 <ul>
 <li>
-<p>The Introduction outlines the motivation and typical use cases for querying types at compile time. </p>
+<p>The Introduction outlines the motivation and typical use cases for querying types at compile time.</p>
 </li>
 <li>
-<p>The Mechanisms section details core tools such as decltype, typeid, std::declval, and type traits, with practical examples. </p>
+<p>The Mechanisms section details core tools such as decltype, typeid, std::declval, and type traits, with practical examples.</p>
 </li>
 <li>
 <p>The Rules section formalizes the deduction behavior of decltype(e) through five canonical rules and edge cases involving cv-qualifiers and value categories.</p>
@@ -2455,7 +2231,7 @@ decltype(getValue()) result;
 <p>Enable compile-time type reflection useful in diagnostics, code synthesis, or meta programming.</p>
 <pre><code class="language-cpp">template&lt;typename T&gt;
 void printTypeInfo(const T&amp; val) {
-  std::cout &lt;&lt; &quot;Type: &quot; &lt;&lt; typeid(decltype(val)).name() &lt;&lt; '\n';
+  std::cout &lt;&lt; "Type: " &lt;&lt; typeid(decltype(val)).name() &lt;&lt; '\n';
 }
 </code></pre>
 </li>
@@ -2530,7 +2306,7 @@ static_assert(
 #include &lt;typeinfo&gt;
 
 void printType(int x) {
-    std::cout &lt;&lt; &quot;Type: &quot; &lt;&lt; typeid(x).name() &lt;&lt; '\n';
+    std::cout &lt;&lt; "Type: " &lt;&lt; typeid(x).name() &lt;&lt; '\n';
 }
 </code></pre>
 <p><strong>Note:</strong> When used on polymorphic types through a base pointer or reference, <code>typeid</code> reveals the dynamic type. Otherwise, it yields the static type.</p>
@@ -2670,7 +2446,7 @@ decltype(*j);                    // int&amp; (dereference of pointer is lvalue)
 decltype(static_cast&lt;int&amp;&amp;&gt;(i)); // int&amp;&amp; (xvalue)
 decltype(i++);                   // int  (post-increment yields prvalue)
 decltype(++i);                   // int&amp; (pre-increment yields lvalue)
-decltype(&quot;hello world&quot;);         // const char(&amp;)[12] (string literal is lvalue array)
+decltype("hello world");         // const char(&amp;)[12] (string literal is lvalue array)
 </code></pre>
 <h2 id="cv-qualifier-deduction-behavior"><a class="header" href="#cv-qualifier-deduction-behavior">cv-Qualifier Deduction Behavior</a></h2>
 <p>In general, <code>decltype(e)</code> preserves the <code>const</code> and <code>volatile</code> (cv) qualifiers of <code>e</code>. For example:</p>
@@ -2764,6 +2540,265 @@ int main() {
 <li>In C++17, <code>decltype(auto)</code> can also serve as a non-type template parameter, enhancing flexibility in meta programming.</li>
 </ul>
 <p>Overall, <code>decltype</code> is a precise and powerful tool that plays a critical role in modern C++ library design. Developers who need maximum control over type behavior—especially in templates—will find it indispensable.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="namespace"><a class="header" href="#namespace">Namespace</a></h1>
+<p>C++ namespaces provide a way to group related declarations and definitions, such as classes, functions, and variables, under a common name. This helps to avoid naming conflicts between different parts of a program or different libraries that may be used together.</p>
+<p>Namespaces were introduced into the C++ standard with the release of C++98. The syntax for declaring and defining namespaces is similar to that used for classes. Here's an example:</p>
+<pre><code class="language-cpp">// Declaration of a namespace
+namespace MyNamespace {
+    int x;
+    void foo();
+}
+
+// Definition of the namespace's contents
+namespace MyNamespace {
+    int x = 42;
+    void foo() {
+        // Implementation of the function
+    }
+}
+</code></pre>
+<p>In this example, <code>MyNamespace</code> is declared and defined to contain an integer variable <code>x</code> and a function <code>foo()</code>. The namespace's contents can be accessed using the scope resolution operator <code>::</code>, like this:</p>
+<pre><code class="language-cpp">int main() {
+    MyNamespace::x = 10;
+    MyNamespace::foo();
+    return 0;
+}
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="inline-namespace"><a class="header" href="#inline-namespace">Inline Namespace</a></h1>
+<h2 id="what-is-inline-namespace"><a class="header" href="#what-is-inline-namespace">What is <code>inline namespace</code></a></h2>
+<p>When a namespace is declared as <code>inline</code>, it means that its members are automatically injected into the enclosing parent namespace, as if they were defined directly in the parent namespace. This allows clients of the namespace to refer to its members without needing to qualify them with the namespace name.</p>
+<p>For example, consider the following code:</p>
+<pre><code class="language-cpp">namespace outer {
+    inline namespace inner {
+        void foo() {}
+    }
+}
+</code></pre>
+<p>Here, <code>inner</code> is an inline namespace that is declared within the <code>outer</code> namespace. This means that <code>foo()</code> can be accessed either as <code>outer::inner::foo()</code> or simply as <code>outer::foo()</code>.</p>
+<h2 id="use-case"><a class="header" href="#use-case">Use case</a></h2>
+<p>C++ <code>inline</code> namespaces were introduced in the C++11 standard to provide a mechanism for versioning and incremental updates of libraries, without breaking backward compatibility.</p>
+<p>An <code>inline</code> namespace can be used to provide an updated version of a library's interface, while still allowing old code to use the previous version. By using an <code>inline</code> namespace, the new version of the library can be introduced without breaking the existing code that depends on the old version.</p>
+<p>Here is an example of how an inline namespace can be used:</p>
+<pre><code class="language-cpp">#include &lt;iostream&gt;
+
+/*
+// Initial version of the library
+namespace MyLib {
+    void foo() {
+        std::cout &lt;&lt; "Hello, world!" &lt;&lt; std::endl;
+    }
+}
+*/
+
+// Updated version of the library, in an inline namespace
+namespace MyLib {
+    inline namespace v1 {
+        void foo() {
+            std::cout &lt;&lt; "Hello, World!" &lt;&lt; std::endl;
+        }
+    }
+    
+    namespace v2 {
+        void foo() {
+            std::cout &lt;&lt; "Hello, C++11!" &lt;&lt; std::endl;
+        }
+    }
+}
+
+// Usage of the library
+int main() {
+    MyLib::foo();     // calls the initial version of foo
+    MyLib::v2::foo(); // calls the updated version of foo
+    return 0;
+}
+</code></pre>
+<p>This code demonstrates how backward compatibility is maintained in a library called <code>MyLib</code>, which defines two versions of a function named <code>foo()</code>. The output of the program will be:</p>
+<pre><code>Hello, World!
+Hello, C++11!
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="new-nested-namespace-syntax"><a class="header" href="#new-nested-namespace-syntax">New Nested Namespace Syntax</a></h1>
+<p>Prior to C++17, nested namespaces are defined like this:</p>
+<pre><code class="language-cpp">namespace A {
+    namespace B {
+        namespace C {
+            int foo() { return 5; }
+        }
+    }
+}
+</code></pre>
+<p>With C++17, the same nested namespaces can be defined using the inline syntax concisely:</p>
+<pre><code class="language-cpp">namespace A::B::C {
+    int foo() { return 5; }
+}
+</code></pre>
+<p>Both of these code snippets achieve the same result: defining a function <code>foo()</code> in the namespace <code>A::B::C</code>. The inline namespace definition syntax introduced in C++17 allows for a more compact and readable way to define nested namespaces.</p>
+<h2 id="nested-inline-namespace"><a class="header" href="#nested-inline-namespace">Nested inline namespace</a></h2>
+<p>The combination of the nested namespace definition syntax (introduced in C++17) and the <code>inline</code> namespace declaration is allowed in C++20.</p>
+<p>The following is valid in C++20:</p>
+<pre><code class="language-cpp">namespace A::B::inline C {
+    int foo() { return 5; }
+}
+</code></pre>
+<p>In this code, the <code>inline</code> keyword is applied to the <code>C</code> namespace within the nested namespace definition <code>A::B</code>. This declares <code>C</code> as an inline namespace within the enclosing namespace <code>B</code>.</p>
+<p>Note <code>inline</code> keyword can appear before any namespace name except namespace <code>A</code>.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="unnamed-namespace"><a class="header" href="#unnamed-namespace">Unnamed Namespace</a></h1>
+<p>The <code>unnamed namespace</code> (or anonymous namespace) is a feature in C++ that was introduced in the C++98 standard. It provides a way to declare identifiers (e.g., functions, variables, or types) with internal linkage, meaning they are only visible within the scope of their parent namespace, or translation unit (i.e., the source file) in which they are defined.</p>
+<p><code>Unnamed namespaces</code> can be declared using the <code>namespace</code> keyword, followed by a pair of braces, like this:</p>
+<pre><code class="language-cpp">namespace {
+    // Your code here
+}
+</code></pre>
+<p>For example, a helper function or a constant that is only needed within a single source file, can be put in an unnamed namespace to prevent it from being accessible in other parts of the program:</p>
+<pre><code class="language-cpp">// File: my_file.cpp
+#include "my_file.h"
+
+namespace {
+    const int someConstant = 42;
+
+    void helperFunction() {
+        // Implementation here
+    }
+}
+
+void myPublicFunction() {
+    helperFunction();
+    // Other implementation details
+}
+</code></pre>
+<p>In this example, <code>someConstant</code> and <code>helperFunction</code> are only visible within <code>my_file.cpp</code> and won't conflict with any other code using the same names.</p>
+<p>Another example:</p>
+<pre><code class="language-cpp">namespace my_namespace {
+    namespace {
+        void helperFunction() {
+            // Implementation here
+        }
+    }
+
+    void publicFunction() {
+        helperFunction(); // This is allowed since helperFunction() is in the same parent namespace
+    }
+}
+</code></pre>
+<p>In this example, <code>helperFunction()</code> is declared within an unnamed namespace inside <code>my_namespace</code>. Although <code>helperFunction()</code> has internal linkage and is not visible outside of the translation unit, it can still be accessed by other functions within the same parent namespace (<code>my_namespace</code>), such as <code>publicFunction()</code>.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="merged-namespace"><a class="header" href="#merged-namespace">Merged Namespace</a></h1>
+<p>If a namespace is defined multiple times, its contents are merged together. For example:</p>
+<pre><code class="language-cpp">// First definition of namespace MyNamespace
+namespace MyNamespace {
+    int x = 1;
+    void foo() {
+        // Implementation of the function
+    }
+}
+
+// Second definition of namespace MyNamespace, with different contents
+namespace MyNamespace {
+    int y = 2;
+    void bar() {
+        // Implementation of the function
+    }
+}
+
+// Usage of the namespace contents
+int main() {
+    MyNamespace::foo();
+    MyNamespace::bar();
+    std::cout &lt;&lt; MyNamespace::x + MyNamespace::y &lt;&lt; std::endl;
+    return 0;
+}
+</code></pre>
+<p>Howerver, if the same variable is defined multiple times, a redefinition error will occur:</p>
+<pre><code class="language-cpp">
+#include &lt;iostream&gt;
+
+namespace Namespace1 {
+    int x = 1;
+}
+
+namespace Namespace1 {
+    int x = 2;
+}
+
+int main() {
+    std::cout &lt;&lt; Namespace1::x &lt;&lt; std::endl;
+    std::cout &lt;&lt; Namespace2::x &lt;&lt; std::endl;
+    return 0;
+}
+
+
+</code></pre>
+<p>We'll see the following compiler error:</p>
+<pre><code>&lt;source&gt;:8:9: error: redefinition of 'int Namespace1::x'
+    8 |     int x = 2;
+      |         ^
+&lt;source&gt;:4:9: note: 'int Namespace1::x' previously defined here
+    4 |     int x = 1;
+      |         ^
+&lt;source&gt;: In function 'int main()':
+&lt;source&gt;:13:18: error: 'Namespace2' has not been declared
+   13 |     std::cout &lt;&lt; Namespace2::x &lt;&lt; std::endl;
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="global-namespace"><a class="header" href="#global-namespace">Global Namespace</a></h1>
+<p>In C++, the global namespace is the outermost namespace that encompasses all the code in a program. When you define a variable, function, or type without explicitly placing it in a named or unnamed namespace, it becomes part of the global namespace. The global namespace is accessible from anywhere in the program, making its members visible across different translation units.</p>
+<p>Although using the global namespace can make it easier to access identifiers without needing to specify a particular namespace, it is generally not recommended to place many identifiers in the global namespace, as it can lead to name clashes and reduced code maintainability. In large projects, putting too many identifiers in the global namespace can make it difficult to determine the purpose or origin of a particular identifier.</p>
+<p>Instead, it's usually better to use named namespaces to organize and encapsulate your code, which helps prevent name collisions and improve code readability.</p>
+<p>Here's an example that demonstrates the difference between global and named namespaces:</p>
+<pre><code class="language-cpp">// Global namespace
+int globalVariable = 10;
+
+void globalFunction() {
+    // Implementation here
+}
+
+// Named namespace
+namespace my_namespace {
+    int myVariable = 20;
+
+    void myFunction() {
+        // Implementation here
+    }
+}
+
+int main() {
+    globalFunction(); // Accessing a function in the global namespace
+    my_namespace::myFunction(); // Accessing a function in a named namespace
+
+    return 0;
+}
+</code></pre>
+<p>In this example, <code>globalVariable</code> and <code>globalFunction()</code> are defined in the global namespace, while <code>myVariable</code> and <code>myFunction()</code> are defined within the named namespace <code>my_namespace</code>. To access members of a named namespace, use the namespace qualifier <code>::</code>.</p>
+<h2 id="scope-resolution-operator-"><a class="header" href="#scope-resolution-operator-">Scope resolution operator <code>::</code></a></h2>
+<p>The global namespace can be accessed explicitly by using the scope resolution operator <code>::</code>. This can be helpful when an identifier in the global namespace shares the same name as an identifier in a different namespace, or it is desirable to explicitly refer to the global namespace version of an identifier.</p>
+<p>Here's an example demonstrating the use of <code>::</code> to access the global namespace:</p>
+<pre><code class="language-cpp">#include &lt;iostream&gt;
+
+// Global namespace
+int myVariable = 10;
+
+namespace my_namespace {
+    int myVariable = 20;
+
+    void printVariables() {
+        std::cout &lt;&lt; "Global namespace myVariable: " &lt;&lt; ::myVariable &lt;&lt; std::endl;
+        std::cout &lt;&lt; "my_namespace myVariable: " &lt;&lt; myVariable &lt;&lt; std::endl;
+    }
+}
+
+int main() {
+    my_namespace::printVariables();
+    return 0;
+}
+</code></pre>
+<p>In this example, there are two variables with the same name <code>myVariable</code>, one in the global namespace and another in the named namespace <code>my_namespace</code>. Inside the <code>printVariables()</code> function, resolution operator <code>::</code> is specified to access the <code>myVariable</code> from the global namespace, while the unqualified <code>myVariable</code> refers to the one in the <code>my_namespace</code>.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="program-structure"><a class="header" href="#program-structure">Program Structure</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="control-flow"><a class="header" href="#control-flow">Control Flow</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="exceptions-and-assertion"><a class="header" href="#exceptions-and-assertion">Exceptions and Assertion</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="class"><a class="header" href="#class">Class</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="value-syntax"><a class="header" href="#value-syntax">Value Syntax</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="templates-and-generic-programming"><a class="header" href="#templates-and-generic-programming">Templates and Generic Programming</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="ranges-and-view"><a class="header" href="#ranges-and-view">Ranges and View</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="concurrency"><a class="header" href="#concurrency">Concurrency</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="attributes-and-preprocessor"><a class="header" href="#attributes-and-preprocessor">Attributes and Preprocessor</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="optimizations"><a class="header" href="#optimizations">Optimizations</a></h1>
 
                     </main>
 
