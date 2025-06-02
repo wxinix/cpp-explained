@@ -1,52 +1,88 @@
 # Summary
 
-[Preface](README.md)
+[Preface](PREFACE.md)
 
-# Modern C++ Elements
+- [Fundamental Data Types](FundamentalDataTypes/README.md)
+  - [Integer Types](FundamentalDataTypes/IntTypes.md)
+    - [`long long`](FundamentalDataTypes/IntTypes_longlong.md)
+  - [Character Types](FundamentalDataTypes/CharTypes.md)
+    - [Sets and Encodings](FundamentalDataTypes/CharTypes_CharSetsEncodings.md)
+    - [New Types](FundamentalDataTypes/CharTypes_NewCharTypes.md)
+    - [Automatic Concatenation](FundamentalDataTypes/CharTypes_StringLiteralCat.md)
+    - [Library Support](FundamentalDataTypes/CharTypes_LibrarySuppor.md)
+ 
 
-- [Fundamental Data Types](primitive/README.md)
-  - [Integer Types](primitive/IntTypes.md)
-    - [Integer Type long long](primitive/IntTypes_longlong.md)
-  - [Character Types](primitive/CharTypes.md)
-    - [Character Sets and Encodings](primitive/CharTypes_CharSetsEncodings.md)
-    - [New Character Types](primitive/CharTypes_NewCharTypes.md)
-    - [Automatic String Literal Concatenation](primitive/CharTypes_StringLiteralCat.md)
-    - [Library Support](primitive/CharTypes_LibrarySuppor.md)
+- [Memory Alignment](MemoryAlignment/README.md)
 
-- [Namespace](namespace/README.md)
-  - [Inline Namespace](namespace/InlineNamespace.md)
-  - [New Nested Namespace Syntax](namespace/NewNestedNamespaceSyntax.md)
-  - [Unnamed Namespace](namespace/UnnamedNamespace.md)
-  - [Merged Namespace](namespace/MergedNamespace.md)
-  - [Global Namespace](namespace/GlobalNamespace.md)
 
-- [`Compile Time Evaluation`](compileval/README.md)
-  - [`constexpr`](compileval/Constexpr.md)
-  - [`std::numeric_limits`](compileval/NumericLimit.md)
-  - [Math functions](compileval/MathFunctions.md)
-  - [Lambdas](compileval/Lambdas.md)
-  - [Inlining `constexpr`](compileval/InliningConstExpr.md)
-  - [Conditional Compilation ](compileval/ConditionalCompilation.md)
-  - [Virtual Functions](compileval/VirtualFunctions.md)
-  - [`try-catch` ](compileval/TryCatch.md)
-  - [Initialization of `constexpr` Object](compileval/DefaultInit.md)
-  - [`consteval` and `constinit`](compileval/ConstEvalAndConstInit.md)
-  - [`std::is_constant_evaluated`](compileval/StdIsConstant.md)
-  - [Other Enhancements](compileval/OtherEnhancements.md)
-
-- [`Type Deduction`](typededuction/README.md)
-  - [`Introduction`](typededuction/Introduction.md)
-  - [`Mechanisms`](typededuction/Mechnisms.md)
-  - [`Rules`](typededuction/Rules.md)
-  - [`Best Practices`](typededuction/BestPractices.md)
+- [Literals](Literals/README.md)
   
-- [`Type Query`](typequery/README.md)
-  - [`Introduction`](typequery/Introduction.md)
-  - [`Mechanisms`](typequery/Mechnisms.md)
-  - [`Rules`](typequery/Rules.md)
-  - [`Best Practices`](typequery/BestPractices.md)
+
+- [Initialization](Initialization/README.md)
+
+
+- [`Compile Time Evaluation`](CompileTimeEvaluation/README.md)
+  - [`constexpr`](CompileTimeEvaluation/Constexpr.md)
+  - [`std::numeric_limits`](CompileTimeEvaluation/NumericLimit.md)
+  - [Math functions](CompileTimeEvaluation/MathFunctions.md)
+  - [Lambdas](CompileTimeEvaluation/Lambdas.md)
+  - [Inlining `constexpr`](CompileTimeEvaluation/InliningConstExpr.md)
+  - [Conditional Compilation ](CompileTimeEvaluation/ConditionalCompilation.md)
+  - [Virtual Functions](CompileTimeEvaluation/VirtualFunctions.md)
+  - [`try-catch` ](CompileTimeEvaluation/TryCatch.md)
+  - [Initialization of `constexpr` Object](CompileTimeEvaluation/DefaultInit.md)
+  - [`consteval` and `constinit`](CompileTimeEvaluation/ConstEvalAndConstInit.md)
+  - [`std::is_constant_evaluated`](CompileTimeEvaluation/StdIsConstant.md)
+  - [Other Enhancements](CompileTimeEvaluation/OtherEnhancements.md)
+  
+
+- [`Type Deduction`](TypeDeduction/README.md)
+  - [`Introduction`](TypeDeduction/Introduction.md)
+  - [`Mechanisms`](TypeDeduction/Mechnisms.md)
+  - [`Rules`](TypeDeduction/Rules.md)
+  - [`Best Practices`](TypeDeduction/BestPractices.md)
   
   
-# Meta-template Programming
+- [`Type Introspection`](TypeIntrospection/README.md)
+  - [`Introduction`](TypeIntrospection/Introduction.md)
+  - [`Mechanisms`](TypeIntrospection/Mechnisms.md)
+  - [`Rules`](TypeIntrospection/Rules.md)
+  - [`Best Practices`](TypeIntrospection/BestPractices.md)  
+ 
+ 
+- [Namespace](Namespace/README.md)
+  - [Inline Namespace](Namespace/InlineNamespace.md)
+  - [New Nested Namespace Syntax](Namespace/NewNestedNamespaceSyntax.md)
+  - [Unnamed Namespace](Namespace/UnnamedNamespace.md)
+  - [Merged Namespace](Namespace/MergedNamespace.md)
+  - [Global Namespace](Namespace/GlobalNamespace.md)
 
-# Algorithms
+
+- [Program Structure](ProgramStructure/README.md)  
+
+
+- [Control Flow](ControlFlow/README.md)
+
+
+- [Exceptions and Assertion](ExceptionAndAssertation/README.md)
+
+
+- [Class](Class/README.md)
+
+
+- [Value Syntax](ValueSyntax/README.md)
+
+
+- [Template and Generic Programming](TemplateAndGenericProgramming/README.md)
+
+
+- [Ranges and View](RangeAndView/README.md)
+  
+
+- [Concurrency](Concurrency/README.md)
+  
+
+- [Attributes and Preprocessor](AttributeAndPreprocessor/README.md)
+  
+
+- [Optimizations](Optimizations/README.md)

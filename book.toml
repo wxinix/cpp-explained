@@ -9,4 +9,5 @@ title = "Modern C++ Explained"
 additional-css      = [ "section-lines.css" , "version-commit.css" ]
 curly-quotes        = false
 git-repository-url  = "https://github.com/wxinix/cpp-explained"
-no-section-label    = true
+no-section-label    = false
+numbered            = true
