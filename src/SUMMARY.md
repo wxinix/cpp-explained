@@ -8,7 +8,7 @@
   - [Character Types](FundamentalDataTypes/CharTypes.md)
     - [Sets and Encodings](FundamentalDataTypes/CharTypes_CharSetsEncodings.md)
     - [New Types](FundamentalDataTypes/CharTypes_NewCharTypes.md)
-    - [Automatic Concatenation](FundamentalDataTypes/CharTypes_StringLiteralCat.md)
+    - [Concatenation](FundamentalDataTypes/CharTypes_StringLiteralCat.md)
     - [Library Support](FundamentalDataTypes/CharTypes_LibrarySuppor.md)
  
 
