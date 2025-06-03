@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Exceptions and Assertion - Modern C++ Explained</title>
+        <title>static_assert - Modern C++ Explained</title>
 
 
         <!-- Custom HTML head -->
@@ -171,17 +171,142 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="exceptions-and-assertion"><a class="header" href="#exceptions-and-assertion">Exceptions and Assertion</a></h1>
+                        <h1 id="understanding-static_assert-in-modern-c"><a class="header" href="#understanding-static_assert-in-modern-c">Understanding <code>static_assert</code> in Modern C++</a></h1>
+<p>Static assertions enable compile-time validation of program logic.</p>
+<p>Introduced in C++11 and enhanced in C++17 and later standards, <code>static_assert</code> is used to catch programming errors early in the development cycle—during compilation, rather than at runtime.</p>
+<h2 id="motivation"><a class="header" href="#motivation">Motivation</a></h2>
+<p>Before <code>static_assert</code>, C++ developers relied on <strong>runtime assertions</strong> using <code>assert()</code> from <code>&lt;cassert&gt;</code>. These runtime checks serve as DEBUG aid, and are only evaluated during program execution:</p>
+<ul>
+<li>They do not prevent compilation of incorrect code.</li>
+<li>They can be disabled in Release builds using the <code>NDEBUG</code> macro.</li>
+<li>They are unsuitable for verifying template logic or constant expressions.</li>
+</ul>
+<p>For example:</p>
+<pre><code class="language-cpp">#include &lt;cassert&gt;
+
+void resize_buffer(void* buffer, int new_size) {
+    assert(buffer != nullptr);   // Valid: internal check for program invariants
+    assert(new_size &gt; 0);        // Valid: internal logic
+}
+
+// Avoid assert() for user input, file format, environment conditions or anything not under
+// direct program control. Assert is a DEBUG aid, not error handling.
+bool handle_user_input(char c) {
+    assert(c == '\r');           // Not recommended: external or user input, not controlled by developer
+    return c == '\r';
+}
+</code></pre>
+<p>Runtime assertions help catch developer mistakes, but they cannot verify correctness of types, templates, or values at compile time.</p>
+<h2 id="basic-syntax-of-static_assert-c11"><a class="header" href="#basic-syntax-of-static_assert-c11">Basic Syntax of <code>static_assert</code> (C++11)</a></h2>
+<p>C++11 introduced <code>static_assert</code> to allow assertions at compile time.</p>
+<pre><code class="language-cpp">static_assert(constexpr_condition, "error message");
+</code></pre>
+<ul>
+<li>The first argument must be a constant expression.</li>
+<li>The second is a string literal shown during compilation if the assertion fails.</li>
+</ul>
+<p>For example:</p>
+<pre><code class="language-cpp">#include &lt;type_traits&gt;
+
+template &lt;typename T&gt;
+struct IsDerivedFromBase {
+    static_assert(std::is_base_of&lt;Base, T&gt;::value, "T must derive from Base");
+};
+</code></pre>
+<p>If <code>T</code> does not inherit from <code>Base</code>, compilation fails with the specified message.</p>
+<h2 id="single-argument-version-c17"><a class="header" href="#single-argument-version-c17">Single-Argument Version (C++17)</a></h2>
+<p>C++17 simplified <code>static_assert</code> by making the message optional. If omitted, the compiler displays the failed expression.</p>
+<p><strong>Syntax (C++17):</strong></p>
+<pre><code class="language-cpp">// MSVC  - error C2338: static_assert failed: 'sizeof(int) &gt;= 4'
+// Clang - static_assert failed due to requirement 'sizeof(int) &gt;= 4'
+static_assert(constexpr_condition); 
+</code></pre>
+<p>For example:</p>
+<pre><code class="language-cpp">static_assert(sizeof(int) &gt;= 4);
+</code></pre>
+<h2 id="use-cases-and-best-practices"><a class="header" href="#use-cases-and-best-practices">Use Cases and Best Practices</a></h2>
+<p><strong>Valid Uses:</strong></p>
+<ul>
+<li>Verifying template arguments.</li>
+<li>Ensuring platform or compiler constraints (e.g., word size).</li>
+<li>Asserting invariants within class or function templates.</li>
+</ul>
+<p><strong>Invalid Uses:</strong></p>
+<ul>
+<li>Runtime values (e.g., function arguments or user input).</li>
+<li>Conditions that depend on external input or file contents.</li>
+</ul>
+<p><strong>Example o Invalid Use:</strong></p>
+<pre><code class="language-cpp">int main(int argc, char* argv[]) {
+    static_assert(argc &gt; 0, "argc must be &gt; 0");  // Invalid: not a compile-time constant
+}
+</code></pre>
+<h2 id="advanced-compile-time-constraints"><a class="header" href="#advanced-compile-time-constraints">Advanced Compile-Time Constraints</a></h2>
+<h3 id="custom-macros-pre-c11"><a class="header" href="#custom-macros-pre-c11">Custom Macros (Pre-C++11)</a></h3>
+<p>Before C++11, libraries like Boost used templates to simulate static assertions:</p>
+<pre><code class="language-cpp">template&lt;bool&gt;
+struct static_assertion; // Primary template - intentionally left undefined.
+
+template&lt;&gt; 
+struct static_assertion&lt;true&gt; {}; // Specialization only for `true`
+
+// This attempts to create a temporary object of type static_assertion&lt;true&gt;
+// (if the condition is true). Otherwise, compiler would fail.
+#define STATIC_ASSERT(expr) static_assertion&lt;(expr)&gt;()
+</code></pre>
+<p>These techniques are now obsolete due to <code>static_assert</code>.</p>
+<h2 id="enhancements-in-c20-and-beyond"><a class="header" href="#enhancements-in-c20-and-beyond">Enhancements in C++20 and Beyond</a></h2>
+<h3 id="concepts-c20"><a class="header" href="#concepts-c20">Concepts (C++20)</a></h3>
+<p>C++20 introduces <strong>concepts</strong>, a powerful way to constrain template parameters. This is often used in place of <code>static_assert</code>.</p>
+<p><strong>Example:</strong></p>
+<pre><code class="language-cpp">template&lt;typename T&gt;
+concept Integral = std::is_integral_v&lt;T&gt;;
+
+template&lt;Integral T&gt;
+T add(T a, T b) {
+    return a + b;
+}
+</code></pre>
+<p>This eliminates the need for <code>static_assert(std::is_integral_v&lt;T&gt;)</code>.</p>
+<h3 id="consteval-and-constinit-c20"><a class="header" href="#consteval-and-constinit-c20"><code>consteval</code> and <code>constinit</code> (C++20)</a></h3>
+<ul>
+<li><code>consteval</code> enforces compile-time evaluation of functions.</li>
+<li><code>constinit</code> ensures static variables are initialized at compile time.</li>
+</ul>
+<p>These provide compile-time safety in contexts where <code>static_assert</code> might be too coarse.</p>
+<p><strong>Example with <code>consteval</code>:</strong></p>
+<pre><code class="language-cpp">consteval int square(int x) {
+    return x * x;
+}
+
+static_assert(square(5) == 25);
+</code></pre>
+<h3 id="static_assert-with-type-traits-c2326-context"><a class="header" href="#static_assert-with-type-traits-c2326-context"><code>static_assert</code> with Type Traits (C++23/26 Context)</a></h3>
+<p>With growing support for constexpr-friendly type traits, <code>static_assert</code> is increasingly used in generic programming. Libraries and frameworks leverage it to enforce type invariants:</p>
+<pre><code class="language-cpp">template&lt;typename T&gt;
+void serialize(const T&amp; obj) {
+    static_assert(std::is_trivially_copyable_v&lt;T&gt;, "T must be trivially copyable");
+}
+</code></pre>
+<h2 id="summary"><a class="header" href="#summary">Summary</a></h2>
+<ul>
+<li><code>static_assert</code> enables compile-time validation, avoiding runtime surprises.</li>
+<li>Introduced in C++11, improved in C++17 (single-argument form).</li>
+<li>C++20 and later expand compile-time programming with <code>concepts</code>, <code>consteval</code>, and more expressive constexpr support.</li>
+<li>Should be used to enforce logic that must always be true during compilation.</li>
+<li>Avoid using it for checking inputs or runtime states.</li>
+</ul>
+<p>Static assertions improve code robustness, help detect logic errors early, and are an essential tool in template meta programming and modern C++ design.</p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="../ControlFlow/index.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../ExceptionAndAssertation/index.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next prefetch" href="../ExceptionAndAssertation/StaticAssert.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../ExceptionAndAssertation/NoExcept.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -191,11 +316,11 @@
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="../ControlFlow/index.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../ExceptionAndAssertation/index.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next prefetch" href="../ExceptionAndAssertation/StaticAssert.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../ExceptionAndAssertation/NoExcept.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>
