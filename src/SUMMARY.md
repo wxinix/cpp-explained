@@ -65,6 +65,8 @@
 
 
 - [Exceptions and Assertion](ExceptionAndAssertation/README.md)
+  - [`static_assert`](ExceptionAndAssertation/StaticAssert.md)
+  - [`noexcept`](ExceptionAndAssertation/NoExcept.md)
 
 
 - [Class](Class/README.md)
