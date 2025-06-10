@@ -2918,7 +2918,152 @@ void serialize(const T&amp; obj) {
 <li>Avoid using it for checking inputs or runtime states.</li>
 </ul>
 <p>Static assertions improve code robustness, help detect logic errors early, and are an essential tool in template meta programming and modern C++ design.</p>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="noexcept"><a class="header" href="#noexcept">noexcept</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="noexcept-in-modern-c"><a class="header" href="#noexcept-in-modern-c"><code>noexcept</code> in Modern C++</a></h1>
+<p>C++11 introduced <code>noexcept</code> as a replacement and improvement over the older <code>throw()</code>-style exception specifications. It plays a vital role in optimization, particularly in generic programming and move semantics. Later revisions of C++ reinforced its importance, culminating in significant changes by C++20.</p>
+<h2 id="what-is-noexcept"><a class="header" href="#what-is-noexcept">What is <code>noexcept</code>?</a></h2>
+<p><code>noexcept</code> is both:</p>
+<ul>
+<li>An <strong>exception specification</strong> (like <code>noexcept</code> or <code>noexcept(true)</code>), telling the compiler a function won't throw.</li>
+<li>A <strong>compile-time operator</strong> (<code>noexcept(expression)</code>) that returns <code>true</code> if the expression is known not to throw.</li>
+</ul>
+<h2 id="why-not-use-throw"><a class="header" href="#why-not-use-throw">Why Not Use <code>throw()</code>?</a></h2>
+<p>Before C++11:</p>
+<pre><code class="language-cpp">void foo() throw();                   // Not supposed to throw any exceptions
+void bar() throw(std::runtime_error); // Supposed to throw only specific exceptions
+</code></pre>
+<p>These had weak compiler enforcement and inconsistent support. Worse, <code>throw()</code> required stack unwinding and called <code>std::unexpected()</code> on violation. In C++ 20, <code>throw()</code> is removed entirely.</p>
+<p>In contrast, <code>noexcept</code> calls <code>std::terminate()</code> directly, avoiding complex runtime behavior and enabling better optimizations.</p>
+<h2 id="basic-noexcept-usage"><a class="header" href="#basic-noexcept-usage">Basic <code>noexcept</code> Usage</a></h2>
+<pre><code class="language-cpp">int f() noexcept {
+    return 42;
+}
+
+struct X {
+    int g() const noexcept {
+        return 58;
+    }
+
+    void h() noexcept {}
+};
+</code></pre>
+<p>Declaring functions <code>noexcept</code> helps the compiler generate better code, especially in templates and STL containers.</p>
+<hr />
+<h2 id="conditional-noexcept-with-templates"><a class="header" href="#conditional-noexcept-with-templates">Conditional <code>noexcept</code> with Templates</a></h2>
+<p>You often want to declare <code>noexcept</code> <em>only if</em> the operations inside a template won’t throw:</p>
+<pre><code class="language-cpp">#include &lt;type_traits&gt;
+
+template &lt;typename T&gt;
+T copy(const T&amp; o) noexcept(std::is_nothrow_copy_constructible&lt;T&gt;::value) {
+    return T(o); // Calls the copy ctor of T
+}
+
+// std::is_nothrow_copy_constructible&lt;T&gt;::value is a compile time boolean constant, and is 
+// true if the type T has a copy ctor that is declared noexcept
+</code></pre>
+<p>Or more generally:</p>
+<pre><code class="language-cpp">template &lt;typename T&gt;
+T copy(const T&amp; o) noexcept(noexcept(T(o))) {
+    return T(o);
+}
+</code></pre>
+<p>Here, the outer <code>noexcept(...)</code> is the specifier, and the inner is the operator.</p>
+<h2 id="noexcept-and-move-semantics"><a class="header" href="#noexcept-and-move-semantics"><code>noexcept</code> and Move Semantics</a></h2>
+<p>Using move operations inside containers is risky if the move constructor/assignment might throw. <code>noexcept</code> helps guide the compiler to choose moves over copies safely.</p>
+<h3 id="example-safe-swap-with-noexcept"><a class="header" href="#example-safe-swap-with-noexcept">Example: Safe <code>swap</code> with <code>noexcept</code></a></h3>
+<pre><code class="language-cpp">#include &lt;utility&gt;
+#include &lt;type_traits&gt;
+
+template &lt;typename T&gt;
+void swap(T&amp; a, T&amp; b)
+noexcept(noexcept(T(std::move(a))) &amp;&amp; noexcept(a = std::move(b))) {
+    T tmp(std::move(a));
+    a = std::move(b);
+    b = std::move(tmp);
+}
+
+/*
+The swap function is declared noexcept only if both:
+  T's move constructor T(std::move(a)) is noexcept
+  T's move assignment a = std::move(b) is noexcept
+
+If either operation could throw, the whole swap function is not noexcept, 
+preventing false promises.
+*/
+</code></pre>
+<h3 id="example-safe-swap-with-conditional-overload"><a class="header" href="#example-safe-swap-with-conditional-overload">Example: Safe <code>swap</code> with Conditional Overload</a></h3>
+<pre><code class="language-cpp">template&lt;typename T&gt;
+void swap_impl(T&amp; a, T&amp; b, std::true_type) noexcept {
+    T tmp(std::move(a));
+    a = std::move(b);
+    b = std::move(tmp);
+}
+
+template&lt;typename T&gt;
+void swap_impl(T&amp; a, T&amp; b, std::false_type) {
+    T tmp(a);
+    a = b;
+    b = tmp;
+}
+
+template&lt;typename T&gt;
+void swap(T&amp; a, T&amp; b)
+noexcept(noexcept(swap_impl(a, b,
+    std::integral_constant&lt;bool,
+        std::is_nothrow_move_constructible&lt;T&gt;::value &amp;&amp;
+        std::is_nothrow_move_assignable&lt;T&gt;::value&gt;()))) {
+    swap_impl(a, b,
+        std::integral_constant&lt;bool,
+            std::is_nothrow_move_constructible&lt;T&gt;::value &amp;&amp;
+            std::is_nothrow_move_assignable&lt;T&gt;::value&gt;());
+}
+</code></pre>
+<h2 id="destructor-and-delete-are-noexcept-by-default"><a class="header" href="#destructor-and-delete-are-noexcept-by-default">Destructor and <code>delete</code> are <code>noexcept</code> by Default</a></h2>
+<p>Even user-defined destructors inherit <code>noexcept</code> unless explicitly marked otherwise. Example:</p>
+<pre><code class="language-cpp">// A's dtor might throw exception.
+struct A { ~A() noexcept(false) {} }; 
+
+// B's dtor by default is noexcept, but its member a is not noexcept, 
+// hence B's dtor is not noexcept
+struct B { A a; };  
+
+// This will pass. Note: noexcept(B()) is testing both the dtor and ctor.
+static_assert(!noexcept(B()), "B’s destructor is not noexcept");
+</code></pre>
+<h2 id="noexcept-in-the-type-system-c17"><a class="header" href="#noexcept-in-the-type-system-c17"><code>noexcept</code> in the Type System (C++17)</a></h2>
+<p>From C++17 onwards, exception specifications are part of the function type:</p>
+<pre><code class="language-cpp">void foo();           // May throw
+void bar() noexcept;  // No-throw
+
+void (*fp)() noexcept = foo; // ERROR in C++17, not compatible type
+</code></pre>
+<p>The two function types are not compatible anymore, enhancing type safety.</p>
+<h2 id="noexcept-with-lambdas-c20"><a class="header" href="#noexcept-with-lambdas-c20"><code>noexcept</code> with Lambdas (C++20)</a></h2>
+<pre><code class="language-cpp">auto f = []() noexcept { return 42; };
+static_assert(noexcept(f()));
+
+</code></pre>
+<p>Before C++20, you couldn't specify noexcept on lambdas unless you wrote a full trailing return type with it.</p>
+<h2 id="support-for-consteval-and-immediate-functions-c20"><a class="header" href="#support-for-consteval-and-immediate-functions-c20">Support for <code>consteval</code> and Immediate Functions (C++20)</a></h2>
+<p>C++20's <code>consteval</code> and <code>constinit</code> features pair well with noexcept, allowing better compile-time enforcement:</p>
+<pre><code class="language-cpp">consteval int f() noexcept {
+    return 42;
+}
+</code></pre>
+<p>If such a function throws or allows throwing, the compiler gives an error — reinforcing that throwing in constant-evaluated code is forbidden.</p>
+<h2 id="when-to-use-noexcept"><a class="header" href="#when-to-use-noexcept">When to Use <code>noexcept</code></a></h2>
+<p>Use <code>noexcept</code> when:</p>
+<ol>
+<li>You <strong>guarantee</strong> the function won't throw (e.g., simple math, memory deallocation).</li>
+<li>Throwing would be catastrophic, and <code>std::terminate</code> is acceptable.</li>
+<li>You aim to <strong>enable move optimizations</strong> in STL containers.</li>
+</ol>
+<p>Avoid using <code>noexcept</code> if there's a possibility of future changes that might introduce exceptions.</p>
+<h2 id="summary-2"><a class="header" href="#summary-2">Summary</a></h2>
+<ul>
+<li><code>noexcept</code> is essential for writing robust, optimized C++ code.</li>
+<li>Use it wisely to guide compiler optimizations and avoid surprises during template instantiations or container operations.</li>
+<li>From C++17 onwards, <code>noexcept</code> becomes part of the type system, enhancing type safety.</li>
+</ul>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="class"><a class="header" href="#class">Class</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="value-syntax"><a class="header" href="#value-syntax">Value Syntax</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="templates-and-generic-programming"><a class="header" href="#templates-and-generic-programming">Templates and Generic Programming</a></h1>
