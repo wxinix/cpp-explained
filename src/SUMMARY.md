@@ -11,15 +11,12 @@
     - [Concatenation](FundamentalDataTypes/CharTypes_StringLiteralCat.md)
     - [Library Support](FundamentalDataTypes/CharTypes_LibrarySuppor.md)
  
+- [Initialization](Initialization/README.md)
+  - [Non-static Data Members Default Initialization](Initialization/NonStaticDataMemberDefaultInit.md)
+  - [List Initialization](Initialization/ListInit.md)
+  - [Structured Binding](Initialization/StructuredBinding.md)
 
 - [Memory Alignment](MemoryAlignment/README.md)
-
-
-- [Literals](Literals/README.md)
-  
-
-- [Initialization](Initialization/README.md)
-
 
 - [`Compile Time Evaluation`](CompileTimeEvaluation/README.md)
   - [`constexpr`](CompileTimeEvaluation/Constexpr.md)
@@ -87,4 +84,7 @@
 - [Attributes and Preprocessor](AttributeAndPreprocessor/README.md)
   
 
-- [Optimizations](Optimizations/README.md)
+- [Semantics Improvements](SemanticsImprovements/README.md)
+  
+  - [`inline` Specifier](SemanticsImprovements/InlineSpecifier.md)
+  - [Miscellaneous](SemanticsImprovements/Misc.md)
